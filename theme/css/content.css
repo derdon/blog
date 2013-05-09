@@ -2,10 +2,6 @@
     font-family: sans-serif;
 }
 
-#header h1 {
-    outline: solid 1px black;
-}
-
 #header a:link,
 #header a:visited,
 #header a:focus,
