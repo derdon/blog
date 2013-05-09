@@ -9,6 +9,7 @@ body {
 }
 
 #header {
+    background: url("../imgs/cloud1.png") repeat-x, url("../imgs/cloud2.png") repeat-x;
     height: 150px;
     padding-left: 2em;
     margin: 0;
@@ -21,7 +22,7 @@ body {
 }
 
 #clouds {
-    background: url("../imgs/cloud1.png") repeat-x, url("../imgs/cloud2.png") repeat-x;
+    /*background: url("../imgs/cloud1.png") repeat-x, url("../imgs/cloud2.png") repeat-x;*/
     height: 200px;
 }
 
