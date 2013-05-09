@@ -16,6 +16,7 @@ body {
 }
 
 #titles {
+    background: inherit;
     float: left;
     width: 15em;
 }
