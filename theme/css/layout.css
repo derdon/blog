@@ -1,0 +1,65 @@
+body {
+    margin-left: auto; margin-right: auto;
+    min-width: 30em; max-width: 85em;
+}
+
+#margins {
+    margin: 2em;
+    margin-bottom: 1em;
+}
+
+#header {
+    height: 150px;
+    padding-left: 2em;
+    margin: 0;
+}
+
+#titles {
+    float: left;
+    height: 100%;
+    width: 12em;
+}
+
+#clouds {
+    background: url("../imgs/cloud1.png") repeat-x, url("../imgs/cloud2.png") repeat-x;
+    height: 200px;
+}
+
+#main {
+}
+
+article, .paginator, footer {
+    border: 2px solid black;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+}
+
+article {
+    padding: 1em 2em;
+    margin-bottom: 1em;
+}
+
+time {
+    display: block;
+    padding-left: 0.2em;
+    font-size: small;
+}
+
+.entry-title {
+    margin-bottom: 0;
+}
+
+.paginator {
+    text-align: center;
+}
+
+.paginator, footer {
+    padding-top: 0.5em; padding-bottom: 0.5em;
+}
+
+footer {
+    text-align: right;
+    font-size: smaller;
+    padding-right: 1.2em;
+}

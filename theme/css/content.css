@@ -1,0 +1,24 @@
+#header {
+    font-family: sans-serif;
+}
+
+#header a:link,
+#header a:visited,
+#header a:focus,
+#header a:hover,
+#header a:active,
+article header h2 a {
+    text-decoration: none;
+}
+
+article p {
+    line-height: 1.5;
+}
+
+article header h2 a {
+    font-family: sans-serif;}
+
+pre {
+    padding-left: 2em;
+    overflow: auto;
+}
