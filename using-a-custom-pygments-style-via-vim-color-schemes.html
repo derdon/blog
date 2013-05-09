@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <title>using a custom pygments style via vim color schemes</title>
+        <link rel="stylesheet" href="http://derdon.github.io/blog/theme/css/main.css">
+                <link href="http://derdon.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="derdon's blog Atom Feed" />
+                
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="http://derdon.github.io/blog/">derdon's blog </a></h1>
+                <nav><ul>
+                                                                                    <li class="active"><a href="http://derdon.github.io/blog/category/python.html">python</a></li>
+                                                </ul></nav>
+        </header><!-- /#banner -->
+        <section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="http://derdon.github.io/blog/using-a-custom-pygments-style-via-vim-color-schemes.html" rel="bookmark"
+           title="Permalink to using a custom pygments style via vim color schemes">using a custom pygments style via vim color schemes</a></h1>
+          </header>
+
+    <div class="entry-content">
+      <footer class="post-info">
+        <abbr class="published" title="2011-05-16T00:00:00">
+                Mon 16 May 2011
+        </abbr>
+
+                <address class="vcard author">
+                By <a class="url fn" href="http://derdon.github.io/blog/author/simon-liedtke.html">Simon Liedtke</a>
+        </address>
+        <p>In <a href="http://derdon.github.io/blog/category/python.html">python</a>. </p>
+
+</footer><!-- /.post-info -->      <p>To convert a vim color schemes to python code, which is
+required for later use, there is the script <a class="reference external" href="https://bitbucket.org/birkenfeld/pygments-main/src/4e66a4c4b3ed/scripts/vim2pygments.py">vim2pygments.py</a> in the
+pygments repository on bitbucket. You pass the path of the vim file to
+this script. Example:</p>
+<pre class="literal-block">
+~/.vim/colors$ vim2pygments.py summerfruit.vim &gt; styles.py
+</pre>
+<p>The generated python code is now saved in styles.py. Let's take a look at
+it!</p>
+<div class="highlight"><pre><span class="o">~/.</span><span class="n">vim</span><span class="o">/</span><span class="n">colors</span><span class="err">$</span> <span class="n">cat</span> <span class="n">styles</span><span class="o">.</span><span class="n">py</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Summerfruit Colorscheme</span>
+<span class="sd">    ~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+<span class="sd">    Converted by Vim Colorscheme Converter</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">pygments.style</span> <span class="kn">import</span> <span class="n">Style</span>
+<span class="kn">from</span> <span class="nn">pygments.token</span> <span class="kn">import</span> <span class="n">Token</span><span class="p">,</span> <span class="n">Comment</span><span class="p">,</span> <span class="n">Name</span><span class="p">,</span> <span class="n">Keyword</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Number</span><span class="p">,</span> <span class="n">Operator</span><span class="p">,</span> <span class="n">String</span>
+
+<span class="k">class</span> <span class="nc">SummerfruitStyle</span><span class="p">(</span><span class="n">Style</span><span class="p">):</span>
+
+    <span class="n">background_color</span> <span class="o">=</span> <span class="s">&#39;#ffffff&#39;</span>
+    <span class="n">styles</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">Token</span><span class="p">:</span>              <span class="s">&#39;#000000 bg:#ffffff&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Output</span><span class="p">:</span>     <span class="s">&#39;#438ec3 bg:#b7dce8&#39;</span><span class="p">,</span>
+        <span class="n">Keyword</span><span class="p">:</span>            <span class="s">&#39;#fb660a bold&#39;</span><span class="p">,</span>
+        <span class="n">Number</span><span class="p">:</span>             <span class="s">&#39;#0086f7 bold&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Tag</span><span class="p">:</span>           <span class="s">&#39;#fb660a bold&#39;</span><span class="p">,</span>
+        <span class="n">String</span><span class="p">:</span>             <span class="s">&#39;#0086d2&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>      <span class="s">&#39;#ffffff bg:#d40000&#39;</span><span class="p">,</span>
+        <span class="n">Comment</span><span class="p">:</span>            <span class="s">&#39;#22a21f bg:#dbf3cd italic&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Attribute</span><span class="p">:</span>     <span class="s">&#39;#ff0086 bold&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Entity</span><span class="p">:</span>        <span class="s">&#39;#fd8900&#39;</span><span class="p">,</span>
+        <span class="n">Keyword</span><span class="o">.</span><span class="n">Type</span><span class="p">:</span>       <span class="s">&#39;#70796b bold&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Label</span><span class="p">:</span>         <span class="s">&#39;#ff0086&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Function</span><span class="p">:</span>      <span class="s">&#39;#ff0086 bold&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Variable</span><span class="p">:</span>      <span class="s">&#39;#ff0086 bold&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Subheading</span><span class="p">:</span> <span class="s">&#39;#000000 bold&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Heading</span><span class="p">:</span>    <span class="s">&#39;#000000 bold&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Constant</span><span class="p">:</span>      <span class="s">&#39;#0086d2&#39;</span><span class="p">,</span>
+        <span class="n">Comment</span><span class="o">.</span><span class="n">Preproc</span><span class="p">:</span>    <span class="s">&#39;#ff0007 bold&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+<p>Now we open a new python shell and execute the following commands to
+create a CSS file with the information gathered from the generated python
+file:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pygments.formatters</span> <span class="kn">import</span> <span class="n">HtmlFormatter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">styles</span> <span class="kn">import</span> <span class="n">SummerfruitStyle</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">css_text</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">SummerfruitStyle</span><span class="p">)</span><span class="o">.</span><span class="n">get_style_defs</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;summerfruit.css&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cssfile</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">cssfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">css_text</span><span class="p">)</span>
+</pre></div>
+<p>We create a new HtmlFormatter because the wanted output is (X)HTML and
+pass as the style the class we imported from the generated python file. To
+get the CSS from a HtmlFormatter instance, the method <tt class="docutils literal">get_style_defs</tt>
+is used. Finally, this string is written to a new CSS file. Now you can use
+the CSS file in your pygments highlighted code by simply including it in a
+way that the generated HTML file accesses it, e.g.:</p>
+<div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;summerfruit.css&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
+</pre></div>
+
+    </div><!-- /.entry-content -->
+    
+  </article>
+</section>
+        <section id="extras" class="body">
+                        <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                                                    <li><a href="http://getpelican.com/">Pelican</a></li>
+                                                    <li><a href="http://python.org/">Python.org</a></li>
+                                                    <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                                                    <li><a href="#">You can modify those links in your config file</a></li>
+                                                </ul>
+                </div><!-- /.blogroll -->
+                                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://derdon.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+                            
+                                                    <li><a href="#">You can add links in your config file</a></li>
+                                                    <li><a href="#">Another social link</a></li>
+                                                </ul>
+                </div><!-- /.social -->
+                </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
