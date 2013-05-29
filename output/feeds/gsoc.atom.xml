@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-05-28T00:00:00+02:00</updated><entry><title>GSOC 2013 -- Initial Post</title><link href="http://derdon.github.io/blog/gsoc-2013-initial-post.html" rel="alternate"></link><updated>2013-05-28T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-05-28:gsoc-2013-initial-post.html</id><summary type="html">&lt;p&gt;So yesterday evening I found out that I am one of the participating
+students of GSOC and this is really cool! Wait, what is “GSOC” and why am
+I so excited about it? GSOC is short for Google Summer of Code and is
+stipend program by Google to improve Open Source projects. The Open Source
+project I have applied for is SunPy, a Python package for gathering and
+analyzing astronomical data concerning solar physics. In my project, I
+will add a database interface to the sunpy package so that information
+about downloaded data is stored in a central database (by default on the
+local hard drive, possibly also remote servers will be supported). This
+makes it possible to query the database, e.g. to display all data that has
+been downloaded in the last two weeks. The database will act as a cache,
+meaning that one gets the data from the database if a download from a
+source is attempted that was already downloaded before.&lt;/p&gt;
+</summary></entry></feed>

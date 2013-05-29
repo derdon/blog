@@ -1,0 +1,33 @@
+nav {
+    position: relative;
+    top: 0.25em;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: black;
+    background-color: white;
+    text-decoration: none;
+    padding: 0.5em 1em;
+    font-size: 1.5em;
+    border: 2px solid black;
+
+    /* round corners at the top */
+    -webkit-border-top-left-radius: 20px;
+    -webkit-border-top-right-radius: 20px;
+    -moz-border-radius-topleft: 20px;
+    -moz-border-radius-topright: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+nav ul li a.current {
+    border-bottom: 2px solid white;
+}

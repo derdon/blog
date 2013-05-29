@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}{{ SITENAME }}{%endblock%}</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/{{ CSS_FILE }}" type="text/css">
+  </head>
+  <body>
+    <div id="margins">
+      <header id="header">
+        <a href="{{ SITEURL }}/index.html"><h1 class="strokeme">{{ SITENAME }}</h1></a>
+        <!-- <div id="clouds"></div> -->
+      </header>
+      {% block category_nav %}
+        {% if categories %}
+          <nav>
+            <ul>
+              {% for category, articles in categories %}
+                <li><a href="{{ SITEURL }}/category/{{category}}.html">{{ category }}</a></li> 
+              {% endfor %}
+            </ul>
+          </nav>
+        {% endif %}
+      {% endblock %}
+      <div id="main">
+        {% block content %}
+        {% endblock %}
+      </div>
+      <footer>
+        © by Simon Liedtke • 
+        Powered by <a href="http://docs.notmyidea.org/alexis/pelican/">pelican</a>.
+      </footer>
+    </div>
+    {% include 'disqus_script.html' %}
+  </body>
+</html>

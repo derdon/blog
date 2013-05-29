@@ -1,0 +1,5 @@
+- use a white border-color for the bottom border of the active category in
+  article pages and category pages
+
+- fix a firefox issue: in firefox4 (also in firefox3?) there is a few pixels
+  (or maybe one pixel?) distance between nav and #main

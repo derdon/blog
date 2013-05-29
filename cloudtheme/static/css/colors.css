@@ -1,0 +1,24 @@
+body, #titles {
+    background-color: #298cfb;
+    /*background-color: #00a2ff;*/
+}
+
+a #titles {
+    color: white;
+}
+
+/*#main {
+    background-color: white;
+}*/
+
+article, .paginator, footer {
+    background-color: white;
+}
+
+time, footer {
+    color: #aaa;
+}
+
+article header h2 a {
+    color: #ff5e00;
+}
