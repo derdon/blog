@@ -16,6 +16,16 @@ the undo stack is poppped and its undo method is executed. After that, the
 command is pushed onto the redo stack. To redo the last undone action, the
 last recently pushed element from the redo stack is popped and executed.
 After that, it is pushed onto the undo stack.&lt;/p&gt;
+&lt;p&gt;Now that I have told you that there are two different ways to implement
+such a manager, you may ask yourself: “What is the better approach?” As
+(almost) always, the answer is: it depends. The generate state is used for
+commands that can easily be undone using an &amp;quot;opposite&amp;quot; command. An example
+for this are the text formatting operations of LibreOffice Writer: the
+opposite action of “increase font size by 12pt” is “decrease font size by
+12pt” and so on. But there are also applications where it is hard or
+impossible to generate an opposite operation of a certain action. Think of
+image manipulation programs like GIMP: How do you sharpen an image so that
+it looks like the original after it has been blurred?&lt;/p&gt;
 &lt;p&gt;In this post I will demonstrate an implementation that uses &lt;strong&gt;generate
 state&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;In my example, I have two commands: one adds an element to a set and one
@@ -27,7 +37,7 @@ realized that both these method are ones that operate on a given set and
 use an element to operate on this set. So I wrote a base class
 &lt;tt class="docutils literal"&gt;SetOperation&lt;/tt&gt; with the abstract methods &lt;tt class="docutils literal"&gt;__call__&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;undo&lt;/tt&gt;. Its
 &lt;tt class="docutils literal"&gt;__init__&lt;/tt&gt; method receives a set and an element. This makes it easy to
-add another command, e.g. &lt;tt class="docutils literal"&gt;SilenElementRemover&lt;/tt&gt; which uses the
+add another command, e.g. &lt;tt class="docutils literal"&gt;SilentElementRemover&lt;/tt&gt; which uses the
 &lt;tt class="docutils literal"&gt;discard&lt;/tt&gt; method of the set instead of &lt;tt class="docutils literal"&gt;remove&lt;/tt&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;abc&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;ABCMeta&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;abstractmethod&lt;/span&gt;
 
