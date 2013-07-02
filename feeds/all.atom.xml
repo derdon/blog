@@ -26,22 +26,21 @@ operator. the number of entries can be accessed by using the &lt;tt class="docut
 function on any database object. It is also supported to iterate over a
 database object to get all entries. As a side-effect, using the &lt;tt class="docutils literal"&gt;list()&lt;/tt&gt;
 function on a database object gives you a list of all entries.&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-&amp;gt;&amp;gt;&amp;gt; from sunpy.database import Database, DatabaseEntry
-&amp;gt;&amp;gt;&amp;gt; database = Database('sqlite:///:memory:')
-&amp;gt;&amp;gt;&amp;gt; database.create_tables()
-&amp;gt;&amp;gt;&amp;gt; entry1 = DatabaseEntry()
-&amp;gt;&amp;gt;&amp;gt; entry2 = DatabaseEntry()
-&amp;gt;&amp;gt;&amp;gt; database.add(entry1)
-&amp;gt;&amp;gt;&amp;gt; database.add(entry2)
-&amp;gt;&amp;gt;&amp;gt; len(database)
-2
-&amp;gt;&amp;gt;&amp;gt; assert entry1 in database
-&amp;gt;&amp;gt;&amp;gt; assert entry2 in database
-&amp;gt;&amp;gt;&amp;gt; pprint(list(database))
-[&amp;lt;DatabaseEntry(id 1, data provider None, fileid None)&amp;gt;,
- &amp;lt;DatabaseEntry(id 2, data provider None, fileid None)&amp;gt;]
-&lt;/pre&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.database&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Database&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DatabaseEntry&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Database&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sqlite:///:memory:&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_tables&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DatabaseEntry&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DatabaseEntry&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;2&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;entry1&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;database&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;entry2&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;database&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;pprint&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="go"&gt;[&amp;lt;DatabaseEntry(id 1, data provider None, fileid None)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;DatabaseEntry(id 2, data provider None, fileid None)&amp;gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="when-are-changes-committed-to-the-database"&gt;
 &lt;h2&gt;When are changes committed to the database?&lt;/h2&gt;
@@ -92,19 +91,18 @@ given number of commands cannot be reverted (if only 2 actions have been
 undone, it is not possible to redo 5 actions), an exception is raised.&lt;/p&gt;
 &lt;p&gt;The &lt;tt class="docutils literal"&gt;remove&lt;/tt&gt; method is as simple as the &lt;tt class="docutils literal"&gt;add&lt;/tt&gt; method: you pass an
 entry and it gets removed.&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-&amp;gt;&amp;gt;&amp;gt; database.remove(entry1)
-&amp;gt;&amp;gt;&amp;gt; database.remove(entry2)
-&amp;gt;&amp;gt;&amp;gt; list(database)
-[]
-&amp;gt;&amp;gt;&amp;gt; database.undo(2)
-&amp;gt;&amp;gt;&amp;gt; pprint(list(database))
-[&amp;lt;DatabaseEntry(id 1, data provider None, fileid None)&amp;gt;,
- &amp;lt;DatabaseEntry(id 2, data provider None, fileid None)&amp;gt;]
-&amp;gt;&amp;gt;&amp;gt; database.redo(1)
-&amp;gt;&amp;gt;&amp;gt; list(database)
-[&amp;lt;DatabaseEntry(id 2, data provider None, fileid None)&amp;gt;]
-&lt;/pre&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;remove&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;remove&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;[]&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;undo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;pprint&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="go"&gt;[&amp;lt;DatabaseEntry(id 1, data provider None, fileid None)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;DatabaseEntry(id 2, data provider None, fileid None)&amp;gt;]&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;redo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;[&amp;lt;DatabaseEntry(id 2, data provider None, fileid None)&amp;gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="editing-entries-un-starring-entries-and-custom-edits"&gt;
 &lt;h2&gt;Editing entries: (un-)starring entries and custom edits&lt;/h2&gt;
@@ -123,19 +121,18 @@ change a specific value of an entry. The first argument is the entry to be
 changed and all following arguments must be keyword arguments where the
 key represents the column name in the database and the value represents
 the new value.&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-&amp;gt;&amp;gt;&amp;gt; database.star(entry2)
-&amp;gt;&amp;gt;&amp;gt; database.get_starred()
-&amp;lt;generator object &amp;lt;genexpr&amp;gt; at 0xb54d734&amp;gt;
-&amp;gt;&amp;gt;&amp;gt; list(database.get_starred())
-[&amp;lt;DatabaseEntry(id 2, data provider None, fileid None)&amp;gt;]
-&amp;gt;&amp;gt;&amp;gt; database.unstar(entry2)
-&amp;gt;&amp;gt;&amp;gt; list(database.get_starred())
-[]
-&amp;gt;&amp;gt;&amp;gt; database.edit(entry2, id=42, starred=True)
-&amp;gt;&amp;gt;&amp;gt; list(database.get_starred())
-[&amp;lt;DatabaseEntry(id 42, data provider None, fileid None)&amp;gt;]
-&lt;/pre&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;star&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_starred&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;generator object &amp;lt;genexpr&amp;gt; at 0xb54d734&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_starred&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="go"&gt;[&amp;lt;DatabaseEntry(id 2, data provider None, fileid None)&amp;gt;]&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;unstar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_starred&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="go"&gt;[]&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;edit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;starred&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_starred&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="go"&gt;[&amp;lt;DatabaseEntry(id 42, data provider None, fileid None)&amp;gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="caching"&gt;
 &lt;h2&gt;Caching&lt;/h2&gt;
@@ -156,31 +153,30 @@ can see that the entries #1 and #3 have been accessed once, whereas #2 has
 not been accessed at all. So you could imagine that its last accessed time
 is minus infinity and therefore it gets removed when entry #4 is added to
 the database.&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-&amp;gt;&amp;gt;&amp;gt; from pprint import pprint
-&amp;gt;&amp;gt;&amp;gt; database = Database('sqlite:///:memory:', cache_size=3)
-&amp;gt;&amp;gt;&amp;gt; database.create_tables()
-&amp;gt;&amp;gt;&amp;gt; entry1 = DatabaseEntry()
-&amp;gt;&amp;gt;&amp;gt; entry2 = DatabaseEntry()
-&amp;gt;&amp;gt;&amp;gt; entry3 = DatabaseEntry()
-&amp;gt;&amp;gt;&amp;gt; entry4 = DatabaseEntry()
-&amp;gt;&amp;gt;&amp;gt; database.add(entry1)
-&amp;gt;&amp;gt;&amp;gt; database.add(entry2)
-&amp;gt;&amp;gt;&amp;gt; database.add(entry3)
-&amp;gt;&amp;gt;&amp;gt; pprint(list(database))
-[&amp;lt;DatabaseEntry(id 1, data provider None, fileid None)&amp;gt;,
- &amp;lt;DatabaseEntry(id 2, data provider None, fileid None)&amp;gt;,
- &amp;lt;DatabaseEntry(id 3, data provider None, fileid None)&amp;gt;]
-&amp;gt;&amp;gt;&amp;gt; database.get_entry_by_id(1)
-&amp;lt;DatabaseEntry(id 1, data provider None, fileid None)&amp;gt;
-&amp;gt;&amp;gt;&amp;gt; database.get_entry_by_id(3)
-&amp;lt;DatabaseEntry(id 3, data provider None, fileid None)&amp;gt;
-&amp;gt;&amp;gt;&amp;gt; database.add(entry4)
-&amp;gt;&amp;gt;&amp;gt; pprint(list(database))
-[&amp;lt;DatabaseEntry(id 1, data provider None, fileid None)&amp;gt;,
- &amp;lt;DatabaseEntry(id 3, data provider None, fileid None)&amp;gt;,
- &amp;lt;DatabaseEntry(id 4, data provider None, fileid None)&amp;gt;]
-&lt;/pre&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pprint&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;pprint&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Database&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sqlite:///:memory:&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cache_size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_tables&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DatabaseEntry&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DatabaseEntry&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry3&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DatabaseEntry&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry4&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DatabaseEntry&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;pprint&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="go"&gt;[&amp;lt;DatabaseEntry(id 1, data provider None, fileid None)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;DatabaseEntry(id 2, data provider None, fileid None)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;DatabaseEntry(id 3, data provider None, fileid None)&amp;gt;]&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_entry_by_id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;DatabaseEntry(id 1, data provider None, fileid None)&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_entry_by_id&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;DatabaseEntry(id 3, data provider None, fileid None)&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;pprint&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="go"&gt;[&amp;lt;DatabaseEntry(id 1, data provider None, fileid None)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;DatabaseEntry(id 3, data provider None, fileid None)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;DatabaseEntry(id 4, data provider None, fileid None)&amp;gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="what-are-the-next-plans"&gt;
 &lt;h2&gt;What are the next plans?&lt;/h2&gt;

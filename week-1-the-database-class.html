@@ -58,22 +58,21 @@ operator. the number of entries can be accessed by using the <tt class="docutils
 function on any database object. It is also supported to iterate over a
 database object to get all entries. As a side-effect, using the <tt class="docutils literal">list()</tt>
 function on a database object gives you a list of all entries.</p>
-<pre class="literal-block">
-&gt;&gt;&gt; from sunpy.database import Database, DatabaseEntry
-&gt;&gt;&gt; database = Database('sqlite:///:memory:')
-&gt;&gt;&gt; database.create_tables()
-&gt;&gt;&gt; entry1 = DatabaseEntry()
-&gt;&gt;&gt; entry2 = DatabaseEntry()
-&gt;&gt;&gt; database.add(entry1)
-&gt;&gt;&gt; database.add(entry2)
-&gt;&gt;&gt; len(database)
-2
-&gt;&gt;&gt; assert entry1 in database
-&gt;&gt;&gt; assert entry2 in database
-&gt;&gt;&gt; pprint(list(database))
-[&lt;DatabaseEntry(id 1, data provider None, fileid None)&gt;,
- &lt;DatabaseEntry(id 2, data provider None, fileid None)&gt;]
-</pre>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">Database</span><span class="p">,</span> <span class="n">DatabaseEntry</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">create_tables</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry1</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry2</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">entry1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">entry2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">entry1</span> <span class="ow">in</span> <span class="n">database</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">entry2</span> <span class="ow">in</span> <span class="n">database</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">database</span><span class="p">))</span>
+<span class="go">[&lt;DatabaseEntry(id 1, data provider None, fileid None)&gt;,</span>
+<span class="go"> &lt;DatabaseEntry(id 2, data provider None, fileid None)&gt;]</span>
+</pre></div>
 </div>
 <div class="section" id="when-are-changes-committed-to-the-database">
 <h2>When are changes committed to the database?</h2>
@@ -124,19 +123,18 @@ given number of commands cannot be reverted (if only 2 actions have been
 undone, it is not possible to redo 5 actions), an exception is raised.</p>
 <p>The <tt class="docutils literal">remove</tt> method is as simple as the <tt class="docutils literal">add</tt> method: you pass an
 entry and it gets removed.</p>
-<pre class="literal-block">
-&gt;&gt;&gt; database.remove(entry1)
-&gt;&gt;&gt; database.remove(entry2)
-&gt;&gt;&gt; list(database)
-[]
-&gt;&gt;&gt; database.undo(2)
-&gt;&gt;&gt; pprint(list(database))
-[&lt;DatabaseEntry(id 1, data provider None, fileid None)&gt;,
- &lt;DatabaseEntry(id 2, data provider None, fileid None)&gt;]
-&gt;&gt;&gt; database.redo(1)
-&gt;&gt;&gt; list(database)
-[&lt;DatabaseEntry(id 2, data provider None, fileid None)&gt;]
-</pre>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">entry1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">entry2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">undo</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">database</span><span class="p">))</span>
+<span class="go">[&lt;DatabaseEntry(id 1, data provider None, fileid None)&gt;,</span>
+<span class="go"> &lt;DatabaseEntry(id 2, data provider None, fileid None)&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">redo</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+<span class="go">[&lt;DatabaseEntry(id 2, data provider None, fileid None)&gt;]</span>
+</pre></div>
 </div>
 <div class="section" id="editing-entries-un-starring-entries-and-custom-edits">
 <h2>Editing entries: (un-)starring entries and custom edits</h2>
@@ -155,19 +153,18 @@ change a specific value of an entry. The first argument is the entry to be
 changed and all following arguments must be keyword arguments where the
 key represents the column name in the database and the value represents
 the new value.</p>
-<pre class="literal-block">
-&gt;&gt;&gt; database.star(entry2)
-&gt;&gt;&gt; database.get_starred()
-&lt;generator object &lt;genexpr&gt; at 0xb54d734&gt;
-&gt;&gt;&gt; list(database.get_starred())
-[&lt;DatabaseEntry(id 2, data provider None, fileid None)&gt;]
-&gt;&gt;&gt; database.unstar(entry2)
-&gt;&gt;&gt; list(database.get_starred())
-[]
-&gt;&gt;&gt; database.edit(entry2, id=42, starred=True)
-&gt;&gt;&gt; list(database.get_starred())
-[&lt;DatabaseEntry(id 42, data provider None, fileid None)&gt;]
-</pre>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">star</span><span class="p">(</span><span class="n">entry2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">get_starred</span><span class="p">()</span>
+<span class="go">&lt;generator object &lt;genexpr&gt; at 0xb54d734&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">database</span><span class="o">.</span><span class="n">get_starred</span><span class="p">())</span>
+<span class="go">[&lt;DatabaseEntry(id 2, data provider None, fileid None)&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">unstar</span><span class="p">(</span><span class="n">entry2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">database</span><span class="o">.</span><span class="n">get_starred</span><span class="p">())</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="n">entry2</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">starred</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">database</span><span class="o">.</span><span class="n">get_starred</span><span class="p">())</span>
+<span class="go">[&lt;DatabaseEntry(id 42, data provider None, fileid None)&gt;]</span>
+</pre></div>
 </div>
 <div class="section" id="caching">
 <h2>Caching</h2>
@@ -188,31 +185,30 @@ can see that the entries #1 and #3 have been accessed once, whereas #2 has
 not been accessed at all. So you could imagine that its last accessed time
 is minus infinity and therefore it gets removed when entry #4 is added to
 the database.</p>
-<pre class="literal-block">
-&gt;&gt;&gt; from pprint import pprint
-&gt;&gt;&gt; database = Database('sqlite:///:memory:', cache_size=3)
-&gt;&gt;&gt; database.create_tables()
-&gt;&gt;&gt; entry1 = DatabaseEntry()
-&gt;&gt;&gt; entry2 = DatabaseEntry()
-&gt;&gt;&gt; entry3 = DatabaseEntry()
-&gt;&gt;&gt; entry4 = DatabaseEntry()
-&gt;&gt;&gt; database.add(entry1)
-&gt;&gt;&gt; database.add(entry2)
-&gt;&gt;&gt; database.add(entry3)
-&gt;&gt;&gt; pprint(list(database))
-[&lt;DatabaseEntry(id 1, data provider None, fileid None)&gt;,
- &lt;DatabaseEntry(id 2, data provider None, fileid None)&gt;,
- &lt;DatabaseEntry(id 3, data provider None, fileid None)&gt;]
-&gt;&gt;&gt; database.get_entry_by_id(1)
-&lt;DatabaseEntry(id 1, data provider None, fileid None)&gt;
-&gt;&gt;&gt; database.get_entry_by_id(3)
-&lt;DatabaseEntry(id 3, data provider None, fileid None)&gt;
-&gt;&gt;&gt; database.add(entry4)
-&gt;&gt;&gt; pprint(list(database))
-[&lt;DatabaseEntry(id 1, data provider None, fileid None)&gt;,
- &lt;DatabaseEntry(id 3, data provider None, fileid None)&gt;,
- &lt;DatabaseEntry(id 4, data provider None, fileid None)&gt;]
-</pre>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s">&#39;sqlite:///:memory:&#39;</span><span class="p">,</span> <span class="n">cache_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">create_tables</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry1</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry2</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry3</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry4</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">entry1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">entry2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">entry3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">database</span><span class="p">))</span>
+<span class="go">[&lt;DatabaseEntry(id 1, data provider None, fileid None)&gt;,</span>
+<span class="go"> &lt;DatabaseEntry(id 2, data provider None, fileid None)&gt;,</span>
+<span class="go"> &lt;DatabaseEntry(id 3, data provider None, fileid None)&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">get_entry_by_id</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&lt;DatabaseEntry(id 1, data provider None, fileid None)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">get_entry_by_id</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">&lt;DatabaseEntry(id 3, data provider None, fileid None)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">entry4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">database</span><span class="p">))</span>
+<span class="go">[&lt;DatabaseEntry(id 1, data provider None, fileid None)&gt;,</span>
+<span class="go"> &lt;DatabaseEntry(id 3, data provider None, fileid None)&gt;,</span>
+<span class="go"> &lt;DatabaseEntry(id 4, data provider None, fileid None)&gt;]</span>
+</pre></div>
 </div>
 <div class="section" id="what-are-the-next-plans">
 <h2>What are the next plans?</h2>
