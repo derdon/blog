@@ -1,5 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-06-22T00:00:00+02:00</updated><entry><title>Week 2 — Database Entries</title><link href="http://derdon.github.io/blog/week-2-database-entries.html" rel="alternate"></link><updated>2013-06-22T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-06-22:week-2-database-entries.html</id><summary type="html">&lt;div class="section" id="the-databaseentry-class"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-06-30T00:00:00+02:00</updated><entry><title>Week 3 — Tag Support</title><link href="http://derdon.github.io/blog/week-3-tag-support.html" rel="alternate"></link><updated>2013-06-30T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-06-30:week-3-tag-support.html</id><summary type="html">&lt;div class="section" id="adding-tags"&gt;
+&lt;h2&gt;adding tags&lt;/h2&gt;
+&lt;p&gt;Tags are usually single words that describe entries in a brief way.
+Although it is possible to use tags that include whitespace or are
+very long, it is not recommended to do so. To add new tags to an entry,
+use the method &lt;tt class="docutils literal"&gt;tag&lt;/tt&gt; from the &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; class. It receives an
+instance of &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt; (the entry that shall get assigned new tags)
+and at least one tag name. The new tags are stored in the attribute
+&lt;tt class="docutils literal"&gt;tags&lt;/tt&gt; of this modified database entry. This is a list of &lt;tt class="docutils literal"&gt;Tag&lt;/tt&gt;
+instances which contain a unique ID and the name of the tag (which is
+also unique). The &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; class has also an attribute called
+&lt;tt class="docutils literal"&gt;tags&lt;/tt&gt;. This stores &lt;em&gt;all&lt;/em&gt; tags that have been saved in the database.&lt;/p&gt;
+&lt;p&gt;In the following example, you can see that the attributes &lt;tt class="docutils literal"&gt;tags&lt;/tt&gt; of both
+the database object and of the entry are by default empty lists. After the
+created entry is tagged with the tags “shiny”, “bright”, and “yellow”, the
+&lt;tt class="docutils literal"&gt;tags&lt;/tt&gt; attribute of entry is not empty anymore but contains a list of
+&lt;tt class="docutils literal"&gt;Tag&lt;/tt&gt; instances, as expected. But why is the list &lt;tt class="docutils literal"&gt;database.tags&lt;/tt&gt;
+still empty? The answer: because the entry is not saved in the database
+yet. It must first be added with the &lt;tt class="docutils literal"&gt;add&lt;/tt&gt; method. After that, the tags
+are saved in the database as we can see in the ID information (if a
+database-related object such as instances of &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;Tag&lt;/tt&gt;
+does not have an ID, it is not stored in the database).&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pprint&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;pprint&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.database&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Database&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DatabaseEntry&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Database&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sqlite:///:memory:&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_tables&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DatabaseEntry&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt;
+&lt;span class="go"&gt;[]&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt;
+&lt;span class="go"&gt;[]&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tag&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;shiny&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;bright&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;yellow&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt;
+&lt;span class="go"&gt;[&amp;lt;Tag(id None, name &amp;#39;bright&amp;#39;)&amp;gt;, &amp;lt;Tag(id None, name &amp;#39;shiny&amp;#39;)&amp;gt;, &amp;lt;Tag(id None, name &amp;#39;yellow&amp;#39;)&amp;gt;]&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt;
+&lt;span class="go"&gt;[]&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt;
+&lt;span class="go"&gt;[&amp;lt;Tag(id 1, name &amp;#39;bright&amp;#39;)&amp;gt;, &amp;lt;Tag(id 2, name &amp;#39;shiny&amp;#39;)&amp;gt;, &amp;lt;Tag(id 3, name &amp;#39;yellow&amp;#39;)&amp;gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="get-entries-by-tag-s"&gt;
+&lt;h2&gt;get entries by tag(s)&lt;/h2&gt;
+&lt;p&gt;To get all entries that have certains tags assigned, the &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt;
+class has the new method &lt;tt class="docutils literal"&gt;get_by_tags&lt;/tt&gt;. It receives at least one tag
+name (that means a string, not an instance of &lt;tt class="docutils literal"&gt;Tag&lt;/tt&gt;!) and returns a list
+of &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt; instances which have &lt;em&gt;at least&lt;/em&gt; one of the given tags
+assigned.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-about-removing-tags"&gt;
+&lt;h2&gt;What about removing tags?&lt;/h2&gt;
+&lt;p&gt;Removing tags is not implemented yet. Because there is a many-to-many
+relationship, this is not trivial. I will have to read &lt;a class="reference external" href="http://docs.sqlalchemy.org/en/rel_0_8/orm/relationships.html#deleting-rows-from-the-many-to-many-table"&gt;Deleting Rows from
+the Many to Many Table&lt;/a&gt;
+from the SQLAlchemy Documentation to find out what to consider when
+removing entries in a many-to-many relationship.&lt;/p&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Week 2 — Database Entries</title><link href="http://derdon.github.io/blog/week-2-database-entries.html" rel="alternate"></link><updated>2013-06-22T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-06-22:week-2-database-entries.html</id><summary type="html">&lt;div class="section" id="the-databaseentry-class"&gt;
 &lt;h2&gt;The DatabaseEntry class&lt;/h2&gt;
 &lt;p&gt;In the last blog post, I have used the class &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt; without
 really explaining it. That may have confused the reader but I had a reason

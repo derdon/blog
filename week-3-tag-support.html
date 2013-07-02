@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>derdon's blog</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://derdon.github.io/blog/theme/css/main.css" type="text/css">
+  </head>
+  <body>
+    <div id="margins">
+      <header id="header">
+        <a href="http://derdon.github.io/blog/index.html"><h1 class="strokeme">derdon's blog</h1></a>
+        <!-- <div id="clouds"></div> -->
+      </header>
+                        <nav>
+            <ul>
+                              <li><a href="http://derdon.github.io/blog/category/gsoc.html">gsoc</a></li> 
+                              <li><a href="http://derdon.github.io/blog/category/python.html">python</a></li> 
+                          </ul>
+          </nav>
+                    <div id="main">
+                
+<article>
+  <header>
+    <h2 class="entry-title">
+      <a href="week-3-tag-support.html" rel="bookmark" title="Permalink to Week 3 — Tag Support">
+        Week 3 — Tag Support
+      </a>
+    </h2>
+  </header>
+  <time datetime="2013-06-30T00:00:00">
+    Sun 30 June 2013
+  </time>
+  <p class="entry-content">
+    <div class="section" id="adding-tags">
+<h2>adding tags</h2>
+<p>Tags are usually single words that describe entries in a brief way.
+Although it is possible to use tags that include whitespace or are
+very long, it is not recommended to do so. To add new tags to an entry,
+use the method <tt class="docutils literal">tag</tt> from the <tt class="docutils literal">Database</tt> class. It receives an
+instance of <tt class="docutils literal">DatabaseEntry</tt> (the entry that shall get assigned new tags)
+and at least one tag name. The new tags are stored in the attribute
+<tt class="docutils literal">tags</tt> of this modified database entry. This is a list of <tt class="docutils literal">Tag</tt>
+instances which contain a unique ID and the name of the tag (which is
+also unique). The <tt class="docutils literal">Database</tt> class has also an attribute called
+<tt class="docutils literal">tags</tt>. This stores <em>all</em> tags that have been saved in the database.</p>
+<p>In the following example, you can see that the attributes <tt class="docutils literal">tags</tt> of both
+the database object and of the entry are by default empty lists. After the
+created entry is tagged with the tags “shiny”, “bright”, and “yellow”, the
+<tt class="docutils literal">tags</tt> attribute of entry is not empty anymore but contains a list of
+<tt class="docutils literal">Tag</tt> instances, as expected. But why is the list <tt class="docutils literal">database.tags</tt>
+still empty? The answer: because the entry is not saved in the database
+yet. It must first be added with the <tt class="docutils literal">add</tt> method. After that, the tags
+are saved in the database as we can see in the ID information (if a
+database-related object such as instances of <tt class="docutils literal">DatabaseEntry</tt> or <tt class="docutils literal">Tag</tt>
+does not have an ID, it is not stored in the database).</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">Database</span><span class="p">,</span> <span class="n">DatabaseEntry</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">create_tables</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tags</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span><span class="o">.</span><span class="n">tags</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="s">&#39;shiny&#39;</span><span class="p">,</span> <span class="s">&#39;bright&#39;</span><span class="p">,</span> <span class="s">&#39;yellow&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span><span class="o">.</span><span class="n">tags</span>
+<span class="go">[&lt;Tag(id None, name &#39;bright&#39;)&gt;, &lt;Tag(id None, name &#39;shiny&#39;)&gt;, &lt;Tag(id None, name &#39;yellow&#39;)&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tags</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tags</span>
+<span class="go">[&lt;Tag(id 1, name &#39;bright&#39;)&gt;, &lt;Tag(id 2, name &#39;shiny&#39;)&gt;, &lt;Tag(id 3, name &#39;yellow&#39;)&gt;]</span>
+</pre></div>
+</div>
+<div class="section" id="get-entries-by-tag-s">
+<h2>get entries by tag(s)</h2>
+<p>To get all entries that have certains tags assigned, the <tt class="docutils literal">Database</tt>
+class has the new method <tt class="docutils literal">get_by_tags</tt>. It receives at least one tag
+name (that means a string, not an instance of <tt class="docutils literal">Tag</tt>!) and returns a list
+of <tt class="docutils literal">DatabaseEntry</tt> instances which have <em>at least</em> one of the given tags
+assigned.</p>
+</div>
+<div class="section" id="what-about-removing-tags">
+<h2>What about removing tags?</h2>
+<p>Removing tags is not implemented yet. Because there is a many-to-many
+relationship, this is not trivial. I will have to read <a class="reference external" href="http://docs.sqlalchemy.org/en/rel_0_8/orm/relationships.html#deleting-rows-from-the-many-to-many-table">Deleting Rows from
+the Many to Many Table</a>
+from the SQLAlchemy Documentation to find out what to consider when
+removing entries in a many-to-many relationship.</p>
+</div>
+
+  </p>
+  </article>
+      </div>
+      <footer>
+        © by Simon Liedtke • 
+        Powered by <a href="http://docs.notmyidea.org/alexis/pelican/">pelican</a>.
+      </footer>
+    </div>
+      </body>
+</html>
