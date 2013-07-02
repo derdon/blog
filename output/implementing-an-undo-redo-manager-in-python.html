@@ -1,43 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8">
-        <title>Implementing an undo-redo-manager in Python</title>
-        <link rel="stylesheet" href="/theme/css/main.css">
+  <head>
+    <title>derdon's blog</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://derdon.github.io/blog/theme/css/main.css" type="text/css">
+  </head>
+  <body>
+    <div id="margins">
+      <header id="header">
+        <a href="http://derdon.github.io/blog/index.html"><h1 class="strokeme">derdon's blog</h1></a>
+        <!-- <div id="clouds"></div> -->
+      </header>
+                        <nav>
+            <ul>
+                              <li><a href="http://derdon.github.io/blog/category/gsoc.html">gsoc</a></li> 
+                              <li><a href="http://derdon.github.io/blog/category/python.html">python</a></li> 
+                          </ul>
+          </nav>
+                    <div id="main">
                 
-        <!--[if IE]>
-            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
-
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">derdon's blog </a></h1>
-                <nav><ul>
-                                                                                    <li ><a href="/category/gsoc.html">gsoc</a></li>
-                                    <li class="active"><a href="/category/python.html">python</a></li>
-                                                </ul></nav>
-        </header><!-- /#banner -->
-        <section id="content" class="body">
-  <article>
-    <header>
-      <h1 class="entry-title">
-        <a href="/implementing-an-undo-redo-manager-in-python.html" rel="bookmark"
-           title="Permalink to Implementing an undo-redo-manager in Python">Implementing an undo-redo-manager in Python</a></h1>
-          </header>
-
-    <div class="entry-content">
-      <footer class="post-info">
-        <abbr class="published" title="2013-05-31T00:00:00">
-                Fri 31 May 2013
-        </abbr>
-
-                <address class="vcard author">
-                By <a class="url fn" href="/author/simon-liedtke.html">Simon Liedtke</a>
-        </address>
-        <p>In <a href="/category/python.html">python</a>. </p>
-
-</footer><!-- /.post-info -->      <p>An undo-redo-manager is useful in many cases, especially in interactive
+<article>
+  <header>
+    <h2 class="entry-title">
+      <a href="implementing-an-undo-redo-manager-in-python.html" rel="bookmark" title="Permalink to Implementing an undo-redo-manager in Python">
+        Implementing an undo-redo-manager in Python
+      </a>
+    </h2>
+  </header>
+  <time datetime="2013-05-31T00:00:00">
+    Fri 31 May 2013
+  </time>
+  <p class="entry-content">
+    <p>An undo-redo-manager is useful in many cases, especially in interactive
 applications (interactive shells, grahical applications like <a class="reference external" href="http://www.gimp.org/">GIMP</a> or
 <a class="reference external" href="http://www.libreoffice.org/">LibreOffice</a>). There are two main different implementation types to
 consider: <a class="reference external" href="http://stackoverflow.com/a/3542670/657575">save state and generate state</a>.  Save state means that each
@@ -50,7 +44,7 @@ undo actions and one for the redo actions. After an action has been
 executed, it is pushed onto the undo stack and the redo stack is cleared
 to make sure it contains no elements after a new command has been
 executed. To undo the last action, the last recently pushed element from
-the undo stack is poppped and its undo method is executed. After that, the
+the undo stack is popped and its undo method is executed. After that, the
 command is pushed onto the redo stack. To redo the last undone action, the
 last recently pushed element from the redo stack is popped and executed.
 After that, it is pushed onto the undo stack.</p>
@@ -227,38 +221,13 @@ session:</p>
 <p>The complete code sample can be found at <a class="reference external" href="https://github.com/derdon/hodgepodge/blob/master/python/undoredomanager.py">undoredomanager.py</a> from my
 hodgepodge GitHub repository.</p>
 
-    </div><!-- /.entry-content -->
-    
+  </p>
   </article>
-</section>
-        <section id="extras" class="body">
-                        <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                                                    <li><a href="http://getpelican.com/">Pelican</a></li>
-                                                    <li><a href="http://python.org/">Python.org</a></li>
-                                                    <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                                                    <li><a href="#">You can modify those links in your config file</a></li>
-                                                </ul>
-                </div><!-- /.blogroll -->
-                                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="/None" type="application/atom+xml" rel="alternate">atom feed</a></li>
-                            
-                                                    <li><a href="#">You can add links in your config file</a></li>
-                                                    <li><a href="#">Another social link</a></li>
-                                                </ul>
-                </div><!-- /.social -->
-                </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+      </div>
+      <footer>
+        © by Simon Liedtke • 
+        Powered by <a href="http://docs.notmyidea.org/alexis/pelican/">pelican</a>.
+      </footer>
+    </div>
+      </body>
 </html>

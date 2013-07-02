@@ -20,7 +20,7 @@ undo actions and one for the redo actions. After an action has been
 executed, it is pushed onto the undo stack and the redo stack is cleared
 to make sure it contains no elements after a new command has been
 executed. To undo the last action, the last recently pushed element from
-the undo stack is poppped and its undo method is executed. After that, the
+the undo stack is popped and its undo method is executed. After that, the
 command is pushed onto the redo stack. To redo the last undone action, the
 last recently pushed element from the redo stack is popped and executed.
 After that, it is pushed onto the undo stack.

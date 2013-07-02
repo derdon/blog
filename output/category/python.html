@@ -1,295 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8">
-        <title>derdon's blog - python</title>
-        <link rel="stylesheet" href="/theme/css/main.css">
+  <head>
+    <title>derdon's blog</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://derdon.github.io/blog/theme/css/main.css" type="text/css">
+  </head>
+  <body>
+    <div id="margins">
+      <header id="header">
+        <a href="http://derdon.github.io/blog/index.html"><h1 class="strokeme">derdon's blog</h1></a>
+        <!-- <div id="clouds"></div> -->
+      </header>
+                        <nav>
+            <ul>
+                              <li><a href="http://derdon.github.io/blog/category/gsoc.html">gsoc</a></li> 
+                              <li><a href="http://derdon.github.io/blog/category/python.html">python</a></li> 
+                          </ul>
+          </nav>
+                    <div id="main">
                 
-        <!--[if IE]>
-            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
-
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">derdon's blog </a></h1>
-                <nav><ul>
-                                                                                    <li ><a href="/category/gsoc.html">gsoc</a></li>
-                                    <li class="active"><a href="/category/python.html">python</a></li>
-                                                </ul></nav>
-        </header><!-- /#banner -->
-                
-            
-
-                            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/implementing-an-undo-redo-manager-in-python.html">Implementing an undo-redo-manager in Python</a></h1> 
-                    <footer class="post-info">
-        <abbr class="published" title="2013-05-31T00:00:00">
-                Fri 31 May 2013
-        </abbr>
-
-                <address class="vcard author">
-                By <a class="url fn" href="/author/simon-liedtke.html">Simon Liedtke</a>
-        </address>
-        <p>In <a href="/category/python.html">python</a>. </p>
-
-</footer><!-- /.post-info --><p>An undo-redo-manager is useful in many cases, especially in interactive
-applications (interactive shells, grahical applications like <a class="reference external" href="http://www.gimp.org/">GIMP</a> or
-<a class="reference external" href="http://www.libreoffice.org/">LibreOffice</a>). There are two main different implementation types to
-consider: <a class="reference external" href="http://stackoverflow.com/a/3542670/657575">save state and generate state</a>.  Save state means that each
-performed action results in “freezing” the current state with all its
-relevant information and saving this state. If a certain state has to be
-recovered, the current state is swapped out with the desired state and the
-new state is loaded. Generate state, on the other hand, means that every
-action has its own undo action. This approach uses two stacks: one for the
-undo actions and one for the redo actions. After an action has been
-executed, it is pushed onto the undo stack and the redo stack is cleared
-to make sure it contains no elements after a new command has been
-executed. To undo the last action, the last recently pushed element from
-the undo stack is poppped and its undo method is executed. After that, the
-command is pushed onto the redo stack. To redo the last undone action, the
-last recently pushed element from the redo stack is popped and executed.
-After that, it is pushed onto the undo stack.</p>
-<p>Now that I have told you that there are two different ways to implement
-such a manager, you may ask yourself: “What is the better approach?” As
-(almost) always, the answer is: it depends. The generate state is used for
-commands that can easily be undone using an &quot;opposite&quot; command. An example
-for this are the text formatting operations of LibreOffice Writer: the
-opposite action of “increase font size by 12pt” is “decrease font size by
-12pt” and so on. But there are also applications where it is hard or
-impossible to generate an opposite operation of a certain action. Think of
-image manipulation programs like GIMP: How do you sharpen an image so that
-it looks like the original after it has been blurred?</p>
-<p>In this post I will demonstrate an implementation that uses <strong>generate
-state</strong>.</p>
-<p>In my example, I have two commands: one adds an element to a set and one
-removes an element from a set. That means we will have two classes:
-<tt class="docutils literal">ElementAdder</tt> for adding an element to a set and <tt class="docutils literal">ElementRemover</tt> for
-removing an element from a set. Both have a <tt class="docutils literal">__call__</tt> and an <tt class="docutils literal">undo</tt>
-method to execute the command or its undo command, respectively. I
-realized that both these method are ones that operate on a given set and
-use an element to operate on this set. So I wrote a base class
-<tt class="docutils literal">SetOperation</tt> with the abstract methods <tt class="docutils literal">__call__</tt> and <tt class="docutils literal">undo</tt>. Its
-<tt class="docutils literal">__init__</tt> method receives a set and an element. This makes it easy to
-add another command, e.g. <tt class="docutils literal">SilentElementRemover</tt> which uses the
-<tt class="docutils literal">discard</tt> method of the set instead of <tt class="docutils literal">remove</tt>.</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
-
-
-<span class="k">class</span> <span class="nc">SetOperation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">set_</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_</span> <span class="o">=</span> <span class="n">set_</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">element</span> <span class="o">=</span> <span class="n">element</span>
-
-    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span>
-
-    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span>
-
-
-<span class="k">class</span> <span class="nc">ElementAdder</span><span class="p">(</span><span class="n">SetOperation</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
-
-
-<span class="k">class</span> <span class="nc">ElementRemover</span><span class="p">(</span><span class="n">SetOperation</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
-</pre></div>
-<p>The <tt class="docutils literal">CommandManager</tt> class manages all executed commands by saving them
-in an undo and a redo stack. The <tt class="docutils literal">push_*</tt> and <tt class="docutils literal">pop_*</tt> methods are
-trivial and are sufficiently explained in their corresponding docstring.
-The <tt class="docutils literal">do</tt> method is for calling a new command. Apart from of course
-calling the passed command, this method also pushes this command onto the
-undo stack and clears the redo stack, as explained above. The <tt class="docutils literal">undo</tt>
-method receives an optional integer (default: 1) as a parameter whic
-indicates the number of commands which have to be undone. If not all
-commands can be undone, an exception is raised as soon as this happens
-(imagine attempting to undo 5 actions if you have only done 2). On every
-iteration, the top element from the undo stack is popped, its undo method
-is called and pushed to the redo stack. The <tt class="docutils literal">redo</tt> method receives an
-optional integer as well, again defaulting to 1. On every iteration, the
-top element from the redo stack is popped, executed and pushed onto the
-undo stack. Note that this method does not clear the redo stack, like the
-method <tt class="docutils literal">do</tt> does.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">CommandManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">undo_commands</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">redo_commands</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">def</span> <span class="nf">push_undo_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Push the given command to the undo command stack.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">undo_commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">pop_undo_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Remove the last command from the undo command stack and return it.</span>
-<span class="sd">        If the command stack is empty, EmptyCommandStackError is raised.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">last_undo_command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">undo_commands</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">EmptyCommandStackError</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">last_undo_command</span>
-
-    <span class="k">def</span> <span class="nf">push_redo_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Push the given command to the redo command stack.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">redo_commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">pop_redo_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Remove the last command from the redo command stack and return it.</span>
-<span class="sd">        If the command stack is empty, EmptyCommandStackError is raised.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">last_redo_command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">redo_commands</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">EmptyCommandStackError</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">last_redo_command</span>
-
-    <span class="k">def</span> <span class="nf">do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Execute the given command. Exceptions raised from the command are</span>
-<span class="sd">        not catched.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">command</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">push_undo_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-        <span class="c"># clear the redo stack when a new command was executed</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">redo_commands</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Undo the last n commands. The default is to undo only the last</span>
-<span class="sd">        command. If there is no command that can be undone because n is too big</span>
-<span class="sd">        or because no command has been emitted yet, EmptyCommandStackError is</span>
-<span class="sd">        raised.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-            <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_undo_command</span><span class="p">()</span>
-            <span class="n">command</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">push_redo_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">redo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Redo the last n commands which have been undone using the undo</span>
-<span class="sd">        method. The default is to redo only the last command which has been</span>
-<span class="sd">        undone using the undo method. If there is no command that can be redone</span>
-<span class="sd">        because n is too big or because no command has been undone yet,</span>
-<span class="sd">        EmptyCommandStackError is raised.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-            <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_redo_command</span><span class="p">()</span>
-            <span class="n">command</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">push_undo_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-</pre></div>
-<p>Let's see the code in action! Here is a copy of an interactive python
-session:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">13</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span>
-<span class="go">set([3, 13, 5])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">CommandManager</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># remove element 5 from the set</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">ElementRemover</span><span class="p">(</span><span class="n">my_set</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span>
-<span class="go">set([3, 13])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># add element -7 to the set</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">ElementAdder</span><span class="p">(</span><span class="n">my_set</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span>
-<span class="go">set([-7, 3, 13])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># undo adding element -7</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span>
-<span class="go">set([3, 13])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># undo removing element 5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span>
-<span class="go">set([3, 13, 5])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># redo both undone operations</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">redo</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span>
-<span class="go">set([-7, 3, 13])</span>
-</pre></div>
-<p>The complete code sample can be found at <a class="reference external" href="https://github.com/derdon/hodgepodge/blob/master/python/undoredomanager.py">undoredomanager.py</a> from my
-hodgepodge GitHub repository.</p>
-                </article>
-                            </aside><!-- /#featured -->
-                            <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-                                                
-
-                 
-                        <li><article class="hentry">    
-                <header>
-                    <h1><a href="/using-a-custom-pygments-style-via-vim-color-schemes.html" rel="bookmark"
-                           title="Permalink to using a custom pygments style via vim color schemes">using a custom pygments style via vim color schemes</a></h1>
-                </header>
-                
-                <div class="entry-content">
-                <footer class="post-info">
-        <abbr class="published" title="2011-05-16T00:00:00">
-                Mon 16 May 2011
-        </abbr>
-
-                <address class="vcard author">
-                By <a class="url fn" href="/author/simon-liedtke.html">Simon Liedtke</a>
-        </address>
-        <p>In <a href="/category/python.html">python</a>. </p>
-
-</footer><!-- /.post-info -->                <p class="first last">Vim color schemes define how syntax highlighting is done when
+          
+    <article class="hentry">    
+      <header>
+        <h2 class="entry-title">
+          <a href="implementing-an-undo-redo-manager-in-python.html" rel="bookmark" title="Permalink to Implementing an undo-redo-manager in Python">
+            Implementing an undo-redo-manager in Python
+          </a>
+        </h2>
+      </header>
+      <time datetime="2013-05-31T00:00:00">
+        Fri 31 May 2013
+      </time>
+    <p class="entry-content"><p class="first last">This post explains one way of implementing a class that is able
+to undo and redo each called command. The explained technique
+will be used in my GSOC project, but I will describe it here in
+a general way so that it can be adapted to your needs.</p>
+</p>
+    <p class="read-more"><a href="implementing-an-undo-redo-manager-in-python.html">Read more…</a></p>
+    </article>
+          
+    <article class="hentry">    
+      <header>
+        <h2 class="entry-title">
+          <a href="using-a-custom-pygments-style-via-vim-color-schemes.html" rel="bookmark" title="Permalink to using a custom pygments style via vim color schemes">
+            using a custom pygments style via vim color schemes
+          </a>
+        </h2>
+      </header>
+      <time datetime="2011-05-16T00:00:00">
+        Mon 16 May 2011
+      </time>
+    <p class="entry-content"><p class="first last">Vim color schemes define how syntax highlighting is done when
 editing files in (g)vim. This article explains how to use such a vim color
 scheme for code blocks in articles which use the library <a class="reference external reference external" href="http://pygments.pocoo.org">pygments</a> to
 highlight code.</p>
-
-                <a class="readmore" href="/using-a-custom-pygments-style-via-vim-color-schemes.html">read more</a>
-                                </div><!-- /.entry-content -->
-            </article></li>
-                            </ol><!-- /#posts-list -->
-                            <p class="paginator">
+</p>
+    <p class="read-more"><a href="using-a-custom-pygments-style-via-vim-color-schemes.html">Read more…</a></p>
+    </article>
+  
+  <p class="paginator">
         Page 1 / 1
-    </p>
-                        </section><!-- /#content -->
-                    <section id="extras" class="body">
-                        <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                                                    <li><a href="http://getpelican.com/">Pelican</a></li>
-                                                    <li><a href="http://python.org/">Python.org</a></li>
-                                                    <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                                                    <li><a href="#">You can modify those links in your config file</a></li>
-                                                </ul>
-                </div><!-- /.blogroll -->
-                                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="/None" type="application/atom+xml" rel="alternate">atom feed</a></li>
-                            
-                                                    <li><a href="#">You can add links in your config file</a></li>
-                                                    <li><a href="#">Another social link</a></li>
-                                                </ul>
-                </div><!-- /.social -->
-                </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+      </p>
+      </div>
+      <footer>
+        © by Simon Liedtke • 
+        Powered by <a href="http://docs.notmyidea.org/alexis/pelican/">pelican</a>.
+      </footer>
+    </div>
+      </body>
 </html>
