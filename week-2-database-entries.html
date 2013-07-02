@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>derdon's blog</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://derdon.github.io/blog/theme/css/main.css" type="text/css">
+  </head>
+  <body>
+    <div id="margins">
+      <header id="header">
+        <a href="http://derdon.github.io/blog/index.html"><h1 class="strokeme">derdon's blog</h1></a>
+        <!-- <div id="clouds"></div> -->
+      </header>
+                        <nav>
+            <ul>
+                              <li><a href="http://derdon.github.io/blog/category/gsoc.html">gsoc</a></li> 
+                              <li><a href="http://derdon.github.io/blog/category/python.html">python</a></li> 
+                          </ul>
+          </nav>
+                    <div id="main">
+                
+<article>
+  <header>
+    <h2 class="entry-title">
+      <a href="week-2-database-entries.html" rel="bookmark" title="Permalink to Week 2 — Database Entries">
+        Week 2 — Database Entries
+      </a>
+    </h2>
+  </header>
+  <time datetime="2013-06-22T00:00:00">
+    Sat 22 June 2013
+  </time>
+  <p class="entry-content">
+    <div class="section" id="the-databaseentry-class">
+<h2>The DatabaseEntry class</h2>
+<p>In the last blog post, I have used the class <tt class="docutils literal">DatabaseEntry</tt> without
+really explaining it. That may have confused the reader but I had a reason
+for doing so: the public API was not final at all. The class didn't have
+any methods and the attributes were not decided yet. The class
+<tt class="docutils literal">DatabaseEntry</tt> represents the main table of the database and each
+instance of this class represents one database entry. Each attribute is
+one field in the database table.</p>
+</div>
+<div class="section" id="adding-information-from-a-fits-file">
+<h2>adding information from a FITS file</h2>
+<p>I added a new method <tt class="docutils literal">add_fits_header_entries_from_file</tt>. With it, the
+information from a FITS file can easily be added to a database entry. FITS
+files usually contain a lot of metadata about the observation like the
+time it took place, which instrument has been used etc. The passed
+argument may be a path to a FITS file or any file-like object (e.g. an
+instance of StringIO.StringIO). The saved information is saved in the
+attribute <tt class="docutils literal">fits_header_entries</tt> which is a list of <tt class="docutils literal">FitsHeaderEntry</tt>
+instances. The class <tt class="docutils literal">FitsHeaderEntry</tt> holds the attributes <tt class="docutils literal">id</tt>,
+<tt class="docutils literal">key</tt>, and <tt class="docutils literal">value</tt>. Here is an example:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sunpy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">DatabaseEntry</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span><span class="o">.</span><span class="n">add_fits_header_entries_from_file</span><span class="p">(</span><span class="n">sunpy</span><span class="o">.</span><span class="n">RHESSI_EVENT_LIST</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">fits_header_entries</span><span class="p">)</span>
+<span class="go">[&lt;FitsHeaderEntry(id None, key &#39;SIMPLE&#39;, value True)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;BITPIX&#39;, value 8)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;NAXIS&#39;, value 0)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;EXTEND&#39;, value True)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;DATE&#39;, value &#39;2011-09-13T15:37:38&#39;)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;ORIGIN&#39;, value &#39;RHESSI&#39;)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;OBSERVER&#39;, value &#39;Unknown&#39;)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;TELESCOP&#39;, value &#39;RHESSI&#39;)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;INSTRUME&#39;, value &#39;RHESSI&#39;)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;OBJECT&#39;, value &#39;Sun&#39;)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;DATE_OBS&#39;, value &#39;2002-02-20T11:06:00.000&#39;)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;DATE_END&#39;, value &#39;2002-02-20T11:06:43.330&#39;)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;TIME_UNI&#39;, value 1)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;ENERGY_L&#39;, value 25.0)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;ENERGY_H&#39;, value 40.0)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;TIMESYS&#39;, value &#39;1979-01-01T00:00:00&#39;)&gt;,</span>
+<span class="go"> &lt;FitsHeaderEntry(id None, key &#39;TIMEUNIT&#39;, value &#39;d&#39;)&gt;]</span>
+</pre></div>
+</div>
+<div class="section" id="generating-entries-by-a-vso-query-response">
+<h2>generating entries by a VSO query response</h2>
+<p>With the <tt class="docutils literal">sunpy.net.vso</tt> package, solar data can be queried and
+downloaded. If a query is issued, a query response is returned. This query
+response can be used to create an iterator of database entries. They are
+not yet saved in a database though. To save them, a database connection
+has to be established and the entries have to be added explicitly. See the
+last post about the <tt class="docutils literal">Database</tt> class for more information. Also see <a class="reference external" href="http://sunpy.readthedocs.org/en/latest/guide/vso.html">the
+documentation of the VSO package</a> for more
+information about its usage.</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net.vso</span> <span class="kn">import</span> <span class="n">VSOClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">entries_from_query_result</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">VSOClient</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query_legacy</span><span class="p">(</span><span class="s">&#39;2001/1/1&#39;</span><span class="p">,</span> <span class="s">&#39;2001/1/2&#39;</span><span class="p">,</span> <span class="n">instrument</span><span class="o">=</span><span class="s">&#39;EIT&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="n">entries_from_query_result</span><span class="p">(</span><span class="n">qr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="go">&lt;DatabaseEntry(id None, data provider SDAC, fileid /archive/soho/private/data/processed/eit/lz/2001/01/efz20010101.010014)&gt;</span>
+</pre></div>
+</div>
+
+  </p>
+  </article>
+      </div>
+      <footer>
+        © by Simon Liedtke • 
+        Powered by <a href="http://docs.notmyidea.org/alexis/pelican/">pelican</a>.
+      </footer>
+    </div>
+      </body>
+</html>

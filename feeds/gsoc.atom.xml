@@ -1,5 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-06-19T00:00:00+02:00</updated><entry><title>Week 1 — The Database class</title><link href="http://derdon.github.io/blog/week-1-the-database-class.html" rel="alternate"></link><updated>2013-06-19T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-06-19:week-1-the-database-class.html</id><summary type="html">&lt;p&gt;The class &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; is the central class of the new database package.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-06-22T00:00:00+02:00</updated><entry><title>Week 2 — Database Entries</title><link href="http://derdon.github.io/blog/week-2-database-entries.html" rel="alternate"></link><updated>2013-06-22T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-06-22:week-2-database-entries.html</id><summary type="html">&lt;div class="section" id="the-databaseentry-class"&gt;
+&lt;h2&gt;The DatabaseEntry class&lt;/h2&gt;
+&lt;p&gt;In the last blog post, I have used the class &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt; without
+really explaining it. That may have confused the reader but I had a reason
+for doing so: the public API was not final at all. The class didn't have
+any methods and the attributes were not decided yet. The class
+&lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt; represents the main table of the database and each
+instance of this class represents one database entry. Each attribute is
+one field in the database table.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="adding-information-from-a-fits-file"&gt;
+&lt;h2&gt;adding information from a FITS file&lt;/h2&gt;
+&lt;p&gt;I added a new method &lt;tt class="docutils literal"&gt;add_fits_header_entries_from_file&lt;/tt&gt;. With it, the
+information from a FITS file can easily be added to a database entry. FITS
+files usually contain a lot of metadata about the observation like the
+time it took place, which instrument has been used etc. The passed
+argument may be a path to a FITS file or any file-like object (e.g. an
+instance of StringIO.StringIO). The saved information is saved in the
+attribute &lt;tt class="docutils literal"&gt;fits_header_entries&lt;/tt&gt; which is a list of &lt;tt class="docutils literal"&gt;FitsHeaderEntry&lt;/tt&gt;
+instances. The class &lt;tt class="docutils literal"&gt;FitsHeaderEntry&lt;/tt&gt; holds the attributes &lt;tt class="docutils literal"&gt;id&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;key&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;value&lt;/tt&gt;. Here is an example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pprint&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;pprint&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sunpy&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.database&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;DatabaseEntry&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DatabaseEntry&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_fits_header_entries_from_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sunpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;RHESSI_EVENT_LIST&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;pprint&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fits_header_entries&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;[&amp;lt;FitsHeaderEntry(id None, key &amp;#39;SIMPLE&amp;#39;, value True)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;BITPIX&amp;#39;, value 8)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;NAXIS&amp;#39;, value 0)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;EXTEND&amp;#39;, value True)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;DATE&amp;#39;, value &amp;#39;2011-09-13T15:37:38&amp;#39;)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;ORIGIN&amp;#39;, value &amp;#39;RHESSI&amp;#39;)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;OBSERVER&amp;#39;, value &amp;#39;Unknown&amp;#39;)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;TELESCOP&amp;#39;, value &amp;#39;RHESSI&amp;#39;)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;INSTRUME&amp;#39;, value &amp;#39;RHESSI&amp;#39;)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;OBJECT&amp;#39;, value &amp;#39;Sun&amp;#39;)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;DATE_OBS&amp;#39;, value &amp;#39;2002-02-20T11:06:00.000&amp;#39;)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;DATE_END&amp;#39;, value &amp;#39;2002-02-20T11:06:43.330&amp;#39;)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;TIME_UNI&amp;#39;, value 1)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;ENERGY_L&amp;#39;, value 25.0)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;ENERGY_H&amp;#39;, value 40.0)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;TIMESYS&amp;#39;, value &amp;#39;1979-01-01T00:00:00&amp;#39;)&amp;gt;,&lt;/span&gt;
+&lt;span class="go"&gt; &amp;lt;FitsHeaderEntry(id None, key &amp;#39;TIMEUNIT&amp;#39;, value &amp;#39;d&amp;#39;)&amp;gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="generating-entries-by-a-vso-query-response"&gt;
+&lt;h2&gt;generating entries by a VSO query response&lt;/h2&gt;
+&lt;p&gt;With the &lt;tt class="docutils literal"&gt;sunpy.net.vso&lt;/tt&gt; package, solar data can be queried and
+downloaded. If a query is issued, a query response is returned. This query
+response can be used to create an iterator of database entries. They are
+not yet saved in a database though. To save them, a database connection
+has to be established and the entries have to be added explicitly. See the
+last post about the &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; class for more information. Also see &lt;a class="reference external" href="http://sunpy.readthedocs.org/en/latest/guide/vso.html"&gt;the
+documentation of the VSO package&lt;/a&gt; for more
+information about its usage.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.net.vso&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;VSOClient&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.database&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;entries_from_query_result&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;VSOClient&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;qr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;query_legacy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;2001/1/1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;2001/1/2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;instrument&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;EIT&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;entries_from_query_result&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;qr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entries&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;DatabaseEntry(id None, data provider SDAC, fileid /archive/soho/private/data/processed/eit/lz/2001/01/efz20010101.010014)&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Week 1 — The Database class</title><link href="http://derdon.github.io/blog/week-1-the-database-class.html" rel="alternate"></link><updated>2013-06-19T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-06-19:week-1-the-database-class.html</id><summary type="html">&lt;p&gt;The class &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; is the central class of the new database package.
 It is used to connect to a database and to manipulate it (adding new
 entries, editing exisitng entries, removing entries). Later on, it will
 also be possible to search for entries by specific criteria (I think about
