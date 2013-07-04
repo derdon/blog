@@ -1,5 +1,5 @@
-GSOC 2013 -- Initial Post
-=========================
+GSOC 2013 — Initial Post
+========================
 :date: 2013-05-28
 :category: gsoc
 :summary: I have found out that I am accepted for GSOC and am pretty
