@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>derdon's blog</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://derdon.github.io/blog/theme/css/main.css" type="text/css">
+  </head>
+  <body>
+    <div id="margins">
+      <header id="header">
+        <a href="http://derdon.github.io/blog/index.html"><h1 class="strokeme">derdon's blog</h1></a>
+        <!-- <div id="clouds"></div> -->
+      </header>
+                        <nav>
+            <ul>
+                              <li><a href="http://derdon.github.io/blog/category/gsoc.html">gsoc</a></li> 
+                              <li><a href="http://derdon.github.io/blog/category/python.html">python</a></li> 
+                          </ul>
+          </nav>
+                    <div id="main">
+                
+<article>
+  <header>
+    <h2 class="entry-title">
+      <a href="week-4-plans-for-query-support.html" rel="bookmark" title="Permalink to Week 4 — Plans for query support">
+        Week 4 — Plans for query support
+      </a>
+    </h2>
+  </header>
+  <time datetime="2013-07-04T00:00:00">
+    Thu 04 July 2013
+  </time>
+  <p class="entry-content">
+    <div class="section" id="user-perspective-first">
+<h2>User perspective first!</h2>
+<div class="section" id="how-does-querying-work-with-the-existing-vso-interface">
+<h3>How does querying work with the existing VSO interface?</h3>
+<p>Querying a VSO server with the VSO interface of SunPy can look like this:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net</span> <span class="kn">import</span> <span class="n">vso</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">vso</span><span class="o">.</span><span class="n">VSOClient</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s">&#39;2001/1/1&#39;</span><span class="p">,</span> <span class="s">&#39;2001/1/2&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;eit&#39;</span><span class="p">))</span>
+</pre></div>
+<p>The <tt class="docutils literal">query</tt> method of <tt class="docutils literal">VSOClient</tt> receives any number of attributes
+and conjugates them. So if you read the exemplary query above, it reads
+like “query all the data that was observed from 2001/1/1 to 2001/1/2 <em>and</em>
+was observed using the instrument EIT”. <tt class="docutils literal">query</tt> returns an instance of
+<tt class="docutils literal">sunpy.net.vso.vso.QueryResponse</tt> which can be used to download the
+queried data.</p>
+</div>
+<div class="section" id="how-should-querying-the-database-look-like">
+<h3>How should querying the database look like?</h3>
+<p>To keep the usage consistent with the query interface of the VSO package
+described above, I plan to make the database query interface usable like
+this:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net.vso</span> <span class="kn">import</span> <span class="n">attrs</span> <span class="k">as</span> <span class="n">vso_attrs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">Database</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">attrs</span> <span class="k">as</span> <span class="n">db_attrs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso_attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;eit&#39;</span><span class="p">),</span> <span class="n">db_attrs</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="s">&#39;sun&#39;</span><span class="p">),</span> <span class="n">db_attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">(</span><span class="bp">True</span><span class="p">))</span>
+</pre></div>
+<p>The class <tt class="docutils literal">Database</tt> gets a new method called <tt class="docutils literal">query</tt> which accepts
+any number of attributes and returns a generator of <tt class="docutils literal">DatabaseEntry</tt>
+instances. I hope you can see the similarities to the VSO query interface.
+Apart from the VSO attributes from the module <tt class="docutils literal">sunpy.net.vso.attrs</tt>,
+this query method will also support database-specific attributes such as
+<tt class="docutils literal">Tag</tt> or <tt class="docutils literal">Starred</tt>. Equivalent to the VSO query method, this one also
+conjugates the passed attributes before they are processed, so the query
+above can be read as “give me all entries that were observed with an EIT
+instrument <em>and</em> are tagged 'sun' <em>and</em> are starred”.</p>
+</div>
+</div>
+<div class="section" id="the-implementation">
+<h2>The implementation</h2>
+<p>To make the described plans possible, one new module within the database
+package will be needed: it will be called <tt class="docutils literal">attrs</tt> (to keep it consistent
+with the VSO package) and will define how to convert attributes to database
+queries. Additionally, it will introduce the new attributes <tt class="docutils literal">Tag</tt> and
+<tt class="docutils literal">Starred</tt>.</p>
+<!-- The module ``sunpy.net.attr`` defines a class ``AttrWalker`` ... -->
+<!-- FIXME
+new module: sunpy.database.attrs
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+- use attributes from sunpy.net.vso.attrs
+- create an attribute walker by importing sunpy.net.attr.AttrWalker and
+  creating an instance of it
+- use this walker to define creators, appliers and converters using the
+  decorators add_creator, add_applier, and add_converter, respectively
+class Database
+- - - - - - - - - - - - - -
+- add a new method ``query`` which receives any number of attributes and
+  yields instances of DatabaseEntry → implementation: iterate over
+  ``walker.create(sunpy.net.attr.and_(*query), self.session)`` -->
+</div>
+
+  </p>
+  </article>
+      </div>
+      <footer>
+        © by Simon Liedtke • 
+        Powered by <a href="http://docs.notmyidea.org/alexis/pelican/">pelican</a>.
+      </footer>
+    </div>
+      </body>
+</html>
