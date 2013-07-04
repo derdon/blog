@@ -42,7 +42,8 @@ instrument &lt;em&gt;and&lt;/em&gt; are tagged 'sun' &lt;em&gt;and&lt;/em&gt; ar
 &lt;p&gt;To make the described plans possible, one new module within the database
 package will be needed: it will be called &lt;tt class="docutils literal"&gt;attrs&lt;/tt&gt; (to keep it consistent
 with the VSO package) and will define how to convert attributes to database
-queries.&lt;/p&gt;
+queries. Additionally, it will introduce the new attributes &lt;tt class="docutils literal"&gt;Tag&lt;/tt&gt; and
+&lt;tt class="docutils literal"&gt;Starred&lt;/tt&gt;.&lt;/p&gt;
 &lt;!-- The module ``sunpy.net.attr`` defines a class ``AttrWalker`` ... --&gt;
 &lt;!-- FIXME
 new module: sunpy.database.attrs
