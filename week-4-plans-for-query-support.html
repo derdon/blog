@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>derdon's blog</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://derdon.github.io/blog/theme/css/main.css" type="text/css">
+  </head>
+  <body>
+    <div id="margins">
+      <header id="header">
+        <a href="http://derdon.github.io/blog/index.html"><h1 class="strokeme">derdon's blog</h1></a>
+        <!-- <div id="clouds"></div> -->
+      </header>
+                        <nav>
+            <ul>
+                              <li><a href="http://derdon.github.io/blog/category/gsoc.html">gsoc</a></li> 
+                              <li><a href="http://derdon.github.io/blog/category/python.html">python</a></li> 
+                          </ul>
+          </nav>
+                    <div id="main">
+                
+<article>
+  <header>
+    <h2 class="entry-title">
+      <a href="week-4-plans-for-query-support.html" rel="bookmark" title="Permalink to Week 4 — Plans for query support">
+        Week 4 — Plans for query support
+      </a>
+    </h2>
+  </header>
+  <time datetime="2013-07-04T00:00:00">
+    Thu 04 July 2013
+  </time>
+  <p class="entry-content">
+    <div class="section" id="new-module-sunpy-database-attrs">
+<h2>new module: sunpy.database.attrs</h2>
+<ul class="simple">
+<li>use attributes from sunpy.net.vso.attrs</li>
+<li>create an attribute walker by importing sunpy.net.attr.AttrWalker and
+creating an instance of it</li>
+<li>use this walker to define creators, appliers and converters using the
+decorators add_creator, add_applier, and add_converter, respectively</li>
+</ul>
+</div>
+<div class="section" id="class-database">
+<h2>class Database</h2>
+<ul class="simple">
+<li>add a new method <tt class="docutils literal">query</tt> which receives any number of attributes and
+yields instances of DatabaseEntry → implementation: iterate over
+<tt class="docutils literal"><span class="pre">walker.create(sunpy.net.attr.and_(*query),</span> self.session)</tt></li>
+</ul>
+</div>
+
+  </p>
+  </article>
+      </div>
+      <footer>
+        © by Simon Liedtke • 
+        Powered by <a href="http://docs.notmyidea.org/alexis/pelican/">pelican</a>.
+      </footer>
+    </div>
+      </body>
+</html>

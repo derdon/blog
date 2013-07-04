@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-06-30T00:00:00+02:00</updated><entry><title>Week 3 — Tag Support</title><link href="http://derdon.github.io/blog/week-3-tag-support.html" rel="alternate"></link><updated>2013-06-30T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-06-30:week-3-tag-support.html</id><summary type="html">&lt;div class="section" id="adding-tags"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-07-04T00:00:00+02:00</updated><entry><title>Week 4 — Plans for query support</title><link href="http://derdon.github.io/blog/week-4-plans-for-query-support.html" rel="alternate"></link><updated>2013-07-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-07-04:week-4-plans-for-query-support.html</id><summary type="html">&lt;div class="section" id="new-module-sunpy-database-attrs"&gt;
+&lt;h2&gt;new module: sunpy.database.attrs&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;use attributes from sunpy.net.vso.attrs&lt;/li&gt;
+&lt;li&gt;create an attribute walker by importing sunpy.net.attr.AttrWalker and
+creating an instance of it&lt;/li&gt;
+&lt;li&gt;use this walker to define creators, appliers and converters using the
+decorators add_creator, add_applier, and add_converter, respectively&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="class-database"&gt;
+&lt;h2&gt;class Database&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;add a new method &lt;tt class="docutils literal"&gt;query&lt;/tt&gt; which receives any number of attributes and
+yields instances of DatabaseEntry → implementation: iterate over
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;walker.create(sunpy.net.attr.and_(*query),&lt;/span&gt; self.session)&lt;/tt&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Week 3 — Tag Support</title><link href="http://derdon.github.io/blog/week-3-tag-support.html" rel="alternate"></link><updated>2013-06-30T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-06-30:week-3-tag-support.html</id><summary type="html">&lt;div class="section" id="adding-tags"&gt;
 &lt;h2&gt;adding tags&lt;/h2&gt;
 &lt;p&gt;Tags are usually single words that describe entries in a brief way.
 Although it is possible to use tags that include whitespace or are
