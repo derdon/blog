@@ -67,6 +67,15 @@ this query method will also support database-specific attributes such as
 conjugates the passed attributes before they are processed, so the query
 above can be read as “give me all entries that were observed with an EIT
 instrument <em>and</em> are tagged 'sun' <em>and</em> are starred”.</p>
+<p><strong>Edit</strong>: After a night of good sleep, I think I have come to a better API
+for the <tt class="docutils literal">Starred</tt> attribute. Or, more general, for any boolean
+attribute:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">starred_entries</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">db_attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unstarred_entries</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="o">~</span><span class="n">db_attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">())</span>
+</pre></div>
+<p>The iterator <tt class="docutils literal">starred_entries</tt> will contain all entries that have been
+marked as starred, whereas <tt class="docutils literal">unstarred_entries</tt> will contain all
+non-starred entries.</p>
 </div>
 </div>
 <div class="section" id="the-implementation">
