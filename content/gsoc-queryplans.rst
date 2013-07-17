@@ -49,6 +49,19 @@ conjugates the passed attributes before they are processed, so the query
 above can be read as “give me all entries that were observed with an EIT
 instrument *and* are tagged 'sun' *and* are starred”.
 
+**Edit**: After a night of good sleep, I think I have come to a better API
+for the ``Starred`` attribute. Or, more general, for any boolean
+attribute:
+
+.. code-block:: pycon
+
+    >>> starred_entries = database.query(db_attrs.Starred())
+    >>> unstarred_entries = database.query(~db_attrs.Starred())
+
+The iterator ``starred_entries`` will contain all entries that have been
+marked as starred, whereas ``unstarred_entries`` will contain all
+non-starred entries.
+
 The implementation
 ------------------
 To make the described plans possible, one new module within the database

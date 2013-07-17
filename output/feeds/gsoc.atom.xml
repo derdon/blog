@@ -35,6 +35,15 @@ this query method will also support database-specific attributes such as
 conjugates the passed attributes before they are processed, so the query
 above can be read as “give me all entries that were observed with an EIT
 instrument &lt;em&gt;and&lt;/em&gt; are tagged 'sun' &lt;em&gt;and&lt;/em&gt; are starred”.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Edit&lt;/strong&gt;: After a night of good sleep, I think I have come to a better API
+for the &lt;tt class="docutils literal"&gt;Starred&lt;/tt&gt; attribute. Or, more general, for any boolean
+attribute:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;starred_entries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;db_attrs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Starred&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;unstarred_entries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="n"&gt;db_attrs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Starred&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The iterator &lt;tt class="docutils literal"&gt;starred_entries&lt;/tt&gt; will contain all entries that have been
+marked as starred, whereas &lt;tt class="docutils literal"&gt;unstarred_entries&lt;/tt&gt; will contain all
+non-starred entries.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="the-implementation"&gt;
