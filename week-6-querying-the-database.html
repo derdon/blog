@@ -37,10 +37,10 @@
 following query call filters all the data that was observed on 1st
 January, 2010 from 0:00 to 1:00 and was observed via the instrument EIT or
 SOT:</p>
-<div class="highlight"><pre>result = client.query(
-   vso.attrs.Time((2010, 1, 1), (2010, 1, 1, 1)),
-   vso.attrs.Instrument(&#39;eit&#39;) | vso.attrs.Instrument(&#39;sot&#39;)
-)
+<div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+   <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">((</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+   <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;eit&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;sot&#39;</span><span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <div class="section" id="preparing-the-database-adding-sample-entries">
