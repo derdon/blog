@@ -69,6 +69,8 @@ code like the following will be possible:&lt;/p&gt;
 &lt;p&gt;This would fetch all data that was observed with the EIT in the January
 2000.&lt;/p&gt;
 &lt;/div&gt;
+</summary></entry><entry><title>Week 7 — Announcement: a week of vacation</title><link href="http://derdon.github.io/blog/week-7-announcement-a-week-of-vacation.html" rel="alternate"></link><updated>2013-07-19T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-07-19:week-7-announcement-a-week-of-vacation.html</id><summary type="html">&lt;p&gt;I don't have much to say here. Tomorrow starts my vacation in Denmark and
+it ends exactly one week later (Saturday next week).&lt;/p&gt;
 </summary></entry><entry><title>Week 5 — Importing database entries from a directory</title><link href="http://derdon.github.io/blog/week-5-importing-database-entries-from-a-directory.html" rel="alternate"></link><updated>2013-07-08T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-07-08:week-5-importing-database-entries-from-a-directory.html</id><summary type="html">&lt;p&gt;The class &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt; now has a new classmethod:
 &lt;tt class="docutils literal"&gt;from_fits_filepath&lt;/tt&gt;. It receives a path to a FITS filename and parses
 its header to make a new instance of &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt;. All key-value
