@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-07-04T00:00:00+02:00</updated><entry><title>Week 4 — Plans for query support</title><link href="http://derdon.github.io/blog/week-4-plans-for-query-support.html" rel="alternate"></link><updated>2013-07-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-07-04:week-4-plans-for-query-support.html</id><summary type="html">&lt;div class="section" id="user-perspective-first"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-07-08T00:00:00+02:00</updated><entry><title>Week 5 — Importing database entries from a directory</title><link href="http://derdon.github.io/blog/week-5-importing-database-entries-from-a-directory.html" rel="alternate"></link><updated>2013-07-08T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-07-08:week-5-importing-database-entries-from-a-directory.html</id><summary type="html">&lt;p&gt;The class &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt; now has a new classmethod:
+&lt;tt class="docutils literal"&gt;from_fits_filepath&lt;/tt&gt;. It receives a path to a FITS filename and parses
+its header to make a new instance of &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt;. All key-value
+pairs can be found in the attribute &lt;tt class="docutils literal"&gt;fits_header_entries&lt;/tt&gt;, which is a
+list of &lt;tt class="docutils literal"&gt;FitsHeaderEntry&lt;/tt&gt; instances. Additionally, this classmethod
+searches for the keys &lt;em&gt;INSTRUME&lt;/em&gt;, &lt;em&gt;WAVELNTH&lt;/em&gt;, &lt;em&gt;DATE-OBS&lt;/em&gt; / &lt;em&gt;DATE_OBS&lt;/em&gt;, and
+&lt;em&gt;DATE-END&lt;/em&gt; / &lt;em&gt;DATE_END&lt;/em&gt;. Their values are used to set the attribute
+&lt;tt class="docutils literal"&gt;instrument&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;wavemin&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;wavemax&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;observation_time_start&lt;/tt&gt;
+or &lt;tt class="docutils literal"&gt;observation_time_end&lt;/tt&gt;, respectively.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.database&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;DatabaseEntry&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DatabaseEntry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_fits_filepath&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sunpy/data/efz20010101.143610.fits&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;instrument&lt;/span&gt;
+&lt;span class="go"&gt;&amp;#39;EIT&amp;#39;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;wavemin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;wavemax&lt;/span&gt;
+&lt;span class="go"&gt;(195.0, 195.0)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;observation_time_start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;observation_time_end&lt;/span&gt;
+&lt;span class="go"&gt;(datetime.datetime(2001, 1, 1, 14, 36, 10, 983000), None)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;header_entry&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fits_header_entries&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;header_entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;INSTRUME&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;WAVELNTH&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;DATE-OBS&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;header_entry&lt;/span&gt;
+&lt;span class="gp"&gt;...&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;FitsHeaderEntry(id None, key &amp;#39;DATE-OBS&amp;#39;, value &amp;#39;2001-01-01T14:36:10.983&amp;#39;)&amp;gt;&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;FitsHeaderEntry(id None, key &amp;#39;INSTRUME&amp;#39;, value &amp;#39;EIT&amp;#39;)&amp;gt;&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;FitsHeaderEntry(id None, key &amp;#39;WAVELNTH&amp;#39;, value 195)&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;There is also a new utility function called &lt;tt class="docutils literal"&gt;entries_from_path&lt;/tt&gt; to get
+an iterator of &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt; instances by passing a directory path.
+This function also accepts the optional arguments &lt;cite&gt;recursive&lt;/cite&gt; and
+&lt;cite&gt;pattern&lt;/cite&gt;. The former argument is boolean and determines whether to search
+the directory recursively or not. The latter one is a string and defines
+how a FITS path is detected by its filename. This value is passed to
+&lt;a class="reference external" href="http://docs.python.org/2.7/library/fnmatch.html#fnmatch.filter"&gt;fnmatch.filter&lt;/a&gt;
+and its default is &lt;em&gt;*.fits&lt;/em&gt;. Again, the values of the attributes
+&lt;tt class="docutils literal"&gt;instrument&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;wavemin&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;wavemax&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;observation_time_start&lt;/tt&gt;, and
+&lt;tt class="docutils literal"&gt;observation_time_end&lt;/tt&gt; are set, if possible.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.database&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;entries_from_path&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.data.test&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;rootdir&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;sampledir&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entries_from_path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sampledir&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;EIT&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entries&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;13&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;first_entry&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;entries&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;first_entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;instrument&lt;/span&gt;
+&lt;span class="go"&gt;&amp;#39;EIT&amp;#39;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;first_entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;wavemin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;first_entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;wavemax&lt;/span&gt;
+&lt;span class="go"&gt;(195.0, 195.0)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;first_entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;observation_time_start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;first_entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;observation_time_end&lt;/span&gt;
+&lt;span class="go"&gt;(datetime.datetime(2004, 3, 1, 2, 0, 10, 642000), None)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+</summary></entry><entry><title>Week 4 — Plans for query support</title><link href="http://derdon.github.io/blog/week-4-plans-for-query-support.html" rel="alternate"></link><updated>2013-07-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-07-04:week-4-plans-for-query-support.html</id><summary type="html">&lt;div class="section" id="user-perspective-first"&gt;
 &lt;h2&gt;User perspective first!&lt;/h2&gt;
 &lt;div class="section" id="how-does-querying-work-with-the-existing-vso-interface"&gt;
 &lt;h3&gt;How does querying work with the existing VSO interface?&lt;/h3&gt;
