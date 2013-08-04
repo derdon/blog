@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-08-04T00:00:00+02:00</updated><entry><title>Week 8 — Various new features</title><link href="http://derdon.github.io/blog/week-8-various-new-features.html" rel="alternate"></link><updated>2013-08-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-04:week-8-various-new-features.html</id><summary type="html">&lt;div class="section" id="preparation"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-08-11T00:00:00+02:00</updated><entry><title>Week 9 — New query attributes</title><link href="http://derdon.github.io/blog/week-9-new-query-attributes.html" rel="alternate"></link><updated>2013-08-11T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-11:week-9-new-query-attributes.html</id><summary type="html"></summary></entry><entry><title>Week 8 — Various new features</title><link href="http://derdon.github.io/blog/week-8-various-new-features.html" rel="alternate"></link><updated>2013-08-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-04:week-8-various-new-features.html</id><summary type="html">&lt;div class="section" id="preparation"&gt;
 &lt;h2&gt;Preparation&lt;/h2&gt;
 &lt;p&gt;To be able to show the new implemented features, the database needs to be
 initialized and populated with some entries. The VSO is queried for all
@@ -102,10 +102,8 @@ example:&lt;/p&gt;
 Changing cache size at runtime
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
 &lt;/div&gt;
-&lt;div class="section" id="new-attributes-for-querying-the-database"&gt;
-&lt;h2&gt;New attributes for querying the database&lt;/h2&gt;
-&lt;div class="section" id="supported-vso-attributes"&gt;
-&lt;h3&gt;supported VSO attributes&lt;/h3&gt;
+&lt;div class="section" id="supported-vso-attributes-for-querying-the-database"&gt;
+&lt;h2&gt;Supported VSO attributes for querying the database&lt;/h2&gt;
 &lt;p&gt;Currently, only one kind of VSO attribute is supported for querying the
 database: simple attributes. Simple attributes are those which have only
 one single value assigned. In particular, they are:&lt;/p&gt;
@@ -139,7 +137,6 @@ instrument &lt;cite&gt;ChroTel&lt;/cite&gt;, the provider &lt;cite&gt;KIS&lt;/ci
 &lt;/pre&gt;&lt;/div&gt;
 &lt;!-- Path, DownloadTime, FitsHeaderEntry
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --&gt;
-&lt;/div&gt;
 &lt;/div&gt;
 </summary></entry><entry><title>Week 7 — Announcement: a week of vacation</title><link href="http://derdon.github.io/blog/week-7-announcement-a-week-of-vacation.html" rel="alternate"></link><updated>2013-07-19T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-07-19:week-7-announcement-a-week-of-vacation.html</id><summary type="html">&lt;p&gt;I don't have much to say here. Tomorrow starts my vacation in Denmark and
 it ends exactly one week later (Saturday next week).&lt;/p&gt;
