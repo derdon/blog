@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>derdon's blog</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://derdon.github.io/blog/theme/css/main.css" type="text/css">
+  </head>
+  <body>
+    <div id="margins">
+      <header id="header">
+        <a href="http://derdon.github.io/blog/index.html"><h1 class="strokeme">derdon's blog</h1></a>
+        <!-- <div id="clouds"></div> -->
+      </header>
+                        <nav>
+            <ul>
+                              <li><a href="http://derdon.github.io/blog/category/gsoc.html">gsoc</a></li> 
+                              <li><a href="http://derdon.github.io/blog/category/python.html">python</a></li> 
+                          </ul>
+          </nav>
+                    <div id="main">
+                
+<article>
+  <header>
+    <h2 class="entry-title">
+      <a href="week-9-improved-database-class.html" rel="bookmark" title="Permalink to Week 9 — Improved <tt class="docutils literal">Database</tt> class">
+        Week 9 — Improved <tt class="docutils literal">Database</tt> class
+      </a>
+    </h2>
+  </header>
+  <time datetime="2013-08-10T00:00:00">
+    Sat 10 August 2013
+  </time>
+  <p class="entry-content">
+    <div class="section" id="adding-entries-by-path">
+<h2>Adding entries by path</h2>
+<p>It is now simpler to add new database entries by passing a directory. The
+class <tt class="docutils literal">Database</tt> got a new method <tt class="docutils literal">add_from_path</tt> which accepts a
+path,
+.. code-block:: pycon</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; from sunpy.database import Database
+&gt;&gt;&gt; database = Database('sqlite:///:memory:')
+&gt;&gt;&gt; database.create_tables()
+&gt;&gt;&gt; import sunpy.data.sample
+&gt;&gt;&gt; database.add_from_path(sunpy.data.sample.rootdir)
+&gt;&gt;&gt; len(database)
+5
+&gt;&gt;&gt; from sunpy.database import display_entries
+&gt;&gt;&gt; print display_entries(database,
+...     ['id', 'observation_time_start', 'observation_time_end', 'instrument', 'waveunit', 'wavemin', 'wavemax'])
+id observation_time_start     observation_time_end       instrument waveunit wavemin wavemax
+-- ----------------------     --------------------       ---------- -------- ------- -------
+1  2010-10-16 19:12:18        2010-10-16 19:12:22        RHESSI     N/A      N/A     N/A
+2  2002-06-25 10:00:10.514000 N/A                        EIT        N/A      195.0   195.0
+3  2011-03-19 10:54:00.340000 N/A                        AIA_3      N/A      171.0   171.0
+4  2011-09-22 00:00:00        2011-09-22 00:00:00        BIR        N/A      N/A     N/A
+5  2002-02-20 11:06:00        2002-02-20 11:06:43.330000 RHESSI     N/A      N/A     N/A
+</pre>
+</blockquote>
+</div>
+<div class="section" id="adding-entries-by-vso-query-result">
+<h2>Adding entries by VSO query result</h2>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net</span> <span class="kn">import</span> <span class="n">vso</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">vso</span><span class="o">.</span><span class="n">VSOClient</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s">&#39;2010-10-01 10:10:01&#39;</span><span class="p">,</span> <span class="s">&#39;2010-10-01 10:10:10&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;AIA&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span><span class="o">.</span><span class="n">num_records</span><span class="p">()</span>
+<span class="go">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">add_from_vso_query_result</span><span class="p">(</span><span class="n">qr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+<span class="go">11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span><span class="n">database</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_start&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_end&#39;</span><span class="p">,</span> <span class="s">&#39;instrument&#39;</span><span class="p">,</span> <span class="s">&#39;waveunit&#39;</span><span class="p">,</span> <span class="s">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s">&#39;wavemax&#39;</span><span class="p">])</span>
+<span class="go">id observation_time_start     observation_time_end       instrument waveunit wavemin wavemax</span>
+<span class="go">-- ----------------------     --------------------       ---------- -------- ------- -------</span>
+<span class="go">1  2010-10-16 19:12:18        2010-10-16 19:12:22        RHESSI     N/A      N/A     N/A</span>
+<span class="go">2  2002-06-25 10:00:10.514000 N/A                        EIT        N/A      195.0   195.0</span>
+<span class="go">3  2011-03-19 10:54:00.340000 N/A                        AIA_3      N/A      171.0   171.0</span>
+<span class="go">4  2011-09-22 00:00:00        2011-09-22 00:00:00        BIR        N/A      N/A     N/A</span>
+<span class="go">5  2002-02-20 11:06:00        2002-02-20 11:06:43.330000 RHESSI     N/A      N/A     N/A</span>
+<span class="go">6  2010-10-01 10:10:02        2010-10-01 10:10:03        AIA        Angstrom 94.0    94.0</span>
+<span class="go">7  2010-10-01 10:10:03        2010-10-01 10:10:04        AIA        Angstrom 335.0   335.0</span>
+<span class="go">8  2010-10-01 10:10:06        2010-10-01 10:10:07        AIA        Angstrom 193.0   193.0</span>
+<span class="go">9  2010-10-01 10:10:07        2010-10-01 10:10:08        AIA        Angstrom 1700.0  1700.0</span>
+<span class="go">10 2010-10-01 10:10:08        2010-10-01 10:10:09        AIA        Angstrom 304.0   304.0</span>
+<span class="go">11 2010-10-01 10:10:09        2010-10-01 10:10:10        AIA        Angstrom 131.0   131.0</span>
+</pre></div>
+</div>
+<div class="section" id="changing-cache-size-at-runtime">
+<h2>Changing cache size at runtime</h2>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># &quot;touch&quot; some entries to make sure that they&#39;re not removed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span>  <span class="n">_</span><span class="p">,</span> <span class="o">=</span> <span class="n">database</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">database</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">database</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">database</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">set_cache_size</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span><span class="n">database</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_start&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_end&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s">&#39;instrument&#39;</span><span class="p">,</span> <span class="s">&#39;waveunit&#39;</span><span class="p">,</span> <span class="s">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s">&#39;wavemax&#39;</span><span class="p">])</span>
+<span class="go">id observation_time_start     observation_time_end instrument waveunit wavemin wavemax</span>
+<span class="go">-- ----------------------     -------------------- ---------- -------- ------- -------</span>
+<span class="go">3  2011-03-19 10:54:00.340000 N/A                  AIA_3      N/A      171.0   171.0</span>
+<span class="go">6  2010-10-01 10:10:02        2010-10-01 10:10:03  AIA        Angstrom 94.0    94.0</span>
+<span class="go">8  2010-10-01 10:10:06        2010-10-01 10:10:07  AIA        Angstrom 193.0   193.0</span>
+<span class="go">10 2010-10-01 10:10:08        2010-10-01 10:10:09  AIA        Angstrom 304.0   304.0</span>
+<span class="go">11 2010-10-01 10:10:09        2010-10-01 10:10:10  AIA        Angstrom 131.0   131.0</span>
+</pre></div>
+</div>
+<div class="section" id="new-query-attributes-path-downloadtime-fitsheaderentry">
+<h2>New query attributes: Path, DownloadTime, FitsHeaderEntry</h2>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">db_attrs</span><span class="o">.</span><span class="n">FitsHeaderEntry</span><span class="p">(</span><span class="s">&#39;WAVELNTH&#39;</span><span class="p">,</span> <span class="mi">171</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;waveunit&#39;</span><span class="p">,</span> <span class="s">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s">&#39;wavemax&#39;</span><span class="p">])</span>
+<span class="go">id waveunit wavemin wavemax</span>
+<span class="go">-- -------- ------- -------</span>
+<span class="go">3  N/A      171.0   171.0</span>
+</pre></div>
+</div>
+
+  </p>
+  </article>
+      </div>
+      <footer>
+        © by Simon Liedtke • 
+        Powered by <a href="http://docs.notmyidea.org/alexis/pelican/">pelican</a>.
+      </footer>
+    </div>
+      </body>
+</html>

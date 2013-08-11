@@ -1,5 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-08-11T00:00:00+02:00</updated><entry><title>Week 9 — New query attributes</title><link href="http://derdon.github.io/blog/week-9-new-query-attributes.html" rel="alternate"></link><updated>2013-08-11T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-11:week-9-new-query-attributes.html</id><summary type="html"></summary></entry><entry><title>Week 8 — Various new features</title><link href="http://derdon.github.io/blog/week-8-various-new-features.html" rel="alternate"></link><updated>2013-08-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-04:week-8-various-new-features.html</id><summary type="html">&lt;div class="section" id="preparation"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-08-11T00:00:00+02:00</updated><entry><title>Week 9 — New query attributes</title><link href="http://derdon.github.io/blog/week-9-new-query-attributes.html" rel="alternate"></link><updated>2013-08-11T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-11:week-9-new-query-attributes.html</id><summary type="html"></summary></entry><entry><title>Week 9 — Improved Database class</title><link href="http://derdon.github.io/blog/week-9-improved-database-class.html" rel="alternate"></link><updated>2013-08-10T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-10:week-9-improved-database-class.html</id><summary type="html">&lt;div class="section" id="adding-entries-by-path"&gt;
+&lt;h2&gt;Adding entries by path&lt;/h2&gt;
+&lt;p&gt;It is now simpler to add new database entries by passing a directory. The
+class &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; got a new method &lt;tt class="docutils literal"&gt;add_from_path&lt;/tt&gt; which accepts a
+path,
+.. code-block:: pycon&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre class="doctest-block"&gt;
+&amp;gt;&amp;gt;&amp;gt; from sunpy.database import Database
+&amp;gt;&amp;gt;&amp;gt; database = Database('sqlite:///:memory:')
+&amp;gt;&amp;gt;&amp;gt; database.create_tables()
+&amp;gt;&amp;gt;&amp;gt; import sunpy.data.sample
+&amp;gt;&amp;gt;&amp;gt; database.add_from_path(sunpy.data.sample.rootdir)
+&amp;gt;&amp;gt;&amp;gt; len(database)
+5
+&amp;gt;&amp;gt;&amp;gt; from sunpy.database import display_entries
+&amp;gt;&amp;gt;&amp;gt; print display_entries(database,
+...     ['id', 'observation_time_start', 'observation_time_end', 'instrument', 'waveunit', 'wavemin', 'wavemax'])
+id observation_time_start     observation_time_end       instrument waveunit wavemin wavemax
+-- ----------------------     --------------------       ---------- -------- ------- -------
+1  2010-10-16 19:12:18        2010-10-16 19:12:22        RHESSI     N/A      N/A     N/A
+2  2002-06-25 10:00:10.514000 N/A                        EIT        N/A      195.0   195.0
+3  2011-03-19 10:54:00.340000 N/A                        AIA_3      N/A      171.0   171.0
+4  2011-09-22 00:00:00        2011-09-22 00:00:00        BIR        N/A      N/A     N/A
+5  2002-02-20 11:06:00        2002-02-20 11:06:43.330000 RHESSI     N/A      N/A     N/A
+&lt;/pre&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div class="section" id="adding-entries-by-vso-query-result"&gt;
+&lt;h2&gt;Adding entries by VSO query result&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.net&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;vso&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;vso&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VSOClient&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;qr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vso&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;attrs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Time&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;2010-10-01 10:10:01&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;2010-10-01 10:10:10&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;vso&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;attrs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Instrument&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;AIA&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;qr&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;num_records&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="go"&gt;6&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_from_vso_query_result&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;qr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;11&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;display_entries&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;observation_time_start&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;observation_time_end&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;instrument&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;waveunit&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemin&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemax&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="go"&gt;id observation_time_start     observation_time_end       instrument waveunit wavemin wavemax&lt;/span&gt;
+&lt;span class="go"&gt;-- ----------------------     --------------------       ---------- -------- ------- -------&lt;/span&gt;
+&lt;span class="go"&gt;1  2010-10-16 19:12:18        2010-10-16 19:12:22        RHESSI     N/A      N/A     N/A&lt;/span&gt;
+&lt;span class="go"&gt;2  2002-06-25 10:00:10.514000 N/A                        EIT        N/A      195.0   195.0&lt;/span&gt;
+&lt;span class="go"&gt;3  2011-03-19 10:54:00.340000 N/A                        AIA_3      N/A      171.0   171.0&lt;/span&gt;
+&lt;span class="go"&gt;4  2011-09-22 00:00:00        2011-09-22 00:00:00        BIR        N/A      N/A     N/A&lt;/span&gt;
+&lt;span class="go"&gt;5  2002-02-20 11:06:00        2002-02-20 11:06:43.330000 RHESSI     N/A      N/A     N/A&lt;/span&gt;
+&lt;span class="go"&gt;6  2010-10-01 10:10:02        2010-10-01 10:10:03        AIA        Angstrom 94.0    94.0&lt;/span&gt;
+&lt;span class="go"&gt;7  2010-10-01 10:10:03        2010-10-01 10:10:04        AIA        Angstrom 335.0   335.0&lt;/span&gt;
+&lt;span class="go"&gt;8  2010-10-01 10:10:06        2010-10-01 10:10:07        AIA        Angstrom 193.0   193.0&lt;/span&gt;
+&lt;span class="go"&gt;9  2010-10-01 10:10:07        2010-10-01 10:10:08        AIA        Angstrom 1700.0  1700.0&lt;/span&gt;
+&lt;span class="go"&gt;10 2010-10-01 10:10:08        2010-10-01 10:10:09        AIA        Angstrom 304.0   304.0&lt;/span&gt;
+&lt;span class="go"&gt;11 2010-10-01 10:10:09        2010-10-01 10:10:10        AIA        Angstrom 131.0   131.0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="changing-cache-size-at-runtime"&gt;
+&lt;h2&gt;Changing cache size at runtime&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="c"&gt;# &amp;quot;touch&amp;quot; some entries to make sure that they&amp;#39;re not removed&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_cache_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;display_entries&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;observation_time_start&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;observation_time_end&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="s"&gt;&amp;#39;instrument&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;waveunit&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemin&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemax&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="go"&gt;id observation_time_start     observation_time_end instrument waveunit wavemin wavemax&lt;/span&gt;
+&lt;span class="go"&gt;-- ----------------------     -------------------- ---------- -------- ------- -------&lt;/span&gt;
+&lt;span class="go"&gt;3  2011-03-19 10:54:00.340000 N/A                  AIA_3      N/A      171.0   171.0&lt;/span&gt;
+&lt;span class="go"&gt;6  2010-10-01 10:10:02        2010-10-01 10:10:03  AIA        Angstrom 94.0    94.0&lt;/span&gt;
+&lt;span class="go"&gt;8  2010-10-01 10:10:06        2010-10-01 10:10:07  AIA        Angstrom 193.0   193.0&lt;/span&gt;
+&lt;span class="go"&gt;10 2010-10-01 10:10:08        2010-10-01 10:10:09  AIA        Angstrom 304.0   304.0&lt;/span&gt;
+&lt;span class="go"&gt;11 2010-10-01 10:10:09        2010-10-01 10:10:10  AIA        Angstrom 131.0   131.0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="new-query-attributes-path-downloadtime-fitsheaderentry"&gt;
+&lt;h2&gt;New query attributes: Path, DownloadTime, FitsHeaderEntry&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;entries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;db_attrs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FitsHeaderEntry&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;WAVELNTH&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;171&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entries&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;1&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;display_entries&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entries&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;waveunit&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemin&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemax&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="go"&gt;id waveunit wavemin wavemax&lt;/span&gt;
+&lt;span class="go"&gt;-- -------- ------- -------&lt;/span&gt;
+&lt;span class="go"&gt;3  N/A      171.0   171.0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Week 8 — Various new features</title><link href="http://derdon.github.io/blog/week-8-various-new-features.html" rel="alternate"></link><updated>2013-08-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-04:week-8-various-new-features.html</id><summary type="html">&lt;div class="section" id="preparation"&gt;
 &lt;h2&gt;Preparation&lt;/h2&gt;
 &lt;p&gt;To be able to show the new implemented features, the database needs to be
 initialized and populated with some entries. The VSO is queried for all
@@ -98,9 +181,6 @@ example:&lt;/p&gt;
 &lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt;
 &lt;span class="go"&gt;[]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;!-- NOTE: has to be fixed before it can be documented
-Changing cache size at runtime
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --&gt;
 &lt;/div&gt;
 &lt;div class="section" id="supported-vso-attributes-for-querying-the-database"&gt;
 &lt;h2&gt;Supported VSO attributes for querying the database&lt;/h2&gt;
@@ -135,8 +215,6 @@ instrument &lt;cite&gt;ChroTel&lt;/cite&gt;, the provider &lt;cite&gt;KIS&lt;/ci
 &lt;span class="go"&gt;23 Angstrom 6562.0  6562.0&lt;/span&gt;
 &lt;span class="go"&gt;24 Angstrom 10830.0 10830.0&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;!-- Path, DownloadTime, FitsHeaderEntry
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --&gt;
 &lt;/div&gt;
 </summary></entry><entry><title>Week 7 — Announcement: a week of vacation</title><link href="http://derdon.github.io/blog/week-7-announcement-a-week-of-vacation.html" rel="alternate"></link><updated>2013-07-19T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-07-19:week-7-announcement-a-week-of-vacation.html</id><summary type="html">&lt;p&gt;I don't have much to say here. Tomorrow starts my vacation in Denmark and
 it ends exactly one week later (Saturday next week).&lt;/p&gt;
@@ -312,20 +390,6 @@ package will be needed: it will be called &lt;tt class="docutils literal"&gt;att
 with the VSO package) and will define how to convert attributes to database
 queries. Additionally, it will introduce the new attributes &lt;tt class="docutils literal"&gt;Tag&lt;/tt&gt; and
 &lt;tt class="docutils literal"&gt;Starred&lt;/tt&gt;.&lt;/p&gt;
-&lt;!-- The module ``sunpy.net.attr`` defines a class ``AttrWalker`` ... --&gt;
-&lt;!-- FIXME
-new module: sunpy.database.attrs
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-- use attributes from sunpy.net.vso.attrs
-- create an attribute walker by importing sunpy.net.attr.AttrWalker and
-  creating an instance of it
-- use this walker to define creators, appliers and converters using the
-  decorators add_creator, add_applier, and add_converter, respectively
-class Database
-- - - - - - - - - - - - - -
-- add a new method ``query`` which receives any number of attributes and
-  yields instances of DatabaseEntry → implementation: iterate over
-  ``walker.create(sunpy.net.attr.and_(*query), self.session)`` --&gt;
 &lt;/div&gt;
 </summary></entry><entry><title>Week 3 — Tag Support</title><link href="http://derdon.github.io/blog/week-3-tag-support.html" rel="alternate"></link><updated>2013-06-30T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-06-30:week-3-tag-support.html</id><summary type="html">&lt;div class="section" id="adding-tags"&gt;
 &lt;h2&gt;adding tags&lt;/h2&gt;
