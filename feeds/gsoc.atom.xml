@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-08-11T00:00:00+02:00</updated><entry><title>Week 9 — New query attributes</title><link href="http://derdon.github.io/blog/week-9-new-query-attributes.html" rel="alternate"></link><updated>2013-08-11T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-11:week-9-new-query-attributes.html</id><summary type="html"></summary></entry><entry><title>Week 9 — Improved Database class</title><link href="http://derdon.github.io/blog/week-9-improved-database-class.html" rel="alternate"></link><updated>2013-08-10T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-10:week-9-improved-database-class.html</id><summary type="html">&lt;div class="section" id="adding-entries-by-path"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-08-11T00:00:00+02:00</updated><entry><title>Week 9 — Improved Database class</title><link href="http://derdon.github.io/blog/week-9-improved-database-class.html" rel="alternate"></link><updated>2013-08-11T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-11:week-9-improved-database-class.html</id><summary type="html">&lt;div class="section" id="adding-entries-by-path"&gt;
 &lt;h2&gt;Adding entries by path&lt;/h2&gt;
 &lt;p&gt;It is now simpler to add new database entries by passing a directory. The
-class &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; got a new method &lt;tt class="docutils literal"&gt;add_from_path&lt;/tt&gt; which accepts a
-path,
-.. code-block:: pycon&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;pre class="doctest-block"&gt;
-&amp;gt;&amp;gt;&amp;gt; from sunpy.database import Database
-&amp;gt;&amp;gt;&amp;gt; database = Database('sqlite:///:memory:')
-&amp;gt;&amp;gt;&amp;gt; database.create_tables()
-&amp;gt;&amp;gt;&amp;gt; import sunpy.data.sample
-&amp;gt;&amp;gt;&amp;gt; database.add_from_path(sunpy.data.sample.rootdir)
-&amp;gt;&amp;gt;&amp;gt; len(database)
-5
-&amp;gt;&amp;gt;&amp;gt; from sunpy.database import display_entries
-&amp;gt;&amp;gt;&amp;gt; print display_entries(database,
-...     ['id', 'observation_time_start', 'observation_time_end', 'instrument', 'waveunit', 'wavemin', 'wavemax'])
-id observation_time_start     observation_time_end       instrument waveunit wavemin wavemax
--- ----------------------     --------------------       ---------- -------- ------- -------
-1  2010-10-16 19:12:18        2010-10-16 19:12:22        RHESSI     N/A      N/A     N/A
-2  2002-06-25 10:00:10.514000 N/A                        EIT        N/A      195.0   195.0
-3  2011-03-19 10:54:00.340000 N/A                        AIA_3      N/A      171.0   171.0
-4  2011-09-22 00:00:00        2011-09-22 00:00:00        BIR        N/A      N/A     N/A
-5  2002-02-20 11:06:00        2002-02-20 11:06:43.330000 RHESSI     N/A      N/A     N/A
-&lt;/pre&gt;
-&lt;/blockquote&gt;
+class &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; got a new method &lt;tt class="docutils literal"&gt;add_from_path&lt;/tt&gt; to add all entries
+from a given directory. If the optional keyword argument &lt;cite&gt;recursive&lt;/cite&gt; is
+true, the given directory is searched recursively.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.database&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Database&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Database&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sqlite:///:memory:&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_tables&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sunpy.data.sample&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_from_path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sunpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rootdir&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;5&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.database&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;display_entries&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;display_entries&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;observation_time_start&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;observation_time_end&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;instrument&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;waveunit&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemin&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemax&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="go"&gt;id observation_time_start     observation_time_end       instrument waveunit wavemin wavemax&lt;/span&gt;
+&lt;span class="go"&gt;-- ----------------------     --------------------       ---------- -------- ------- -------&lt;/span&gt;
+&lt;span class="go"&gt;1  2010-10-16 19:12:18        2010-10-16 19:12:22        RHESSI     N/A      N/A     N/A&lt;/span&gt;
+&lt;span class="go"&gt;2  2002-06-25 10:00:10.514000 N/A                        EIT        N/A      195.0   195.0&lt;/span&gt;
+&lt;span class="go"&gt;3  2011-03-19 10:54:00.340000 N/A                        AIA_3      N/A      171.0   171.0&lt;/span&gt;
+&lt;span class="go"&gt;4  2011-09-22 00:00:00        2011-09-22 00:00:00        BIR        N/A      N/A     N/A&lt;/span&gt;
+&lt;span class="go"&gt;5  2002-02-20 11:06:00        2002-02-20 11:06:43.330000 RHESSI     N/A      N/A     N/A&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="adding-entries-by-vso-query-result"&gt;
 &lt;h2&gt;Adding entries by VSO query result&lt;/h2&gt;
@@ -82,7 +79,7 @@ id observation_time_start     observation_time_end       instrument waveunit wav
 &lt;span class="go"&gt;3  N/A      171.0   171.0&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Week 8 — Various new features</title><link href="http://derdon.github.io/blog/week-8-various-new-features.html" rel="alternate"></link><updated>2013-08-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-04:week-8-various-new-features.html</id><summary type="html">&lt;div class="section" id="preparation"&gt;
+</summary></entry><entry><title>Week 9 — New query attributes</title><link href="http://derdon.github.io/blog/week-9-new-query-attributes.html" rel="alternate"></link><updated>2013-08-11T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-11:week-9-new-query-attributes.html</id><summary type="html"></summary></entry><entry><title>Week 8 — Various new features</title><link href="http://derdon.github.io/blog/week-8-various-new-features.html" rel="alternate"></link><updated>2013-08-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-04:week-8-various-new-features.html</id><summary type="html">&lt;div class="section" id="preparation"&gt;
 &lt;h2&gt;Preparation&lt;/h2&gt;
 &lt;p&gt;To be able to show the new implemented features, the database needs to be
 initialized and populated with some entries. The VSO is queried for all

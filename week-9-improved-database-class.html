@@ -27,37 +27,34 @@
       </a>
     </h2>
   </header>
-  <time datetime="2013-08-10T00:00:00">
-    Sat 10 August 2013
+  <time datetime="2013-08-11T00:00:00">
+    Sun 11 August 2013
   </time>
   <p class="entry-content">
     <div class="section" id="adding-entries-by-path">
 <h2>Adding entries by path</h2>
 <p>It is now simpler to add new database entries by passing a directory. The
-class <tt class="docutils literal">Database</tt> got a new method <tt class="docutils literal">add_from_path</tt> which accepts a
-path,
-.. code-block:: pycon</p>
-<blockquote>
-<pre class="doctest-block">
-&gt;&gt;&gt; from sunpy.database import Database
-&gt;&gt;&gt; database = Database('sqlite:///:memory:')
-&gt;&gt;&gt; database.create_tables()
-&gt;&gt;&gt; import sunpy.data.sample
-&gt;&gt;&gt; database.add_from_path(sunpy.data.sample.rootdir)
-&gt;&gt;&gt; len(database)
-5
-&gt;&gt;&gt; from sunpy.database import display_entries
-&gt;&gt;&gt; print display_entries(database,
-...     ['id', 'observation_time_start', 'observation_time_end', 'instrument', 'waveunit', 'wavemin', 'wavemax'])
-id observation_time_start     observation_time_end       instrument waveunit wavemin wavemax
--- ----------------------     --------------------       ---------- -------- ------- -------
-1  2010-10-16 19:12:18        2010-10-16 19:12:22        RHESSI     N/A      N/A     N/A
-2  2002-06-25 10:00:10.514000 N/A                        EIT        N/A      195.0   195.0
-3  2011-03-19 10:54:00.340000 N/A                        AIA_3      N/A      171.0   171.0
-4  2011-09-22 00:00:00        2011-09-22 00:00:00        BIR        N/A      N/A     N/A
-5  2002-02-20 11:06:00        2002-02-20 11:06:43.330000 RHESSI     N/A      N/A     N/A
-</pre>
-</blockquote>
+class <tt class="docutils literal">Database</tt> got a new method <tt class="docutils literal">add_from_path</tt> to add all entries
+from a given directory. If the optional keyword argument <cite>recursive</cite> is
+true, the given directory is searched recursively.</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">Database</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">create_tables</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sunpy.data.sample</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">add_from_path</span><span class="p">(</span><span class="n">sunpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">rootdir</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">display_entries</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span><span class="n">database</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_start&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_end&#39;</span><span class="p">,</span> <span class="s">&#39;instrument&#39;</span><span class="p">,</span> <span class="s">&#39;waveunit&#39;</span><span class="p">,</span> <span class="s">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s">&#39;wavemax&#39;</span><span class="p">])</span>
+<span class="go">id observation_time_start     observation_time_end       instrument waveunit wavemin wavemax</span>
+<span class="go">-- ----------------------     --------------------       ---------- -------- ------- -------</span>
+<span class="go">1  2010-10-16 19:12:18        2010-10-16 19:12:22        RHESSI     N/A      N/A     N/A</span>
+<span class="go">2  2002-06-25 10:00:10.514000 N/A                        EIT        N/A      195.0   195.0</span>
+<span class="go">3  2011-03-19 10:54:00.340000 N/A                        AIA_3      N/A      171.0   171.0</span>
+<span class="go">4  2011-09-22 00:00:00        2011-09-22 00:00:00        BIR        N/A      N/A     N/A</span>
+<span class="go">5  2002-02-20 11:06:00        2002-02-20 11:06:43.330000 RHESSI     N/A      N/A     N/A</span>
+</pre></div>
 </div>
 <div class="section" id="adding-entries-by-vso-query-result">
 <h2>Adding entries by VSO query result</h2>
