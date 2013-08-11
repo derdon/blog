@@ -79,7 +79,7 @@ true, the given directory is searched recursively.&lt;/p&gt;
 &lt;span class="go"&gt;3  N/A      171.0   171.0&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Week 9 — New query attributes</title><link href="http://derdon.github.io/blog/week-9-new-query-attributes.html" rel="alternate"></link><updated>2013-08-11T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-11:week-9-new-query-attributes.html</id><summary type="html"></summary></entry><entry><title>Week 8 — Various new features</title><link href="http://derdon.github.io/blog/week-8-various-new-features.html" rel="alternate"></link><updated>2013-08-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-04:week-8-various-new-features.html</id><summary type="html">&lt;div class="section" id="preparation"&gt;
+</summary></entry><entry><title>Week 8 — Various new features</title><link href="http://derdon.github.io/blog/week-8-various-new-features.html" rel="alternate"></link><updated>2013-08-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-04:week-8-various-new-features.html</id><summary type="html">&lt;div class="section" id="preparation"&gt;
 &lt;h2&gt;Preparation&lt;/h2&gt;
 &lt;p&gt;To be able to show the new implemented features, the database needs to be
 initialized and populated with some entries. The VSO is queried for all
