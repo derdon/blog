@@ -22,8 +22,8 @@
 <article>
   <header>
     <h2 class="entry-title">
-      <a href="week-9-improved-database-class.html" rel="bookmark" title="Permalink to Week 9 — Improved <tt class="docutils literal">Database</tt> class">
-        Week 9 — Improved <tt class="docutils literal">Database</tt> class
+      <a href="week-9-improved-database-class.html" rel="bookmark" title="Permalink to Week 9 — Improved Database class">
+        Week 9 — Improved Database class
       </a>
     </h2>
   </header>
@@ -58,6 +58,9 @@ true, the given directory is searched recursively.</p>
 </div>
 <div class="section" id="adding-entries-by-vso-query-result">
 <h2>Adding entries by VSO query result</h2>
+<p>To add entries from a VSO query result, the API has been simplified: the
+new method <tt class="docutils literal">add_from_vso_query_result</tt> accepts a query result and all
+reachable information will be used to add new entries to the database.</p>
 <div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net</span> <span class="kn">import</span> <span class="n">vso</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">vso</span><span class="o">.</span><span class="n">VSOClient</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s">&#39;2010-10-01 10:10:01&#39;</span><span class="p">,</span> <span class="s">&#39;2010-10-01 10:10:10&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;AIA&#39;</span><span class="p">))</span>
@@ -85,6 +88,10 @@ true, the given directory is searched recursively.</p>
 </div>
 <div class="section" id="changing-cache-size-at-runtime">
 <h2>Changing cache size at runtime</h2>
+<p>The cache size can now be changed at runtime. If the cache size becomes
+smaller, entries are removed until <tt class="docutils literal">database.cache_size</tt> equals
+<tt class="docutils literal">database.cache_maxsize</tt>. Which entries are removed depends on the
+actual cache implementation.</p>
 <div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># &quot;touch&quot; some entries to make sure that they&#39;re not removed</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span>  <span class="n">_</span><span class="p">,</span> <span class="o">=</span> <span class="n">database</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">database</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">database</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">database</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">set_cache_size</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -102,6 +109,8 @@ true, the given directory is searched recursively.</p>
 </div>
 <div class="section" id="new-query-attributes-path-downloadtime-fitsheaderentry">
 <h2>New query attributes: Path, DownloadTime, FitsHeaderEntry</h2>
+<p>The <tt class="docutils literal">query</tt> method now also supports the attributes <tt class="docutils literal">Path</tt>,
+<tt class="docutils literal">DownloadTime</tt>, and <tt class="docutils literal">FitsHeaderEntry</tt>.</p>
 <div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">db_attrs</span><span class="o">.</span><span class="n">FitsHeaderEntry</span><span class="p">(</span><span class="s">&#39;WAVELNTH&#39;</span><span class="p">,</span> <span class="mi">171</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span>
 <span class="go">1</span>
