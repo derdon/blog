@@ -69,19 +69,3 @@ package will be needed: it will be called ``attrs`` (to keep it consistent
 with the VSO package) and will define how to convert attributes to database
 queries. Additionally, it will introduce the new attributes ``Tag`` and
 ``Starred``.
-
-.. The module ``sunpy.net.attr`` defines a class ``AttrWalker`` ...
-
-.. FIXME
-    new module: sunpy.database.attrs
-    --------------------------------
-    - use attributes from sunpy.net.vso.attrs
-    - create an attribute walker by importing sunpy.net.attr.AttrWalker and
-      creating an instance of it
-    - use this walker to define creators, appliers and converters using the
-      decorators add_creator, add_applier, and add_converter, respectively
-    class Database
-    --------------
-    - add a new method ``query`` which receives any number of attributes and
-      yields instances of DatabaseEntry → implementation: iterate over
-      ``walker.create(sunpy.net.attr.and_(*query), self.session)``
