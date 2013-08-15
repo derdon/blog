@@ -18,23 +18,16 @@ function returns a list of headers, not just one header. My new function
 the value of the waveunit. One goal of this function is to return strings
 which can be used easily to make &lt;tt class="docutils literal"&gt;astropy.unit&lt;/tt&gt; instances. Here is an
 example of how to use it:&lt;/p&gt;
-&lt;div class="system-message"&gt;
-&lt;p class="system-message-title"&gt;System Message: ERROR/3 (&lt;tt class="docutils"&gt;/home/derdon/repos/general/own/blog/content/gsoc-waveunit.rst&lt;/tt&gt;, line 29)&lt;/p&gt;
-&lt;p&gt;Unknown directive type &amp;quot;pycon&amp;quot;.&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-.. pycon::
-
-    &amp;gt;&amp;gt;&amp;gt; from sunpy.io import fits
-    &amp;gt;&amp;gt;&amp;gt; from sunpy.data.test.waveunit import MEDN_IMAGE
-    &amp;gt;&amp;gt;&amp;gt; from astropy import units
-    &amp;gt;&amp;gt;&amp;gt; header = fits.get_header(MEDN_IMAGE)[0]
-    &amp;gt;&amp;gt;&amp;gt; waveunit = fits.extract_waveunit(header)
-    &amp;gt;&amp;gt;&amp;gt; waveunit
-    'nm'
-    &amp;gt;&amp;gt;&amp;gt; getattr(units, waveunit)
-    Unit(&amp;quot;nm&amp;quot;)
-&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.io&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;fits&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.data.test.waveunit&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MEDN_IMAGE&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;astropy&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;units&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;header&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fits&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_header&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MEDN_IMAGE&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;waveunit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fits&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;extract_waveunit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;header&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;waveunit&lt;/span&gt;
+&lt;span class="go"&gt;&amp;#39;nm&amp;#39;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;getattr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;units&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;waveunit&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;Unit(&amp;quot;nm&amp;quot;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 </summary></entry><entry><title>Week 9 — Improved Database class</title><link href="http://derdon.github.io/blog/week-9-improved-database-class.html" rel="alternate"></link><updated>2013-08-11T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-11:week-9-improved-database-class.html</id><summary type="html">&lt;div class="section" id="adding-entries-by-path"&gt;
 &lt;h2&gt;Adding entries by path&lt;/h2&gt;
