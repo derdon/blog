@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>derdon's blog</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://derdon.github.io/blog/theme/css/main.css" type="text/css">
+  </head>
+  <body>
+    <div id="margins">
+      <header id="header">
+        <a href="http://derdon.github.io/blog/index.html"><h1 class="strokeme">derdon's blog</h1></a>
+        <!-- <div id="clouds"></div> -->
+      </header>
+                        <nav>
+            <ul>
+                              <li><a href="http://derdon.github.io/blog/category/gsoc.html">gsoc</a></li> 
+                              <li><a href="http://derdon.github.io/blog/category/python.html">python</a></li> 
+                          </ul>
+          </nav>
+                    <div id="main">
+                
+<article>
+  <header>
+    <h2 class="entry-title">
+      <a href="week-10-extracting-waveunit-from-fits-files.html" rel="bookmark" title="Permalink to Week 10 — Extracting waveunit from FITS files">
+        Week 10 — Extracting waveunit from FITS files
+      </a>
+    </h2>
+  </header>
+  <time datetime="2013-08-15T00:00:00">
+    Thu 15 August 2013
+  </time>
+  <p class="entry-content">
+    <div class="section" id="motivation">
+<h2>Motivation</h2>
+<p>The <tt class="docutils literal">query</tt> method of the class <tt class="docutils literal">Database</tt> already works with
+<tt class="docutils literal">Wave(100, 200, 'angstrom')</tt>, but not as the user might expect it.
+Currently, querying for the wave instance shown above will only search for
+database entries with the saved wavelength unit <em>angstrom</em> and then check
+if the stored wavelength is between 100 and 200 (inclusive). The goal is
+to check every single database entry and convert units, if necessary.</p>
+</div>
+<div class="section" id="getting-the-waveunit-from-a-fits-file">
+<h2>Getting the waveunit from a FITS file</h2>
+<p>To get the wavelength unit from a FITS file, the first step that has to be
+performed is to get a list of FITS headers using the function
+<tt class="docutils literal">sunpy.io.fits.get_header</tt>. Do not get confused by the name; the
+function returns a list of headers, not just one header. My new function
+<tt class="docutils literal">extract_waveunit</tt> receives one header and attempts several ways to find
+the value of the waveunit. One goal of this function is to return strings
+which can be used easily to make <tt class="docutils literal">astropy.unit</tt> instances. Here is an
+example of how to use it:</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/derdon/repos/general/own/blog/content/gsoc-waveunit.rst</tt>, line 29)</p>
+<p>Unknown directive type &quot;pycon&quot;.</p>
+<pre class="literal-block">
+.. pycon::
+
+    &gt;&gt;&gt; from sunpy.io import fits
+    &gt;&gt;&gt; from sunpy.data.test.waveunit import MEDN_IMAGE
+    &gt;&gt;&gt; from astropy import units
+    &gt;&gt;&gt; header = fits.get_header(MEDN_IMAGE)[0]
+    &gt;&gt;&gt; waveunit = fits.extract_waveunit(header)
+    &gt;&gt;&gt; waveunit
+    'nm'
+    &gt;&gt;&gt; getattr(units, waveunit)
+    Unit(&quot;nm&quot;)
+</pre>
+</div>
+</div>
+
+  </p>
+  </article>
+      </div>
+      <footer>
+        © by Simon Liedtke • 
+        Powered by <a href="http://docs.notmyidea.org/alexis/pelican/">pelican</a>.
+      </footer>
+    </div>
+      </body>
+</html>

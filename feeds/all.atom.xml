@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-08-11T00:00:00+02:00</updated><entry><title>Week 9 — Improved Database class</title><link href="http://derdon.github.io/blog/week-9-improved-database-class.html" rel="alternate"></link><updated>2013-08-11T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-11:week-9-improved-database-class.html</id><summary type="html">&lt;div class="section" id="adding-entries-by-path"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-08-15T00:00:00+02:00</updated><entry><title>Week 10 — Extracting waveunit from FITS files</title><link href="http://derdon.github.io/blog/week-10-extracting-waveunit-from-fits-files.html" rel="alternate"></link><updated>2013-08-15T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-15:week-10-extracting-waveunit-from-fits-files.html</id><summary type="html">&lt;div class="section" id="motivation"&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;The &lt;tt class="docutils literal"&gt;query&lt;/tt&gt; method of the class &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; already works with
+&lt;tt class="docutils literal"&gt;Wave(100, 200, 'angstrom')&lt;/tt&gt;, but not as the user might expect it.
+Currently, querying for the wave instance shown above will only search for
+database entries with the saved wavelength unit &lt;em&gt;angstrom&lt;/em&gt; and then check
+if the stored wavelength is between 100 and 200 (inclusive). The goal is
+to check every single database entry and convert units, if necessary.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="getting-the-waveunit-from-a-fits-file"&gt;
+&lt;h2&gt;Getting the waveunit from a FITS file&lt;/h2&gt;
+&lt;p&gt;To get the wavelength unit from a FITS file, the first step that has to be
+performed is to get a list of FITS headers using the function
+&lt;tt class="docutils literal"&gt;sunpy.io.fits.get_header&lt;/tt&gt;. Do not get confused by the name; the
+function returns a list of headers, not just one header. My new function
+&lt;tt class="docutils literal"&gt;extract_waveunit&lt;/tt&gt; receives one header and attempts several ways to find
+the value of the waveunit. One goal of this function is to return strings
+which can be used easily to make &lt;tt class="docutils literal"&gt;astropy.unit&lt;/tt&gt; instances. Here is an
+example of how to use it:&lt;/p&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: ERROR/3 (&lt;tt class="docutils"&gt;/home/derdon/repos/general/own/blog/content/gsoc-waveunit.rst&lt;/tt&gt;, line 29)&lt;/p&gt;
+&lt;p&gt;Unknown directive type &amp;quot;pycon&amp;quot;.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+.. pycon::
+
+    &amp;gt;&amp;gt;&amp;gt; from sunpy.io import fits
+    &amp;gt;&amp;gt;&amp;gt; from sunpy.data.test.waveunit import MEDN_IMAGE
+    &amp;gt;&amp;gt;&amp;gt; from astropy import units
+    &amp;gt;&amp;gt;&amp;gt; header = fits.get_header(MEDN_IMAGE)[0]
+    &amp;gt;&amp;gt;&amp;gt; waveunit = fits.extract_waveunit(header)
+    &amp;gt;&amp;gt;&amp;gt; waveunit
+    'nm'
+    &amp;gt;&amp;gt;&amp;gt; getattr(units, waveunit)
+    Unit(&amp;quot;nm&amp;quot;)
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Week 9 — Improved Database class</title><link href="http://derdon.github.io/blog/week-9-improved-database-class.html" rel="alternate"></link><updated>2013-08-11T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-11:week-9-improved-database-class.html</id><summary type="html">&lt;div class="section" id="adding-entries-by-path"&gt;
 &lt;h2&gt;Adding entries by path&lt;/h2&gt;
 &lt;p&gt;It is now simpler to add new database entries by passing a directory. The
 class &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; got a new method &lt;tt class="docutils literal"&gt;add_from_path&lt;/tt&gt; to add all entries
