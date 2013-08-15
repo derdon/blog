@@ -26,7 +26,7 @@ the value of the waveunit. One goal of this function is to return strings
 which can be used easily to make ``astropy.unit`` instances. Here is an
 example of how to use it:
 
-.. pycon::
+.. code-block:: pycon
 
     >>> from sunpy.io import fits
     >>> from sunpy.data.test.waveunit import MEDN_IMAGE
