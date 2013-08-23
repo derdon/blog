@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>derdon's blog</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://derdon.github.io/blog/theme/css/main.css" type="text/css">
+  </head>
+  <body>
+    <div id="margins">
+      <header id="header">
+        <a href="http://derdon.github.io/blog/index.html"><h1 class="strokeme">derdon's blog</h1></a>
+        <!-- <div id="clouds"></div> -->
+      </header>
+                        <nav>
+            <ul>
+                              <li><a href="http://derdon.github.io/blog/category/gsoc.html">gsoc</a></li> 
+                              <li><a href="http://derdon.github.io/blog/category/python.html">python</a></li> 
+                          </ul>
+          </nav>
+                    <div id="main">
+                
+<article>
+  <header>
+    <h2 class="entry-title">
+      <a href="week-11-support-for-the-vso-attributes-wave-and-time.html" rel="bookmark" title="Permalink to Week 11 — Support for the VSO attributes Wave and Time">
+        Week 11 — Support for the VSO attributes Wave and Time
+      </a>
+    </h2>
+  </header>
+  <time datetime="2013-08-23T00:00:00">
+    Fri 23 August 2013
+  </time>
+  <p class="entry-content">
+    <div class="section" id="preparation-filling-the-database-with-entries">
+<h2>Preparation: filling the database with entries</h2>
+<p>The VSO is queried for all AIA data that has been observed on the 8th of
+June, 2011 from 23:59:55 to the end of this day (i.e. a range of 5
+seconds). The result is added to the database and displayed in a table to
+show the values of the observation time (start and end) and the
+wavelengths. You can see that the wavelengths have been converted from
+Angstrom to Nanometers. The reason for converting all wavelengths to
+Nanometers before saving them is that it makes querying using the <tt class="docutils literal">Wave</tt>
+attribute quite convenient (see the next section to better understand this
+claim).</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net</span> <span class="kn">import</span> <span class="n">vso</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">vso</span><span class="o">.</span><span class="n">VSOClient</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s">&#39;20110608T235955&#39;</span><span class="p">,</span> <span class="s">&#39;2011-06-09&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;aia&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">qr</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="s">&#39;{wave.wavemin}</span><span class="se">\t</span><span class="s">{wave.wavemax}</span><span class="se">\t</span><span class="s">{wave.waveunit}</span><span class="se">\t</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wave</span><span class="o">=</span><span class="n">block</span><span class="o">.</span><span class="n">wave</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">193     193     Angstrom</span>
+<span class="go">94      94      Angstrom</span>
+<span class="go">131     131     Angstrom</span>
+<span class="go">171     171     Angstrom</span>
+<span class="go">211     211     Angstrom</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">Database</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">create_tables</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">add_from_vso_query_result</span><span class="p">(</span><span class="n">qr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database.tables</span> <span class="kn">import</span> <span class="n">display_entries</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">database</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_start&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_end&#39;</span><span class="p">,</span> <span class="s">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s">&#39;wavemax&#39;</span><span class="p">])</span>
+<span class="go">id observation_time_start observation_time_end wavemin wavemax</span>
+<span class="go">-- ---------------------- -------------------- ------- -------</span>
+<span class="go">1  2011-06-08 23:59:55    2011-06-08 23:59:56  19.3    19.3</span>
+<span class="go">2  2011-06-08 23:59:56    2011-06-08 23:59:57  9.4     9.4</span>
+<span class="go">3  2011-06-08 23:59:57    2011-06-08 23:59:58  13.1    13.1</span>
+<span class="go">4  2011-06-09 00:00:00    2011-06-09 00:00:01  17.1    17.1</span>
+<span class="go">5  2011-06-09 00:00:00    2011-06-09 00:00:01  21.1    21.1</span>
+</pre></div>
+</div>
+<div class="section" id="querying-for-wavelengths">
+<h2>Querying for wavelengths</h2>
+<p>Previously, querying for certain wavelengths such as <tt class="docutils literal">Wave(50, 80, 'GHz')</tt>
+would search for all entries <em>with the waveunit GHz (Gigahertz)</em> and then
+check if the wavelengths of these entries are in the interval [50, 80].
+Now, such a query will iterate over <em>all</em> entries and convert the values
+50GHz and 80GHz to Nanometers and check for each database entry if its
+wavelengths are in the converted range. Here is an example using
+Angstroms:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Wave</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_start&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_end&#39;</span><span class="p">,</span> <span class="s">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s">&#39;wavemax&#39;</span><span class="p">])</span>
+<span class="go">id observation_time_start observation_time_end wavemin wavemax</span>
+<span class="go">-- ---------------------- -------------------- ------- -------</span>
+<span class="go">1  2011-06-08 23:59:55    2011-06-08 23:59:56  19.3    19.3</span>
+<span class="go">3  2011-06-08 23:59:57    2011-06-08 23:59:58  13.1    13.1</span>
+<span class="go">4  2011-06-09 00:00:00    2011-06-09 00:00:01  17.1    17.1</span>
+</pre></div>
+</div>
+<div class="section" id="querying-for-observation-times">
+<h2>Querying for observation times</h2>
+<p>A new supported attribute for querying the database is <tt class="docutils literal">vso.attrs.Time</tt>.
+The start of the observation time of each yielded entry is greater than or
+equal to the <cite>start</cite> parameter of the <tt class="docutils literal">Time</tt> attribute. The end of the
+observation time of each yielded entry is lower than or equal to the <cite>end</cite>
+parameter of the <tt class="docutils literal">Time</tt> attribute. See the following example to see how
+it works:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s">&#39;2011-06-08 23:59:57&#39;</span><span class="p">,</span> <span class="s">&#39;2011-06-10&#39;</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_start&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_end&#39;</span><span class="p">,</span> <span class="s">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s">&#39;wavemax&#39;</span><span class="p">])</span>
+<span class="go">id observation_time_start observation_time_end wavemin wavemax</span>
+<span class="go">-- ---------------------- -------------------- ------- -------</span>
+<span class="go">3  2011-06-08 23:59:57    2011-06-08 23:59:58  13.1    13.1</span>
+<span class="go">4  2011-06-09 00:00:00    2011-06-09 00:00:01  17.1    17.1</span>
+<span class="go">5  2011-06-09 00:00:00    2011-06-09 00:00:01  21.1    21.1</span>
+</pre></div>
+</div>
+
+  </p>
+  </article>
+      </div>
+      <footer>
+        © by Simon Liedtke • 
+        Powered by <a href="http://docs.notmyidea.org/alexis/pelican/">pelican</a>.
+      </footer>
+    </div>
+      </body>
+</html>

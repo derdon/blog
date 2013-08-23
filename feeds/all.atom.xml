@@ -1,5 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-08-15T00:00:00+02:00</updated><entry><title>Week 10 — Extracting waveunit from FITS files</title><link href="http://derdon.github.io/blog/week-10-extracting-waveunit-from-fits-files.html" rel="alternate"></link><updated>2013-08-15T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-15:week-10-extracting-waveunit-from-fits-files.html</id><summary type="html">&lt;div class="section" id="motivation"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-08-23T00:00:00+02:00</updated><entry><title>Week 11 — Support for the VSO attributes Wave and Time</title><link href="http://derdon.github.io/blog/week-11-support-for-the-vso-attributes-wave-and-time.html" rel="alternate"></link><updated>2013-08-23T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-23:week-11-support-for-the-vso-attributes-wave-and-time.html</id><summary type="html">&lt;div class="section" id="preparation-filling-the-database-with-entries"&gt;
+&lt;h2&gt;Preparation: filling the database with entries&lt;/h2&gt;
+&lt;p&gt;The VSO is queried for all AIA data that has been observed on the 8th of
+June, 2011 from 23:59:55 to the end of this day (i.e. a range of 5
+seconds). The result is added to the database and displayed in a table to
+show the values of the observation time (start and end) and the
+wavelengths. You can see that the wavelengths have been converted from
+Angstrom to Nanometers. The reason for converting all wavelengths to
+Nanometers before saving them is that it makes querying using the &lt;tt class="docutils literal"&gt;Wave&lt;/tt&gt;
+attribute quite convenient (see the next section to better understand this
+claim).&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.net&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;vso&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;vso&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;VSOClient&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;qr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vso&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;attrs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Time&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;20110608T235955&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;2011-06-09&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;vso&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;attrs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Instrument&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;aia&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;block&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;qr&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{wave.wavemin}&lt;/span&gt;&lt;span class="se"&gt;\t&lt;/span&gt;&lt;span class="s"&gt;{wave.wavemax}&lt;/span&gt;&lt;span class="se"&gt;\t&lt;/span&gt;&lt;span class="s"&gt;{wave.waveunit}&lt;/span&gt;&lt;span class="se"&gt;\t&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;wave&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;block&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;wave&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;...&lt;/span&gt;
+&lt;span class="go"&gt;193     193     Angstrom&lt;/span&gt;
+&lt;span class="go"&gt;94      94      Angstrom&lt;/span&gt;
+&lt;span class="go"&gt;131     131     Angstrom&lt;/span&gt;
+&lt;span class="go"&gt;171     171     Angstrom&lt;/span&gt;
+&lt;span class="go"&gt;211     211     Angstrom&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.database&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Database&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Database&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sqlite:///:memory:&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_tables&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_from_vso_query_result&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;qr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sunpy.database.tables&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;display_entries&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;display_entries&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;observation_time_start&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;observation_time_end&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemin&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemax&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="go"&gt;id observation_time_start observation_time_end wavemin wavemax&lt;/span&gt;
+&lt;span class="go"&gt;-- ---------------------- -------------------- ------- -------&lt;/span&gt;
+&lt;span class="go"&gt;1  2011-06-08 23:59:55    2011-06-08 23:59:56  19.3    19.3&lt;/span&gt;
+&lt;span class="go"&gt;2  2011-06-08 23:59:56    2011-06-08 23:59:57  9.4     9.4&lt;/span&gt;
+&lt;span class="go"&gt;3  2011-06-08 23:59:57    2011-06-08 23:59:58  13.1    13.1&lt;/span&gt;
+&lt;span class="go"&gt;4  2011-06-09 00:00:00    2011-06-09 00:00:01  17.1    17.1&lt;/span&gt;
+&lt;span class="go"&gt;5  2011-06-09 00:00:00    2011-06-09 00:00:01  21.1    21.1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="querying-for-wavelengths"&gt;
+&lt;h2&gt;Querying for wavelengths&lt;/h2&gt;
+&lt;p&gt;Previously, querying for certain wavelengths such as &lt;tt class="docutils literal"&gt;Wave(50, 80, 'GHz')&lt;/tt&gt;
+would search for all entries &lt;em&gt;with the waveunit GHz (Gigahertz)&lt;/em&gt; and then
+check if the wavelengths of these entries are in the interval [50, 80].
+Now, such a query will iterate over &lt;em&gt;all&lt;/em&gt; entries and convert the values
+50GHz and 80GHz to Nanometers and check for each database entry if its
+wavelengths are in the converted range. Here is an example using
+Angstroms:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;display_entries&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vso&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;attrs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Wave&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;observation_time_start&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;observation_time_end&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemin&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemax&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="go"&gt;id observation_time_start observation_time_end wavemin wavemax&lt;/span&gt;
+&lt;span class="go"&gt;-- ---------------------- -------------------- ------- -------&lt;/span&gt;
+&lt;span class="go"&gt;1  2011-06-08 23:59:55    2011-06-08 23:59:56  19.3    19.3&lt;/span&gt;
+&lt;span class="go"&gt;3  2011-06-08 23:59:57    2011-06-08 23:59:58  13.1    13.1&lt;/span&gt;
+&lt;span class="go"&gt;4  2011-06-09 00:00:00    2011-06-09 00:00:01  17.1    17.1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="querying-for-observation-times"&gt;
+&lt;h2&gt;Querying for observation times&lt;/h2&gt;
+&lt;p&gt;A new supported attribute for querying the database is &lt;tt class="docutils literal"&gt;vso.attrs.Time&lt;/tt&gt;.
+The start of the observation time of each yielded entry is greater than or
+equal to the &lt;cite&gt;start&lt;/cite&gt; parameter of the &lt;tt class="docutils literal"&gt;Time&lt;/tt&gt; attribute. The end of the
+observation time of each yielded entry is lower than or equal to the &lt;cite&gt;end&lt;/cite&gt;
+parameter of the &lt;tt class="docutils literal"&gt;Time&lt;/tt&gt; attribute. See the following example to see how
+it works:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;display_entries&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;query&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vso&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;attrs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Time&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;2011-06-08 23:59:57&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;2011-06-10&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;observation_time_start&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;observation_time_end&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemin&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wavemax&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="go"&gt;id observation_time_start observation_time_end wavemin wavemax&lt;/span&gt;
+&lt;span class="go"&gt;-- ---------------------- -------------------- ------- -------&lt;/span&gt;
+&lt;span class="go"&gt;3  2011-06-08 23:59:57    2011-06-08 23:59:58  13.1    13.1&lt;/span&gt;
+&lt;span class="go"&gt;4  2011-06-09 00:00:00    2011-06-09 00:00:01  17.1    17.1&lt;/span&gt;
+&lt;span class="go"&gt;5  2011-06-09 00:00:00    2011-06-09 00:00:01  21.1    21.1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Week 10 — Extracting waveunit from FITS files</title><link href="http://derdon.github.io/blog/week-10-extracting-waveunit-from-fits-files.html" rel="alternate"></link><updated>2013-08-15T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-15:week-10-extracting-waveunit-from-fits-files.html</id><summary type="html">&lt;div class="section" id="motivation"&gt;
 &lt;h2&gt;Motivation&lt;/h2&gt;
 &lt;p&gt;The &lt;tt class="docutils literal"&gt;query&lt;/tt&gt; method of the class &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; already works with
 &lt;tt class="docutils literal"&gt;Wave(100, 200, 'angstrom')&lt;/tt&gt;, but not as the user might expect it.
