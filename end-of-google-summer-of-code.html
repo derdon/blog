@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>derdon's blog</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://derdon.github.io/blog/theme/css/main.css" type="text/css">
+  </head>
+  <body>
+    <div id="margins">
+      <header id="header">
+        <a href="http://derdon.github.io/blog/index.html"><h1 class="strokeme">derdon's blog</h1></a>
+        <!-- <div id="clouds"></div> -->
+      </header>
+                        <nav>
+            <ul>
+                              <li><a href="http://derdon.github.io/blog/category/gsoc.html">gsoc</a></li> 
+                              <li><a href="http://derdon.github.io/blog/category/python.html">python</a></li> 
+                          </ul>
+          </nav>
+                    <div id="main">
+                
+<article>
+  <header>
+    <h2 class="entry-title">
+      <a href="end-of-google-summer-of-code.html" rel="bookmark" title="Permalink to End of Google Summer of Code">
+        End of Google Summer of Code
+      </a>
+    </h2>
+  </header>
+  <time datetime="2013-09-28T00:00:00">
+    Sat 28 September 2013
+  </time>
+  <p class="entry-content">
+    <div class="section" id="thank-you">
+<h2>Thank You!</h2>
+<p>Yesterday was the last day of my Google Summer of Code project. I want to
+use this blog post to say thank you. Thank you Google for making this
+program possible and thank you Carol Smith for the great help and
+administrative work throughout the whole GSoC 2013. Thanks to my mentor,
+Florian Mayer, for helping me understand the existing VSO package code and
+for general guidance and tips. Thanks to Steven Christe for various ideas,
+especially the function <tt class="docutils literal">display_entries</tt> and the ability to fetch a
+subset of all entries by using the slicing syntax.</p>
+</div>
+<div class="section" id="plans">
+<h2>Plans</h2>
+<p>The database package is not finished to a 100%; it has at least one bug
+that I know of (but I'm pretty there are more that will be found only if
+this package is used by real users), documentation can be improved and
+some features need to be added.</p>
+<p>The bug that I know of is that the <tt class="docutils literal">undo</tt> method of the <tt class="docutils literal">Database</tt>
+class is broken for the method <tt class="docutils literal">set_cache_size</tt> if it reduces the number
+of database entries. But I already know where the problem is, so it should
+be easy to fix: removing the database entries can be undone, but the
+original internal cache is not saved so it is not restored after the
+<tt class="docutils literal">undo</tt> call.</p>
+<p>One thing that I couldn't commit to my database branch was the feature of
+dumping and loading of database entries to a single text file. Use cases
+for this feature is the possibility to share this file with other people
+and also use it as a backup.</p>
+<p>Another thing I want to implement is the support of adding database
+entries by an HEK query result. Thanks to the work of Michael Malocha (the
+other GSoC student working for SunPy) this should be quite simple because
+he wrote a module which can translate VSO queries to HEK queries.</p>
+<p>Currently, only FITS files are supported in the <tt class="docutils literal">download</tt> method of the
+<tt class="docutils literal">Database</tt> class. But the files that will be downloaded via
+<tt class="docutils literal">VSOClient.get</tt> may also be *.tar or *.tar.gz files, so I plan to
+support these kind of files as well.</p>
+</div>
+
+  </p>
+  </article>
+      </div>
+      <footer>
+        © by Simon Liedtke • 
+        Powered by <a href="http://docs.notmyidea.org/alexis/pelican/">pelican</a>.
+      </footer>
+    </div>
+      </body>
+</html>

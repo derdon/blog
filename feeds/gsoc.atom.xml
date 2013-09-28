@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-08-23T00:00:00+02:00</updated><entry><title>Week 11 — Support for the VSO attributes Wave and Time</title><link href="http://derdon.github.io/blog/week-11-support-for-the-vso-attributes-wave-and-time.html" rel="alternate"></link><updated>2013-08-23T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-23:week-11-support-for-the-vso-attributes-wave-and-time.html</id><summary type="html">&lt;div class="section" id="preparation-filling-the-database-with-entries"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-09-28T00:00:00+02:00</updated><entry><title>End of Google Summer of Code</title><link href="http://derdon.github.io/blog/end-of-google-summer-of-code.html" rel="alternate"></link><updated>2013-09-28T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-09-28:end-of-google-summer-of-code.html</id><summary type="html">&lt;div class="section" id="thank-you"&gt;
+&lt;h2&gt;Thank You!&lt;/h2&gt;
+&lt;p&gt;Yesterday was the last day of my Google Summer of Code project. I want to
+use this blog post to say thank you. Thank you Google for making this
+program possible and thank you Carol Smith for the great help and
+administrative work throughout the whole GSoC 2013. Thanks to my mentor,
+Florian Mayer, for helping me understand the existing VSO package code and
+for general guidance and tips. Thanks to Steven Christe for various ideas,
+especially the function &lt;tt class="docutils literal"&gt;display_entries&lt;/tt&gt; and the ability to fetch a
+subset of all entries by using the slicing syntax.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="plans"&gt;
+&lt;h2&gt;Plans&lt;/h2&gt;
+&lt;p&gt;The database package is not finished to a 100%; it has at least one bug
+that I know of (but I'm pretty there are more that will be found only if
+this package is used by real users), documentation can be improved and
+some features need to be added.&lt;/p&gt;
+&lt;p&gt;The bug that I know of is that the &lt;tt class="docutils literal"&gt;undo&lt;/tt&gt; method of the &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt;
+class is broken for the method &lt;tt class="docutils literal"&gt;set_cache_size&lt;/tt&gt; if it reduces the number
+of database entries. But I already know where the problem is, so it should
+be easy to fix: removing the database entries can be undone, but the
+original internal cache is not saved so it is not restored after the
+&lt;tt class="docutils literal"&gt;undo&lt;/tt&gt; call.&lt;/p&gt;
+&lt;p&gt;One thing that I couldn't commit to my database branch was the feature of
+dumping and loading of database entries to a single text file. Use cases
+for this feature is the possibility to share this file with other people
+and also use it as a backup.&lt;/p&gt;
+&lt;p&gt;Another thing I want to implement is the support of adding database
+entries by an HEK query result. Thanks to the work of Michael Malocha (the
+other GSoC student working for SunPy) this should be quite simple because
+he wrote a module which can translate VSO queries to HEK queries.&lt;/p&gt;
+&lt;p&gt;Currently, only FITS files are supported in the &lt;tt class="docutils literal"&gt;download&lt;/tt&gt; method of the
+&lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; class. But the files that will be downloaded via
+&lt;tt class="docutils literal"&gt;VSOClient.get&lt;/tt&gt; may also be *.tar or *.tar.gz files, so I plan to
+support these kind of files as well.&lt;/p&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Week 11 — Support for the VSO attributes Wave and Time</title><link href="http://derdon.github.io/blog/week-11-support-for-the-vso-attributes-wave-and-time.html" rel="alternate"></link><updated>2013-08-23T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io/blog,2013-08-23:week-11-support-for-the-vso-attributes-wave-and-time.html</id><summary type="html">&lt;div class="section" id="preparation-filling-the-database-with-entries"&gt;
 &lt;h2&gt;Preparation: filling the database with entries&lt;/h2&gt;
 &lt;p&gt;The VSO is queried for all AIA data that has been observed on the 8th of
 June, 2011 from 23:59:55 to the end of this day (i.e. a range of 5
