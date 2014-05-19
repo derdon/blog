@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2013-09-28T00:00:00+02:00</updated><entry><title>End of Google Summer of Code</title><link href="http://derdon.github.io/blog/end-of-google-summer-of-code.html" rel="alternate"></link><updated>2013-09-28T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-09-28:blog/end-of-google-summer-of-code.html</id><summary type="html">&lt;div class="section" id="thank-you"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/gsoc.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2014-05-18T00:00:00+02:00</updated><entry><title>Bonding Period is Over</title><link href="http://derdon.github.io/blog/bonding-period-is-over.html" rel="alternate"></link><updated>2014-05-18T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2014-05-18:blog/bonding-period-is-over.html</id><summary type="html">&lt;p&gt;The last week has officially been the so-called &amp;quot;community bonding
+period&amp;quot;. I used it to get more familiar with the codebase, hang around on
+#astropy and follow the development via the mailinglist and the updates of
+the astroquery repository at GitHub. My next plans are:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;to finally finish my started pull request to switch from the library
+lxml to BeautifulSoup.&lt;/li&gt;
+&lt;li&gt;to fix the &lt;a class="reference external" href="https://github.com/astropy/astroquery/issues/49"&gt;issue #49&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Today I will have a hangout with my mentor Adam Ginsburg to discuss the
+next steps and how to implement them. At least that's what I imagine,
+actually we only arranged a time for a hangout.&lt;/p&gt;
+</summary></entry><entry><title>End of Google Summer of Code</title><link href="http://derdon.github.io/blog/end-of-google-summer-of-code.html" rel="alternate"></link><updated>2013-09-28T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-09-28:blog/end-of-google-summer-of-code.html</id><summary type="html">&lt;div class="section" id="thank-you"&gt;
 &lt;h2&gt;Thank You!&lt;/h2&gt;
 &lt;p&gt;Yesterday was the last day of my Google Summer of Code project. I want to
 use this blog post to say thank you. Thank you Google for making this
