@@ -14,10 +14,11 @@
           type="application/rss+xml" rel="alternate"
           title="{{ SITENAME }} RSS Feed" />
     {% endif %}
-    {% if CATEGORY_FEED_RSS %}
-    <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_RSS }}"
+
+    {% if CATEGORY_FEED_RSS and category %}
+    <link href="{{ FEED_DOMAIN }}/{{ CATEGORY_FEED_RSS|format(category.slug) }}"
           type="application/rss+xml" rel="alternate"
-          title="{{ SITENAME }} ({{ CATEGORY_FEED_RSS }}) RSS Feed" />
+          title="{{ SITENAME }} Categories RSS Feed" />
     {% endif %}
 
   </head>
