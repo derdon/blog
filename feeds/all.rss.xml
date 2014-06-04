@@ -931,7 +931,8 @@ the source &lt;tt class="docutils literal"&gt;&amp;lt;input name=foo&amp;gt;&lt;
 value &lt;tt class="docutils literal"&gt;'foo'&lt;/tt&gt;. But using beautifulsoup, the value of &lt;tt class="docutils literal"&gt;form_input.name&lt;/tt&gt;
 will be &lt;tt class="docutils literal"&gt;'input'&lt;/tt&gt; because it returns the name of the node as a string!&lt;/p&gt;
 &lt;p&gt;After having fixed the code according to my new knowledge, there is only
-one remote failing test left, yay!&lt;/p&gt;
+one remote failing test left, yay! Until next time, I think this is enough
+for one blog post :-)&lt;/p&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Tue, 04 Jun 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-06-04:blog/adding-tests-to-eso-service.html</guid></item><item><title>Implementing an undo-redo-manager in Python</title><link>https://derdon.github.io/blog/implementing-an-undo-redo-manager-in-python.html</link><description>&lt;p&gt;An undo-redo-manager is useful in many cases, especially in interactive
 applications (interactive shells, grahical applications like &lt;a class="reference external" href="http://www.gimp.org/"&gt;GIMP&lt;/a&gt; or
 &lt;a class="reference external" href="http://www.libreoffice.org/"&gt;LibreOffice&lt;/a&gt;). There are two main different implementation types to
