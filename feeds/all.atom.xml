@@ -857,12 +857,12 @@ the database.&lt;/p&gt;
 querying and adding a connection to the VSO interface so that downloaded
 data gets automatically added to the database.&lt;/p&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Adding tests to ESO service</title><link href="https://derdon.github.io/blog/adding-tests-to-eso-service.html" rel="alternate"></link><updated>2013-05-31T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-05-31:blog/adding-tests-to-eso-service.html</id><summary type="html">&lt;p&gt;I started working on a pull request which replaces the XML library &lt;a class="reference external" href="http://bpaste.net/show/321066/"&gt;lxml&lt;/a&gt;
-with &lt;a class="reference external" href="http://bpaste.net/show/321066/"&gt;beautifulsoup&lt;/a&gt; to have a pure-Python solution. The problem is that
+</summary></entry><entry><title>Adding tests to ESO service</title><link href="https://derdon.github.io/blog/adding-tests-to-eso-service.html" rel="alternate"></link><updated>2013-06-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-06-04:blog/adding-tests-to-eso-service.html</id><summary type="html">&lt;p&gt;I started working on a pull request which replaces the XML library &lt;a class="reference external" href="http://lxml.de"&gt;lxml&lt;/a&gt;
+with &lt;a class="reference external" href="http://beautiful-soup-4.readthedocs.org/en/latest/"&gt;beautifulsoup&lt;/a&gt; to have a pure-Python solution. The problem is that
 some of the remote tests fail, thus the pull request cannot be merged yet.&lt;/p&gt;
 &lt;p&gt;When I run &lt;tt class="docutils literal"&gt;py.test &lt;span class="pre"&gt;--remote-data&lt;/span&gt; astroquery/eso/tests&lt;/tt&gt; on the master
 branch, all tests pass fine. But when I call the same command on my branch
-which uses &lt;a class="reference external" href="http://bpaste.net/show/321066/"&gt;beautifulsoup&lt;/a&gt; instead of &lt;a class="reference external" href="http://bpaste.net/show/321066/"&gt;lxml&lt;/a&gt;, I get &lt;a class="reference external" href="http://bpaste.net/show/321066/"&gt;3 failing tests&lt;/a&gt;, each
+which uses beautifulsoup instead of lxml, I get &lt;a class="reference external" href="http://bpaste.net/show/321066/"&gt;3 failing tests&lt;/a&gt;, each
 of them raising the exception &lt;tt class="docutils literal"&gt;InconsistentTableError&lt;/tt&gt;. Time to find out
 more and debug! Simplified, the stacktraces look like this:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -888,10 +888,10 @@ this class if a data row doesn't match the header.&lt;/p&gt;
 rows. I presume this is because &lt;tt class="docutils literal"&gt;astropy.io.ascii_read&lt;/tt&gt; receives the web
 search form instead of the generated CSV formatted string for some reason.
 At least this was the case when I had trouble before. Let's check it. The
-testing framework &lt;a href="#id1"&gt;&lt;span class="problematic" id="id2"&gt;py.test_&lt;/span&gt;&lt;/a&gt; supports debugging failed tests easily via the
+testing framework &lt;a class="reference external" href="http://pytest.org"&gt;py.test&lt;/a&gt; supports debugging failed tests easily via the
 &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--pdb&lt;/span&gt;&lt;/tt&gt; option. So I run the tests now like this: &lt;tt class="docutils literal"&gt;py.test
 &lt;span class="pre"&gt;--remote-data&lt;/span&gt; &lt;span class="pre"&gt;--pdb&lt;/span&gt; astroquery/eso/tests&lt;/tt&gt;. This will launch the Python
-debugger &lt;a class="reference internal" href="#pdb"&gt;pdb&lt;/a&gt;.&lt;/p&gt;
+debugger &lt;a class="reference external" href="http://docs.python.org/library/pdb.html"&gt;pdb&lt;/a&gt;.&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 &amp;gt; /home/derdon/repos/python/3rdparty/astroquery/astroquery/eso/core.py(333)query_instrument()
 -&amp;gt; raise ex
@@ -932,12 +932,6 @@ value &lt;tt class="docutils literal"&gt;'foo'&lt;/tt&gt;. But using beautifulso
 will be &lt;tt class="docutils literal"&gt;'input'&lt;/tt&gt; because it returns the name of the node as a string!&lt;/p&gt;
 &lt;p&gt;After having fixed the code according to my new knowledge, there is only
 one remote failing test left, yay!&lt;/p&gt;
-&lt;span class="target" id="pdb"&gt;&lt;/span&gt;&lt;div class="system-messages section"&gt;
-&lt;h2&gt;Docutils System Messages&lt;/h2&gt;
-&lt;div class="system-message" id="id1"&gt;
-&lt;p class="system-message-title"&gt;System Message: ERROR/3 (&lt;tt class="docutils"&gt;/home/derdon/repos/general/own/blog/content/gsoc-aq-esotests.rst&lt;/tt&gt;, line 38); &lt;em&gt;&lt;a href="#id2"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-Unknown target name: &amp;quot;py.test&amp;quot;.&lt;/div&gt;
-&lt;/div&gt;
 </summary></entry><entry><title>Implementing an undo-redo-manager in Python</title><link href="https://derdon.github.io/blog/implementing-an-undo-redo-manager-in-python.html" rel="alternate"></link><updated>2013-05-31T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-05-31:blog/implementing-an-undo-redo-manager-in-python.html</id><summary type="html">&lt;p&gt;An undo-redo-manager is useful in many cases, especially in interactive
 applications (interactive shells, grahical applications like &lt;a class="reference external" href="http://www.gimp.org/"&gt;GIMP&lt;/a&gt; or
 &lt;a class="reference external" href="http://www.libreoffice.org/"&gt;LibreOffice&lt;/a&gt;). There are two main different implementation types to

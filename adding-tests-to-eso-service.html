@@ -37,16 +37,16 @@
       </a>
     </h2>
   </header>
-  <time datetime="2013-05-31T00:00:00">
-    Fri 31 May 2013
+  <time datetime="2013-06-04T00:00:00">
+    Tue 04 June 2013
   </time>
   <p class="entry-content">
-    <p>I started working on a pull request which replaces the XML library <a class="reference external" href="http://bpaste.net/show/321066/">lxml</a>
-with <a class="reference external" href="http://bpaste.net/show/321066/">beautifulsoup</a> to have a pure-Python solution. The problem is that
+    <p>I started working on a pull request which replaces the XML library <a class="reference external" href="http://lxml.de">lxml</a>
+with <a class="reference external" href="http://beautiful-soup-4.readthedocs.org/en/latest/">beautifulsoup</a> to have a pure-Python solution. The problem is that
 some of the remote tests fail, thus the pull request cannot be merged yet.</p>
 <p>When I run <tt class="docutils literal">py.test <span class="pre">--remote-data</span> astroquery/eso/tests</tt> on the master
 branch, all tests pass fine. But when I call the same command on my branch
-which uses <a class="reference external" href="http://bpaste.net/show/321066/">beautifulsoup</a> instead of <a class="reference external" href="http://bpaste.net/show/321066/">lxml</a>, I get <a class="reference external" href="http://bpaste.net/show/321066/">3 failing tests</a>, each
+which uses beautifulsoup instead of lxml, I get <a class="reference external" href="http://bpaste.net/show/321066/">3 failing tests</a>, each
 of them raising the exception <tt class="docutils literal">InconsistentTableError</tt>. Time to find out
 more and debug! Simplified, the stacktraces look like this:</p>
 <blockquote>
@@ -72,10 +72,10 @@ this class if a data row doesn't match the header.</p>
 rows. I presume this is because <tt class="docutils literal">astropy.io.ascii_read</tt> receives the web
 search form instead of the generated CSV formatted string for some reason.
 At least this was the case when I had trouble before. Let's check it. The
-testing framework <a href="#id1"><span class="problematic" id="id2">py.test_</span></a> supports debugging failed tests easily via the
+testing framework <a class="reference external" href="http://pytest.org">py.test</a> supports debugging failed tests easily via the
 <tt class="docutils literal"><span class="pre">--pdb</span></tt> option. So I run the tests now like this: <tt class="docutils literal">py.test
 <span class="pre">--remote-data</span> <span class="pre">--pdb</span> astroquery/eso/tests</tt>. This will launch the Python
-debugger <a class="reference internal" href="#pdb">pdb</a>.</p>
+debugger <a class="reference external" href="http://docs.python.org/library/pdb.html">pdb</a>.</p>
 <pre class="literal-block">
 &gt; /home/derdon/repos/python/3rdparty/astroquery/astroquery/eso/core.py(333)query_instrument()
 -&gt; raise ex
@@ -116,12 +116,6 @@ value <tt class="docutils literal">'foo'</tt>. But using beautifulsoup, the valu
 will be <tt class="docutils literal">'input'</tt> because it returns the name of the node as a string!</p>
 <p>After having fixed the code according to my new knowledge, there is only
 one remote failing test left, yay!</p>
-<span class="target" id="pdb"></span><div class="system-messages section">
-<h2>Docutils System Messages</h2>
-<div class="system-message" id="id1">
-<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/home/derdon/repos/general/own/blog/content/gsoc-aq-esotests.rst</tt>, line 38); <em><a href="#id2">backlink</a></em></p>
-Unknown target name: &quot;py.test&quot;.</div>
-</div>
 
   </p>
 </article>
