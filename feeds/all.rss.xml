@@ -1,5 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>derdon's blog</title><link>https://derdon.github.io/blog/</link><description></description><atom:link href="https://derdon.github.io/blog/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 18 May 2014 00:00:00 +0200</lastBuildDate><item><title>Bonding Period is Over</title><link>https://derdon.github.io/blog/bonding-period-is-over.html</link><description>&lt;p&gt;The last week has officially been the so-called &amp;quot;community bonding
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>derdon's blog</title><link>https://derdon.github.io/blog/</link><description></description><atom:link href="https://derdon.github.io/blog/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 04 Jun 2014 00:00:00 +0200</lastBuildDate><item><title>Debugging BeautifulSoup Pull Request</title><link>https://derdon.github.io/blog/debugging-beautifulsoup-pull-request.html</link><description>&lt;p&gt;I started working on a pull request which replaces the XML library &lt;a class="reference external" href="http://lxml.de"&gt;lxml&lt;/a&gt;
+with &lt;a class="reference external" href="http://beautiful-soup-4.readthedocs.org/en/latest/"&gt;beautifulsoup&lt;/a&gt; to have a pure-Python solution. The problem is that
+some of the remote tests fail, thus the pull request cannot be merged yet.&lt;/p&gt;
+&lt;p&gt;When I run &lt;tt class="docutils literal"&gt;py.test &lt;span class="pre"&gt;--remote-data&lt;/span&gt; astroquery/eso/tests&lt;/tt&gt; on the master
+branch, all tests pass fine. But when I call the same command on my branch
+which uses beautifulsoup instead of lxml, I get &lt;a class="reference external" href="http://bpaste.net/show/321066/"&gt;3 failing tests&lt;/a&gt;, each
+of them raising the exception &lt;tt class="docutils literal"&gt;InconsistentTableError&lt;/tt&gt;. Time to find out
+more and debug! Simplified, the stacktraces look like this:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;test_Sgr_Astar&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;EsoClass.query_instrument&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;raise
+InconsistentTableError&lt;/tt&gt;&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;test_empty_return&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;EsoClass.query_survey&lt;/tt&gt; -&amp;gt;
+&lt;tt class="docutils literal"&gt;astropy.io.ascii.read&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;astropy.io.ui._guess&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;raise
+InconsistentTableError&lt;/tt&gt;&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;test_SgrAstar_remotevslocal&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;EsoClass.query_instrument&lt;/tt&gt; -&amp;gt;
+&lt;tt class="docutils literal"&gt;raise InconsistentTableError&lt;/tt&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The exception &lt;tt class="docutils literal"&gt;InconsistentTableError&lt;/tt&gt; is a subclass of &lt;tt class="docutils literal"&gt;ValueError&lt;/tt&gt;
+and is defined in &lt;tt class="docutils literal"&gt;astropy.io.ascii.core&lt;/tt&gt;. It has the following
+docstring:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Indicates that an input table is inconsistent in some way.&lt;/p&gt;
+&lt;p&gt;The default behavior of &lt;tt class="docutils literal"&gt;BaseReader&lt;/tt&gt; is to throw an instance of
+this class if a data row doesn't match the header.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So the failing tests fail because some table is created with inconsistent
+rows. I presume this is because &lt;tt class="docutils literal"&gt;astropy.io.ascii_read&lt;/tt&gt; receives the web
+search form instead of the generated CSV formatted string for some reason.
+At least this was the case when I had trouble before. Let's check it. The
+testing framework &lt;a class="reference external" href="http://pytest.org"&gt;py.test&lt;/a&gt; supports debugging failed tests easily via the
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--pdb&lt;/span&gt;&lt;/tt&gt; option. So I run the tests now like this: &lt;tt class="docutils literal"&gt;py.test
+&lt;span class="pre"&gt;--remote-data&lt;/span&gt; &lt;span class="pre"&gt;--pdb&lt;/span&gt; astroquery/eso/tests&lt;/tt&gt;. This will launch the Python
+debugger &lt;a class="reference external" href="http://docs.python.org/library/pdb.html"&gt;pdb&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;gt; /home/derdon/repos/python/3rdparty/astroquery/astroquery/eso/core.py(333)query_instrument()
+-&amp;gt; raise ex
+(Pdb) ''.join(content.splitlines()[:3])
+'&amp;lt;html&amp;gt;&amp;lt;HEAD&amp;gt;&amp;lt;TITLE&amp;gt;ESO Science Archive - MIDI Data Products&amp;lt;/TITLE&amp;gt;'
+&lt;/pre&gt;
+&lt;p&gt;Yup, looks like &lt;cite&gt;content&lt;/cite&gt; contains the web form instead of a CSV-formatted
+string as it should (&lt;cite&gt;content&lt;/cite&gt; is the value that is passed to &lt;cite&gt;Table.read&lt;/cite&gt;
+and thus passed on to &lt;tt class="docutils literal"&gt;astropy.io.ascii_read&lt;/tt&gt;). I think the failure is
+in the method &lt;tt class="docutils literal"&gt;_activate_form&lt;/tt&gt; and therefore set a breakpoint via
+&lt;tt class="docutils literal"&gt;import pdb; pdb.set_trace()&lt;/tt&gt; at the end of this method body directly
+before returning. The code contains the statement &lt;tt class="docutils literal"&gt;if form_elem.name in
+inputs:&lt;/tt&gt; where &lt;tt class="docutils literal"&gt;form_elem&lt;/tt&gt; is created via the loop &lt;tt class="docutils literal"&gt;for form_elem in
+&lt;span class="pre"&gt;form.find_all(['input',&lt;/span&gt; 'select', &lt;span class="pre"&gt;'textarea']):&lt;/span&gt;&lt;/tt&gt;. The following pdb
+checks show that this if-statement can never be evaluated to &lt;tt class="docutils literal"&gt;True&lt;/tt&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+(Pdb) inputs
+{'wdbo': 'csv/download', 'max_rows_returned': 50, 'target': 'Sgr A*'}
+(Pdb) [form_elem.name for form_elem in form.find_all(['input', 'select', 'textarea'])]
+[u'input', u'input', u'select', u'input', u'input', u'input', u'input', u'select', u'select', u'input', u'input', u'input', u'select', u'input', u'input', u'input', u'input', u'input', u'select', u'input', u'select', u'input', u'input', u'input', u'select', u'input', u'select', u'input', u'input', u'select', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'select', u'input', u'select', u'input', u'input', u'select', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'select', u'input', u'select', u'input', u'input', u'input', u'select', u'input', u'select', u'input', u'select', u'input', u'select', u'input', u'select', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'select', u'input', u'input', u'select', u'select', u'input', u'input']
+&lt;/pre&gt;
+&lt;p&gt;I &lt;tt class="docutils literal"&gt;git checkout&lt;/tt&gt; now back to master and use pdb there to see how it
+&lt;em&gt;should&lt;/em&gt; be working.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+(Pdb) inputs
+{'wdbo': 'csv/download', 'max_rows_returned': 50, 'target': 'Sgr A*'}
+(Pdb) [form_input.name for form_input in form.inputs]
+[None, None, 'wdbo', 'max_rows_returned', None, None, 'target', 'resolver', 'coord_sys', 'coord1', 'coord2', 'box', 'format', 'tab_wdb_input_file', 'wdb_input_file', 'tab_night', 'night', 'stime', 'starttime', 'etime', 'endtime', 'tab_prog_id', 'prog_id', 'tab_prog_type', 'prog_type', 'tab_obs_mode', 'obs_mode', 'tab_pi_coi', 'pi_coi', 'pi_coi_name', 'tab_prog_title', 'prog_title', 'tab_dp_id', 'dp_id', 'tab_ob_id', 'ob_id', 'tab_obs_targ_name', 'obs_targ_name', 'tab_dp_cat', 'dp_cat', 'tab_dp_type', 'dp_type', 'tab_interferometry', 'tab_dp_tech', 'dp_tech', 'tab_tpl_name', 'tpl_name', 'tab_tpl_nexp', 'tpl_nexp', 'tab_tpl_start', 'tpl_start', 'tab_del_ft_sensor', 'del_ft_sensor', 'tab_del_ft_status', 'del_ft_status', 'tab_det_ntel', 'det_ntel', 'tab_iss_conf_station1', 'iss_conf_station1', 'tab_iss_conf_station2', 'iss_conf_station2', 'tab_iss_conf_station3', 'iss_conf_station3', 'tab_ocs_obs_mode', 'ocs_obs_mode', 'tab_ocs_obs_specconf', 'ocs_obs_specconf', 'tab_ocs_obs_type', 'ocs_obs_type', 'tab_ins_grat1_wlen', 'ins_grat1_wlen', 'tab_fwhm_avg', 'fwhm_avg', 'tab_airmass_range', 'airmass_range', 'tab_night_flag', 'night_flag', 'tab_moon_illu', 'moon_illu', 'order', 'extra_columns', 'force_tabular_mode', 'full_screen_mode']
+(Pdb) 'wdbo' in [form_input.name for form_input in form.inputs]
+True
+&lt;/pre&gt;
+&lt;p&gt;Zing! The last expression is always &lt;tt class="docutils literal"&gt;False&lt;/tt&gt; at my branch which is
+problematic. Now I realize what the problem is! On lxml,
+&lt;tt class="docutils literal"&gt;form_input.name&lt;/tt&gt; gives me the attribute value for the attribute
+&lt;tt class="docutils literal"&gt;name&lt;/tt&gt; of the node &lt;tt class="docutils literal"&gt;form_input&lt;/tt&gt;. E.g. if the node &lt;tt class="docutils literal"&gt;form_input&lt;/tt&gt; has
+the source &lt;tt class="docutils literal"&gt;&amp;lt;input name=foo&amp;gt;&lt;/tt&gt;, then &lt;tt class="docutils literal"&gt;form_input.name&lt;/tt&gt; will have the
+value &lt;tt class="docutils literal"&gt;'foo'&lt;/tt&gt;. But using beautifulsoup, the value of &lt;tt class="docutils literal"&gt;form_input.name&lt;/tt&gt;
+will be &lt;tt class="docutils literal"&gt;'input'&lt;/tt&gt; because it returns the name of the node as a string!&lt;/p&gt;
+&lt;p&gt;After having fixed the code according to my new knowledge, there is only
+one remote failing test left, yay! Until next time, I think this is enough
+for one blog post :-)&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Wed, 04 Jun 2014 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2014-06-04:blog/debugging-beautifulsoup-pull-request.html</guid></item><item><title>Bonding Period is Over</title><link>https://derdon.github.io/blog/bonding-period-is-over.html</link><description>&lt;p&gt;The last week has officially been the so-called &amp;quot;community bonding
 period&amp;quot;. I used it to get more familiar with the codebase, hang around on
 #astropy and follow the development via the mailinglist and the updates of
 the astroquery repository at GitHub. My next plans are:&lt;/p&gt;
@@ -857,83 +933,7 @@ the database.&lt;/p&gt;
 querying and adding a connection to the VSO interface so that downloaded
 data gets automatically added to the database.&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Wed, 19 Jun 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-06-19:blog/week-1-the-database-class.html</guid></item><item><title>Adding tests to ESO service</title><link>https://derdon.github.io/blog/adding-tests-to-eso-service.html</link><description>&lt;p&gt;I started working on a pull request which replaces the XML library &lt;a class="reference external" href="http://lxml.de"&gt;lxml&lt;/a&gt;
-with &lt;a class="reference external" href="http://beautiful-soup-4.readthedocs.org/en/latest/"&gt;beautifulsoup&lt;/a&gt; to have a pure-Python solution. The problem is that
-some of the remote tests fail, thus the pull request cannot be merged yet.&lt;/p&gt;
-&lt;p&gt;When I run &lt;tt class="docutils literal"&gt;py.test &lt;span class="pre"&gt;--remote-data&lt;/span&gt; astroquery/eso/tests&lt;/tt&gt; on the master
-branch, all tests pass fine. But when I call the same command on my branch
-which uses beautifulsoup instead of lxml, I get &lt;a class="reference external" href="http://bpaste.net/show/321066/"&gt;3 failing tests&lt;/a&gt;, each
-of them raising the exception &lt;tt class="docutils literal"&gt;InconsistentTableError&lt;/tt&gt;. Time to find out
-more and debug! Simplified, the stacktraces look like this:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol class="arabic simple"&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;test_Sgr_Astar&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;EsoClass.query_instrument&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;raise
-InconsistentTableError&lt;/tt&gt;&lt;/li&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;test_empty_return&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;EsoClass.query_survey&lt;/tt&gt; -&amp;gt;
-&lt;tt class="docutils literal"&gt;astropy.io.ascii.read&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;astropy.io.ui._guess&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;raise
-InconsistentTableError&lt;/tt&gt;&lt;/li&gt;
-&lt;li&gt;&lt;tt class="docutils literal"&gt;test_SgrAstar_remotevslocal&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;EsoClass.query_instrument&lt;/tt&gt; -&amp;gt;
-&lt;tt class="docutils literal"&gt;raise InconsistentTableError&lt;/tt&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;The exception &lt;tt class="docutils literal"&gt;InconsistentTableError&lt;/tt&gt; is a subclass of &lt;tt class="docutils literal"&gt;ValueError&lt;/tt&gt;
-and is defined in &lt;tt class="docutils literal"&gt;astropy.io.ascii.core&lt;/tt&gt;. It has the following
-docstring:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Indicates that an input table is inconsistent in some way.&lt;/p&gt;
-&lt;p&gt;The default behavior of &lt;tt class="docutils literal"&gt;BaseReader&lt;/tt&gt; is to throw an instance of
-this class if a data row doesn't match the header.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;So the failing tests fail because some table is created with inconsistent
-rows. I presume this is because &lt;tt class="docutils literal"&gt;astropy.io.ascii_read&lt;/tt&gt; receives the web
-search form instead of the generated CSV formatted string for some reason.
-At least this was the case when I had trouble before. Let's check it. The
-testing framework &lt;a class="reference external" href="http://pytest.org"&gt;py.test&lt;/a&gt; supports debugging failed tests easily via the
-&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--pdb&lt;/span&gt;&lt;/tt&gt; option. So I run the tests now like this: &lt;tt class="docutils literal"&gt;py.test
-&lt;span class="pre"&gt;--remote-data&lt;/span&gt; &lt;span class="pre"&gt;--pdb&lt;/span&gt; astroquery/eso/tests&lt;/tt&gt;. This will launch the Python
-debugger &lt;a class="reference external" href="http://docs.python.org/library/pdb.html"&gt;pdb&lt;/a&gt;.&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-&amp;gt; /home/derdon/repos/python/3rdparty/astroquery/astroquery/eso/core.py(333)query_instrument()
--&amp;gt; raise ex
-(Pdb) ''.join(content.splitlines()[:3])
-'&amp;lt;html&amp;gt;&amp;lt;HEAD&amp;gt;&amp;lt;TITLE&amp;gt;ESO Science Archive - MIDI Data Products&amp;lt;/TITLE&amp;gt;'
-&lt;/pre&gt;
-&lt;p&gt;Yup, looks like &lt;cite&gt;content&lt;/cite&gt; contains the web form instead of a CSV-formatted
-string as it should (&lt;cite&gt;content&lt;/cite&gt; is the value that is passed to &lt;cite&gt;Table.read&lt;/cite&gt;
-and thus passed on to &lt;tt class="docutils literal"&gt;astropy.io.ascii_read&lt;/tt&gt;). I think the failure is
-in the method &lt;tt class="docutils literal"&gt;_activate_form&lt;/tt&gt; and therefore set a breakpoint via
-&lt;tt class="docutils literal"&gt;import pdb; pdb.set_trace()&lt;/tt&gt; at the end of this method body directly
-before returning. The code contains the statement &lt;tt class="docutils literal"&gt;if form_elem.name in
-inputs:&lt;/tt&gt; where &lt;tt class="docutils literal"&gt;form_elem&lt;/tt&gt; is created via the loop &lt;tt class="docutils literal"&gt;for form_elem in
-&lt;span class="pre"&gt;form.find_all(['input',&lt;/span&gt; 'select', &lt;span class="pre"&gt;'textarea']):&lt;/span&gt;&lt;/tt&gt;. The following pdb
-checks show that this if-statement can never be evaluated to &lt;tt class="docutils literal"&gt;True&lt;/tt&gt;:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-(Pdb) inputs
-{'wdbo': 'csv/download', 'max_rows_returned': 50, 'target': 'Sgr A*'}
-(Pdb) [form_elem.name for form_elem in form.find_all(['input', 'select', 'textarea'])]
-[u'input', u'input', u'select', u'input', u'input', u'input', u'input', u'select', u'select', u'input', u'input', u'input', u'select', u'input', u'input', u'input', u'input', u'input', u'select', u'input', u'select', u'input', u'input', u'input', u'select', u'input', u'select', u'input', u'input', u'select', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'select', u'input', u'select', u'input', u'input', u'select', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'select', u'input', u'select', u'input', u'input', u'input', u'select', u'input', u'select', u'input', u'select', u'input', u'select', u'input', u'select', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'input', u'select', u'input', u'input', u'select', u'select', u'input', u'input']
-&lt;/pre&gt;
-&lt;p&gt;I &lt;tt class="docutils literal"&gt;git checkout&lt;/tt&gt; now back to master and use pdb there to see how it
-&lt;em&gt;should&lt;/em&gt; be working.&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-(Pdb) inputs
-{'wdbo': 'csv/download', 'max_rows_returned': 50, 'target': 'Sgr A*'}
-(Pdb) [form_input.name for form_input in form.inputs]
-[None, None, 'wdbo', 'max_rows_returned', None, None, 'target', 'resolver', 'coord_sys', 'coord1', 'coord2', 'box', 'format', 'tab_wdb_input_file', 'wdb_input_file', 'tab_night', 'night', 'stime', 'starttime', 'etime', 'endtime', 'tab_prog_id', 'prog_id', 'tab_prog_type', 'prog_type', 'tab_obs_mode', 'obs_mode', 'tab_pi_coi', 'pi_coi', 'pi_coi_name', 'tab_prog_title', 'prog_title', 'tab_dp_id', 'dp_id', 'tab_ob_id', 'ob_id', 'tab_obs_targ_name', 'obs_targ_name', 'tab_dp_cat', 'dp_cat', 'tab_dp_type', 'dp_type', 'tab_interferometry', 'tab_dp_tech', 'dp_tech', 'tab_tpl_name', 'tpl_name', 'tab_tpl_nexp', 'tpl_nexp', 'tab_tpl_start', 'tpl_start', 'tab_del_ft_sensor', 'del_ft_sensor', 'tab_del_ft_status', 'del_ft_status', 'tab_det_ntel', 'det_ntel', 'tab_iss_conf_station1', 'iss_conf_station1', 'tab_iss_conf_station2', 'iss_conf_station2', 'tab_iss_conf_station3', 'iss_conf_station3', 'tab_ocs_obs_mode', 'ocs_obs_mode', 'tab_ocs_obs_specconf', 'ocs_obs_specconf', 'tab_ocs_obs_type', 'ocs_obs_type', 'tab_ins_grat1_wlen', 'ins_grat1_wlen', 'tab_fwhm_avg', 'fwhm_avg', 'tab_airmass_range', 'airmass_range', 'tab_night_flag', 'night_flag', 'tab_moon_illu', 'moon_illu', 'order', 'extra_columns', 'force_tabular_mode', 'full_screen_mode']
-(Pdb) 'wdbo' in [form_input.name for form_input in form.inputs]
-True
-&lt;/pre&gt;
-&lt;p&gt;Zing! The last expression is always &lt;tt class="docutils literal"&gt;False&lt;/tt&gt; at my branch which is
-problematic. Now I realize what the problem is! On lxml,
-&lt;tt class="docutils literal"&gt;form_input.name&lt;/tt&gt; gives me the attribute value for the attribute
-&lt;tt class="docutils literal"&gt;name&lt;/tt&gt; of the node &lt;tt class="docutils literal"&gt;form_input&lt;/tt&gt;. E.g. if the node &lt;tt class="docutils literal"&gt;form_input&lt;/tt&gt; has
-the source &lt;tt class="docutils literal"&gt;&amp;lt;input name=foo&amp;gt;&lt;/tt&gt;, then &lt;tt class="docutils literal"&gt;form_input.name&lt;/tt&gt; will have the
-value &lt;tt class="docutils literal"&gt;'foo'&lt;/tt&gt;. But using beautifulsoup, the value of &lt;tt class="docutils literal"&gt;form_input.name&lt;/tt&gt;
-will be &lt;tt class="docutils literal"&gt;'input'&lt;/tt&gt; because it returns the name of the node as a string!&lt;/p&gt;
-&lt;p&gt;After having fixed the code according to my new knowledge, there is only
-one remote failing test left, yay! Until next time, I think this is enough
-for one blog post :-)&lt;/p&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Tue, 04 Jun 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-06-04:blog/adding-tests-to-eso-service.html</guid></item><item><title>Implementing an undo-redo-manager in Python</title><link>https://derdon.github.io/blog/implementing-an-undo-redo-manager-in-python.html</link><description>&lt;p&gt;An undo-redo-manager is useful in many cases, especially in interactive
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Wed, 19 Jun 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-06-19:blog/week-1-the-database-class.html</guid></item><item><title>Implementing an undo-redo-manager in Python</title><link>https://derdon.github.io/blog/implementing-an-undo-redo-manager-in-python.html</link><description>&lt;p&gt;An undo-redo-manager is useful in many cases, especially in interactive
 applications (interactive shells, grahical applications like &lt;a class="reference external" href="http://www.gimp.org/"&gt;GIMP&lt;/a&gt; or
 &lt;a class="reference external" href="http://www.libreoffice.org/"&gt;LibreOffice&lt;/a&gt;). There are two main different implementation types to
 consider: &lt;a class="reference external" href="http://stackoverflow.com/a/3542670/657575"&gt;save state and generate state&lt;/a&gt;.  Save state means that each
