@@ -16,7 +16,7 @@ the following parameters: cat1, cat2, max_distance, format, colRA1,
 coldDec1, colRA2, colDec2. cat1 and cat2 are used to identify the first or
 the second table to be queried, respectively. max_distance denotes the
 maximum distance (in arcsecs) that will be used to look for counterparts.
-The desired format can be either &lt;a href="#id1"&gt;&lt;span class="problematic" id="id2"&gt;VOTable_&lt;/span&gt;&lt;/a&gt;, &lt;a class="reference external" href="http://json.org"&gt;JSON&lt;/a&gt;, &lt;a class="reference internal" href="#csv"&gt;CSV&lt;/a&gt;, or &lt;a class="reference internal" href="#tsv"&gt;TSV&lt;/a&gt;. The last
+The desired format can be either &lt;a class="reference external" href="http://www.ivoa.net/documents/REC/VOTable/VOTable-20040811.html"&gt;VOTable&lt;/a&gt;, &lt;a class="reference external" href="http://json.org"&gt;JSON&lt;/a&gt;, &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Comma-separated_values"&gt;CSV&lt;/a&gt;, or &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Tab-separated_values"&gt;TSV&lt;/a&gt;. The last
 four parameters indicate the names of the columns of the respective
 tables.&lt;/p&gt;
 &lt;p&gt;The &lt;a class="reference external" href="http://ipython.org"&gt;ipython&lt;/a&gt; session below shows the xmatch package &amp;quot;in action&amp;quot;:&lt;/p&gt;
@@ -70,17 +70,14 @@ open and things will change because I haven't reacted to all the comments
 yet.&lt;/p&gt;
 &lt;div class="section" id="what-s-next"&gt;
 &lt;h2&gt;What's next?&lt;/h2&gt;
-&lt;p&gt;I started working on the next service, &lt;a href="#id3"&gt;&lt;span class="problematic" id="id4"&gt;SkyView_&lt;/span&gt;&lt;/a&gt;. Yet it is not enough to
+&lt;p&gt;I started working on the next service, &lt;a href="#id1"&gt;&lt;span class="problematic" id="id2"&gt;SkyView_&lt;/span&gt;&lt;/a&gt;. Yet it is not enough to
 open a new PR about it, but I have some concrete plans on how to continue
 on it. Stay tuned!&lt;/p&gt;
-&lt;span class="target" id="tsv"&gt;&lt;span id="csv"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
 &lt;div class="system-messages section"&gt;
 &lt;h2&gt;Docutils System Messages&lt;/h2&gt;
 &lt;div class="system-message" id="id1"&gt;
-&lt;p class="system-message-title"&gt;System Message: ERROR/3 (&lt;tt class="docutils"&gt;/home/derdon/repos/general/own/blog/content/gsoc-aq-xmatch.rst&lt;/tt&gt;, line 8); &lt;em&gt;&lt;a href="#id2"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-Unknown target name: &amp;quot;votable&amp;quot;.&lt;/div&gt;
-&lt;div class="system-message" id="id3"&gt;
-&lt;p class="system-message-title"&gt;System Message: ERROR/3 (&lt;tt class="docutils"&gt;/home/derdon/repos/general/own/blog/content/gsoc-aq-xmatch.rst&lt;/tt&gt;, line 84); &lt;em&gt;&lt;a href="#id4"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p class="system-message-title"&gt;System Message: ERROR/3 (&lt;tt class="docutils"&gt;/home/derdon/repos/general/own/blog/content/gsoc-aq-xmatch.rst&lt;/tt&gt;, line 84); &lt;em&gt;&lt;a href="#id2"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 Unknown target name: &amp;quot;skyview&amp;quot;.&lt;/div&gt;
 &lt;/div&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Thu, 19 Jun 2014 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2014-06-19:blog/new-service-for-astroquery-coming-xmatch.html</guid></item><item><title>Debugging BeautifulSoup Pull Request</title><link>https://derdon.github.io/blog/debugging-beautifulsoup-pull-request.html</link><description>&lt;p&gt;I started working on a pull request which replaces the XML library &lt;a class="reference external" href="http://lxml.de"&gt;lxml&lt;/a&gt;
