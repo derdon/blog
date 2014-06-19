@@ -70,15 +70,9 @@ open and things will change because I haven't reacted to all the comments
 yet.&lt;/p&gt;
 &lt;div class="section" id="what-s-next"&gt;
 &lt;h2&gt;What's next?&lt;/h2&gt;
-&lt;p&gt;I started working on the next service, &lt;a href="#id1"&gt;&lt;span class="problematic" id="id2"&gt;SkyView_&lt;/span&gt;&lt;/a&gt;. Yet it is not enough to
+&lt;p&gt;I started working on the next service, &lt;a class="reference external" href="http://skyview.gsfc.nasa.gov/current/cgi/titlepage.pl"&gt;SkyView&lt;/a&gt;. Yet it is not enough to
 open a new PR about it, but I have some concrete plans on how to continue
 on it. Stay tuned!&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="system-messages section"&gt;
-&lt;h2&gt;Docutils System Messages&lt;/h2&gt;
-&lt;div class="system-message" id="id1"&gt;
-&lt;p class="system-message-title"&gt;System Message: ERROR/3 (&lt;tt class="docutils"&gt;/home/derdon/repos/general/own/blog/content/gsoc-aq-xmatch.rst&lt;/tt&gt;, line 84); &lt;em&gt;&lt;a href="#id2"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-Unknown target name: &amp;quot;skyview&amp;quot;.&lt;/div&gt;
 &lt;/div&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Thu, 19 Jun 2014 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2014-06-19:blog/new-service-for-astroquery-coming-xmatch.html</guid></item><item><title>Debugging BeautifulSoup Pull Request</title><link>https://derdon.github.io/blog/debugging-beautifulsoup-pull-request.html</link><description>&lt;p&gt;I started working on a pull request which replaces the XML library &lt;a class="reference external" href="http://lxml.de"&gt;lxml&lt;/a&gt;
 with &lt;a class="reference external" href="http://beautiful-soup-4.readthedocs.org/en/latest/"&gt;beautifulsoup&lt;/a&gt; to have a pure-Python solution. The problem is that
