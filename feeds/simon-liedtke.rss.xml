@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>derdon's blog</title><link href="http://derdon.github.io/blog/" rel="alternate"></link><link href="http://derdon.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>http://derdon.github.io/blog/</id><updated>2014-05-18T00:00:00+02:00</updated><entry><title>Bonding Period is Over</title><link href="http://derdon.github.io/blog/bonding-period-is-over.html" rel="alternate"></link><updated>2014-05-18T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2014-05-18:blog/bonding-period-is-over.html</id><summary type="html">&lt;p&gt;The last week has officially been the so-called &amp;quot;community bonding
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>derdon's blog</title><link>http://derdon.github.io/blog/</link><description></description><atom:link href="http://derdon.github.io/blog/feeds/simon-liedtke.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 18 May 2014 00:00:00 +0200</lastBuildDate><item><title>Bonding Period is Over</title><link>http://derdon.github.io/blog/bonding-period-is-over.html</link><description>&lt;p&gt;The last week has officially been the so-called &amp;quot;community bonding
 period&amp;quot;. I used it to get more familiar with the codebase, hang around on
 #astropy and follow the development via the mailinglist and the updates of
 the astroquery repository at GitHub. My next plans are:&lt;/p&gt;
@@ -13,7 +13,7 @@ lxml to BeautifulSoup.&lt;/li&gt;
 &lt;p&gt;Today I will have a hangout with my mentor Adam Ginsburg to discuss the
 next steps and how to implement them. At least that's what I imagine,
 actually we only arranged a time for a hangout.&lt;/p&gt;
-</summary></entry><entry><title>End of Google Summer of Code</title><link href="http://derdon.github.io/blog/end-of-google-summer-of-code.html" rel="alternate"></link><updated>2013-09-28T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-09-28:blog/end-of-google-summer-of-code.html</id><summary type="html">&lt;div class="section" id="thank-you"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Sun, 18 May 2014 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2014-05-18:blog/bonding-period-is-over.html</guid></item><item><title>End of Google Summer of Code</title><link>http://derdon.github.io/blog/end-of-google-summer-of-code.html</link><description>&lt;div class="section" id="thank-you"&gt;
 &lt;h2&gt;Thank You!&lt;/h2&gt;
 &lt;p&gt;Yesterday was the last day of my Google Summer of Code project. I want to
 use this blog post to say thank you. Thank you Google for making this
@@ -49,7 +49,7 @@ he wrote a module which can translate VSO queries to HEK queries.&lt;/p&gt;
 &lt;tt class="docutils literal"&gt;VSOClient.get&lt;/tt&gt; may also be *.tar or *.tar.gz files, so I plan to
 support these kind of files as well.&lt;/p&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Week 11 — Support for the VSO attributes Wave and Time</title><link href="http://derdon.github.io/blog/week-11-support-for-the-vso-attributes-wave-and-time.html" rel="alternate"></link><updated>2013-08-23T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-08-23:blog/week-11-support-for-the-vso-attributes-wave-and-time.html</id><summary type="html">&lt;div class="section" id="preparation-filling-the-database-with-entries"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Sat, 28 Sep 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-09-28:blog/end-of-google-summer-of-code.html</guid></item><item><title>Week 11 — Support for the VSO attributes Wave and Time</title><link>http://derdon.github.io/blog/week-11-support-for-the-vso-attributes-wave-and-time.html</link><description>&lt;div class="section" id="preparation-filling-the-database-with-entries"&gt;
 &lt;h2&gt;Preparation: filling the database with entries&lt;/h2&gt;
 &lt;p&gt;The VSO is queried for all AIA data that has been observed on the 8th of
 June, 2011 from 23:59:55 to the end of this day (i.e. a range of 5
@@ -125,7 +125,7 @@ it works:&lt;/p&gt;
 &lt;span class="go"&gt;5  2011-06-09 00:00:00    2011-06-09 00:00:01  21.1    21.1&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Week 10 — Extracting waveunit from FITS files</title><link href="http://derdon.github.io/blog/week-10-extracting-waveunit-from-fits-files.html" rel="alternate"></link><updated>2013-08-15T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-08-15:blog/week-10-extracting-waveunit-from-fits-files.html</id><summary type="html">&lt;div class="section" id="motivation"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Fri, 23 Aug 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-08-23:blog/week-11-support-for-the-vso-attributes-wave-and-time.html</guid></item><item><title>Week 10 — Extracting waveunit from FITS files</title><link>http://derdon.github.io/blog/week-10-extracting-waveunit-from-fits-files.html</link><description>&lt;div class="section" id="motivation"&gt;
 &lt;h2&gt;Motivation&lt;/h2&gt;
 &lt;p&gt;The &lt;tt class="docutils literal"&gt;query&lt;/tt&gt; method of the class &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; already works with
 &lt;tt class="docutils literal"&gt;Wave(100, 200, 'angstrom')&lt;/tt&gt;, but not as the user might expect it.
@@ -155,7 +155,7 @@ example of how to use it:&lt;/p&gt;
 &lt;span class="go"&gt;Unit(&amp;quot;nm&amp;quot;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Week 9 — Improved Database class</title><link href="http://derdon.github.io/blog/week-9-improved-database-class.html" rel="alternate"></link><updated>2013-08-11T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-08-11:blog/week-9-improved-database-class.html</id><summary type="html">&lt;div class="section" id="adding-entries-by-path"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Thu, 15 Aug 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-08-15:blog/week-10-extracting-waveunit-from-fits-files.html</guid></item><item><title>Week 9 — Improved Database class</title><link>http://derdon.github.io/blog/week-9-improved-database-class.html</link><description>&lt;div class="section" id="adding-entries-by-path"&gt;
 &lt;h2&gt;Adding entries by path&lt;/h2&gt;
 &lt;p&gt;It is now simpler to add new database entries by passing a directory. The
 class &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; got a new method &lt;tt class="docutils literal"&gt;add_from_path&lt;/tt&gt; to add all entries
@@ -240,7 +240,7 @@ actual cache implementation.&lt;/p&gt;
 &lt;span class="go"&gt;3  N/A      171.0   171.0&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Week 8 — Various new features</title><link href="http://derdon.github.io/blog/week-8-various-new-features.html" rel="alternate"></link><updated>2013-08-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-08-04:blog/week-8-various-new-features.html</id><summary type="html">&lt;div class="section" id="preparation"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Sun, 11 Aug 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-08-11:blog/week-9-improved-database-class.html</guid></item><item><title>Week 8 — Various new features</title><link>http://derdon.github.io/blog/week-8-various-new-features.html</link><description>&lt;div class="section" id="preparation"&gt;
 &lt;h2&gt;Preparation&lt;/h2&gt;
 &lt;p&gt;To be able to show the new implemented features, the database needs to be
 initialized and populated with some entries. The VSO is queried for all
@@ -374,9 +374,9 @@ instrument &lt;cite&gt;ChroTel&lt;/cite&gt;, the provider &lt;cite&gt;KIS&lt;/ci
 &lt;span class="go"&gt;24 Angstrom 10830.0 10830.0&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Week 7 — Announcement: a week of vacation</title><link href="http://derdon.github.io/blog/week-7-announcement-a-week-of-vacation.html" rel="alternate"></link><updated>2013-07-19T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-07-19:blog/week-7-announcement-a-week-of-vacation.html</id><summary type="html">&lt;p&gt;I don't have much to say here. Tomorrow starts my vacation in Denmark and
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Sun, 04 Aug 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-08-04:blog/week-8-various-new-features.html</guid></item><item><title>Week 7 — Announcement: a week of vacation</title><link>http://derdon.github.io/blog/week-7-announcement-a-week-of-vacation.html</link><description>&lt;p&gt;I don't have much to say here. Tomorrow starts my vacation in Denmark and
 it ends exactly one week later (Saturday next week).&lt;/p&gt;
-</summary></entry><entry><title>Week 6 — Querying the database</title><link href="http://derdon.github.io/blog/week-6-querying-the-database.html" rel="alternate"></link><updated>2013-07-18T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-07-18:blog/week-6-querying-the-database.html</id><summary type="html">&lt;div class="section" id="intro-comparison-with-the-vso-query-interface"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Fri, 19 Jul 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-07-19:blog/week-7-announcement-a-week-of-vacation.html</guid></item><item><title>Week 6 — Querying the database</title><link>http://derdon.github.io/blog/week-6-querying-the-database.html</link><description>&lt;div class="section" id="intro-comparison-with-the-vso-query-interface"&gt;
 &lt;h2&gt;Intro: Comparison with the VSO query interface&lt;/h2&gt;
 &lt;p&gt;Querying the database works like the query method of VSOClient. The
 following query call filters all the data that was observed on 1st
@@ -446,7 +446,7 @@ code like the following will be possible:&lt;/p&gt;
 &lt;p&gt;This would fetch all data that was observed with the EIT in the January
 2000.&lt;/p&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Week 5 — Importing database entries from a directory</title><link href="http://derdon.github.io/blog/week-5-importing-database-entries-from-a-directory.html" rel="alternate"></link><updated>2013-07-08T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-07-08:blog/week-5-importing-database-entries-from-a-directory.html</id><summary type="html">&lt;p&gt;The class &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt; now has a new classmethod:
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Thu, 18 Jul 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-07-18:blog/week-6-querying-the-database.html</guid></item><item><title>Week 5 — Importing database entries from a directory</title><link>http://derdon.github.io/blog/week-5-importing-database-entries-from-a-directory.html</link><description>&lt;p&gt;The class &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt; now has a new classmethod:
 &lt;tt class="docutils literal"&gt;from_fits_filepath&lt;/tt&gt;. It receives a path to a FITS filename and parses
 its header to make a new instance of &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt;. All key-value
 pairs can be found in the attribute &lt;tt class="docutils literal"&gt;fits_header_entries&lt;/tt&gt;, which is a
@@ -494,7 +494,7 @@ and its default is &lt;em&gt;*.fits&lt;/em&gt;. Again, the values of the attribu
 &lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;first_entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;observation_time_start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;first_entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;observation_time_end&lt;/span&gt;
 &lt;span class="go"&gt;(datetime.datetime(2004, 3, 1, 2, 0, 10, 642000), None)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</summary></entry><entry><title>Week 4 — Plans for query support</title><link href="http://derdon.github.io/blog/week-4-plans-for-query-support.html" rel="alternate"></link><updated>2013-07-04T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-07-04:blog/week-4-plans-for-query-support.html</id><summary type="html">&lt;div class="section" id="user-perspective-first"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Mon, 08 Jul 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-07-08:blog/week-5-importing-database-entries-from-a-directory.html</guid></item><item><title>Week 4 — Plans for query support</title><link>http://derdon.github.io/blog/week-4-plans-for-query-support.html</link><description>&lt;div class="section" id="user-perspective-first"&gt;
 &lt;h2&gt;User perspective first!&lt;/h2&gt;
 &lt;div class="section" id="how-does-querying-work-with-the-existing-vso-interface"&gt;
 &lt;h3&gt;How does querying work with the existing VSO interface?&lt;/h3&gt;
@@ -549,7 +549,7 @@ with the VSO package) and will define how to convert attributes to database
 queries. Additionally, it will introduce the new attributes &lt;tt class="docutils literal"&gt;Tag&lt;/tt&gt; and
 &lt;tt class="docutils literal"&gt;Starred&lt;/tt&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Week 3 — Tag Support</title><link href="http://derdon.github.io/blog/week-3-tag-support.html" rel="alternate"></link><updated>2013-06-30T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-06-30:blog/week-3-tag-support.html</id><summary type="html">&lt;div class="section" id="adding-tags"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Thu, 04 Jul 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-07-04:blog/week-4-plans-for-query-support.html</guid></item><item><title>Week 3 — Tag Support</title><link>http://derdon.github.io/blog/week-3-tag-support.html</link><description>&lt;div class="section" id="adding-tags"&gt;
 &lt;h2&gt;adding tags&lt;/h2&gt;
 &lt;p&gt;Tags are usually single words that describe entries in a brief way.
 Although it is possible to use tags that include whitespace or are
@@ -606,7 +606,7 @@ the Many to Many Table&lt;/a&gt;
 from the SQLAlchemy Documentation to find out what to consider when
 removing entries in a many-to-many relationship.&lt;/p&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Week 2 — Database Entries</title><link href="http://derdon.github.io/blog/week-2-database-entries.html" rel="alternate"></link><updated>2013-06-22T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-06-22:blog/week-2-database-entries.html</id><summary type="html">&lt;div class="section" id="the-databaseentry-class"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Sun, 30 Jun 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-06-30:blog/week-3-tag-support.html</guid></item><item><title>Week 2 — Database Entries</title><link>http://derdon.github.io/blog/week-2-database-entries.html</link><description>&lt;div class="section" id="the-databaseentry-class"&gt;
 &lt;h2&gt;The DatabaseEntry class&lt;/h2&gt;
 &lt;p&gt;In the last blog post, I have used the class &lt;tt class="docutils literal"&gt;DatabaseEntry&lt;/tt&gt; without
 really explaining it. That may have confused the reader but I had a reason
@@ -671,7 +671,7 @@ information about its usage.&lt;/p&gt;
 &lt;span class="go"&gt;&amp;lt;DatabaseEntry(id None, data provider SDAC, fileid /archive/soho/private/data/processed/eit/lz/2001/01/efz20010101.010014)&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Week 1 — The Database class</title><link href="http://derdon.github.io/blog/week-1-the-database-class.html" rel="alternate"></link><updated>2013-06-19T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-06-19:blog/week-1-the-database-class.html</id><summary type="html">&lt;p&gt;The class &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; is the central class of the new database package.
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Sat, 22 Jun 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-06-22:blog/week-2-database-entries.html</guid></item><item><title>Week 1 — The Database class</title><link>http://derdon.github.io/blog/week-1-the-database-class.html</link><description>&lt;p&gt;The class &lt;tt class="docutils literal"&gt;Database&lt;/tt&gt; is the central class of the new database package.
 It is used to connect to a database and to manipulate it (adding new
 entries, editing exisitng entries, removing entries). Later on, it will
 also be possible to search for entries by specific criteria (I think about
@@ -857,7 +857,7 @@ the database.&lt;/p&gt;
 querying and adding a connection to the VSO interface so that downloaded
 data gets automatically added to the database.&lt;/p&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Implementing an undo-redo-manager in Python</title><link href="http://derdon.github.io/blog/implementing-an-undo-redo-manager-in-python.html" rel="alternate"></link><updated>2013-05-31T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-05-31:blog/implementing-an-undo-redo-manager-in-python.html</id><summary type="html">&lt;p&gt;An undo-redo-manager is useful in many cases, especially in interactive
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Wed, 19 Jun 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-06-19:blog/week-1-the-database-class.html</guid></item><item><title>Implementing an undo-redo-manager in Python</title><link>http://derdon.github.io/blog/implementing-an-undo-redo-manager-in-python.html</link><description>&lt;p&gt;An undo-redo-manager is useful in many cases, especially in interactive
 applications (interactive shells, grahical applications like &lt;a class="reference external" href="http://www.gimp.org/"&gt;GIMP&lt;/a&gt; or
 &lt;a class="reference external" href="http://www.libreoffice.org/"&gt;LibreOffice&lt;/a&gt;). There are two main different implementation types to
 consider: &lt;a class="reference external" href="http://stackoverflow.com/a/3542670/657575"&gt;save state and generate state&lt;/a&gt;.  Save state means that each
@@ -1046,7 +1046,7 @@ session:&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The complete code sample can be found at &lt;a class="reference external" href="https://github.com/derdon/hodgepodge/blob/master/python/undoredomanager.py"&gt;undoredomanager.py&lt;/a&gt; from my
 hodgepodge GitHub repository.&lt;/p&gt;
-</summary></entry><entry><title>GSOC 2013 — Initial Post</title><link href="http://derdon.github.io/blog/gsoc-2013-initial-post.html" rel="alternate"></link><updated>2013-05-28T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2013-05-28:blog/gsoc-2013-initial-post.html</id><summary type="html">&lt;p&gt;So yesterday evening I found out that I am one of the participating
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Fri, 31 May 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-05-31:blog/implementing-an-undo-redo-manager-in-python.html</guid></item><item><title>GSOC 2013 — Initial Post</title><link>http://derdon.github.io/blog/gsoc-2013-initial-post.html</link><description>&lt;p&gt;So yesterday evening I found out that I am one of the participating
 students of GSOC and this is really cool! Wait, what is “GSOC” and why am
 I so excited about it? GSOC is short for Google Summer of Code and is
 stipend program by Google to improve Open Source projects. The Open Source
@@ -1059,7 +1059,7 @@ makes it possible to query the database, e.g. to display all data that has
 been downloaded in the last two weeks. The database will act as a cache,
 meaning that one gets the data from the database if a download from a
 source is attempted that was already downloaded before.&lt;/p&gt;
-</summary></entry><entry><title>using a custom pygments style via vim color schemes</title><link href="http://derdon.github.io/blog/using-a-custom-pygments-style-via-vim-color-schemes.html" rel="alternate"></link><updated>2011-05-16T00:00:00+02:00</updated><author><name>Simon Liedtke</name></author><id>tag:derdon.github.io,2011-05-16:blog/using-a-custom-pygments-style-via-vim-color-schemes.html</id><summary type="html">&lt;p&gt;To convert a vim color schemes to python code, which is
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Tue, 28 May 2013 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2013-05-28:blog/gsoc-2013-initial-post.html</guid></item><item><title>using a custom pygments style via vim color schemes</title><link>http://derdon.github.io/blog/using-a-custom-pygments-style-via-vim-color-schemes.html</link><description>&lt;p&gt;To convert a vim color schemes to python code, which is
 required for later use, there is the script &lt;a class="reference external" href="https://bitbucket.org/birkenfeld/pygments-main/src/4e66a4c4b3ed/scripts/vim2pygments.py"&gt;vim2pygments.py&lt;/a&gt; in the
 pygments repository on bitbucket. You pass the path of the vim file to
 this script. Example:&lt;/p&gt;
@@ -1120,4 +1120,4 @@ the CSS file in your pygments highlighted code by simply including it in a
 way that the generated HTML file accesses it, e.g.:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;link&lt;/span&gt; &lt;span class="na"&gt;rel=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;stylesheet&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;href=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;summerfruit.css&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;type=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;text/css&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</summary></entry></feed>
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Mon, 16 May 2011 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2011-05-16:blog/using-a-custom-pygments-style-via-vim-color-schemes.html</guid></item></channel></rss>
