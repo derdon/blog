@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>derdon's blog</title><link>http://derdon.github.io/blog/</link><description></description><atom:link href="http://derdon.github.io/blog/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 18 May 2014 00:00:00 +0200</lastBuildDate><item><title>Bonding Period is Over</title><link>http://derdon.github.io/blog/bonding-period-is-over.html</link><description>&lt;p&gt;The last week has officially been the so-called &amp;quot;community bonding
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>derdon's blog</title><link>http://derdon.github.io/blog/</link><description></description><atom:link href="http://derdon.github.io/blog/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 03 Aug 2014 00:00:00 +0200</lastBuildDate><item><title>Astroquery -- New Service Atomic Line List</title><link>http://derdon.github.io/blog/astroquery-new-service-atomic-line-list.html</link><description>&lt;p&gt;&amp;quot;Atomic Line List&amp;quot; is a collection of more than 900,000 atomic transitions in
+the range from 0.5 Å to 1000 µm (&lt;a class="reference external" href="http://www.pa.uky.edu/~peter/atomic/documentation.html"&gt;source&lt;/a&gt;). By adding support for this
+service in astroquery, it will be possible to access these records easily
+with the Python programming language.&lt;/p&gt;
+&lt;p&gt;The class &lt;tt class="docutils literal"&gt;AtomicLineList&lt;/tt&gt; has only 2 public methods: &lt;tt class="docutils literal"&gt;query_object&lt;/tt&gt;
+and &lt;tt class="docutils literal"&gt;query_object_async&lt;/tt&gt;. The latter one only gives us an HTTP response
+object, whereas the former one converts the HTTP response into an AstroPy
+table. So let's take a look at &lt;tt class="docutils literal"&gt;query_object&lt;/tt&gt;: So far, it only has four
+parameters (all optional): &lt;tt class="docutils literal"&gt;wavelength_range&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;wavelength_type&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;wavelength_accuracy&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;element_spectrum&lt;/tt&gt;. The respective web form
+for Atomic Line List can be found at &lt;a class="reference external" href="http://www.pa.uky.edu/~peter/atomic/"&gt;http://www.pa.uky.edu/~peter/atomic/&lt;/a&gt;.
+As you can see there, the first form fields are &amp;quot;Wavelength range&amp;quot; and
+&amp;quot;Unit&amp;quot;. The &lt;a class="reference external" href="http://astropy.readthedocs.org/en/stable/"&gt;AstroPy&lt;/a&gt; package offers a very handy &lt;cite&gt;unit&lt;/cite&gt; package, so I
+decided to support this type instead of passing plain strings. Therefore,
+even more units are supported than the one given in the web form! The
+parameter &lt;cite&gt;wavelength_range&lt;/cite&gt; is a 2-tuple where each item is a scalar
+multiplied with an AstroPy unit. Behind the scenes, both values will be
+converted to Angstrom (arbitrarily chosen from the web form's dropdown
+menu)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;astropy&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;units&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;u&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;astroquery.atomic&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;AtomicLineList&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;alist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AtomicLineList&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;wavelength_range&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;nm&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1.5e+16&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Hz&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;alist&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;query_object&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;wavelength_range&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wavelength_type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Air&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wavelength_accuracy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;element_spectrum&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;C II-IV&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;Table rows=3 names=(&amp;#39;LAMBDA VAC ANG&amp;#39;,&amp;#39;SPECTRUM&amp;#39;,&amp;#39;TT&amp;#39;,&amp;#39;TERM&amp;#39;,&amp;#39;J J&amp;#39;,&amp;#39;LEVEL ENERGY  CM 1&amp;#39;)&amp;gt;&lt;/span&gt;
+&lt;span class="go"&gt;array([(196.8874, &amp;#39;C IV&amp;#39;, &amp;#39;E1&amp;#39;, &amp;#39;2S-2Po&amp;#39;, &amp;#39;1/2-*&amp;#39;, &amp;#39;0.00 -   507904.40&amp;#39;),&lt;/span&gt;
+&lt;span class="go"&gt;       (197.7992, &amp;#39;C IV&amp;#39;, &amp;#39;E1&amp;#39;, &amp;#39;2S-2Po&amp;#39;, &amp;#39;1/2-*&amp;#39;, &amp;#39;0.00 -   505563.30&amp;#39;),&lt;/span&gt;
+&lt;span class="go"&gt;       (199.0122, &amp;#39;C IV&amp;#39;, &amp;#39;E1&amp;#39;, &amp;#39;2S-2Po&amp;#39;, &amp;#39;1/2-*&amp;#39;, &amp;#39;0.00 -   502481.80&amp;#39;)],&lt;/span&gt;
+&lt;span class="go"&gt;      dtype=[(&amp;#39;LAMBDA VAC ANG&amp;#39;, &amp;#39;&amp;lt;f8&amp;#39;), (&amp;#39;SPECTRUM&amp;#39;, &amp;#39;S4&amp;#39;), (&amp;#39;TT&amp;#39;, &amp;#39;S2&amp;#39;), (&amp;#39;TERM&amp;#39;, &amp;#39;S6&amp;#39;), (&amp;#39;J J&amp;#39;, &amp;#39;S5&amp;#39;), (&amp;#39;LEVEL ENERGY  CM 1&amp;#39;, &amp;#39;S18&amp;#39;)])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Simon Liedtke</dc:creator><pubDate>Sun, 03 Aug 2014 00:00:00 +0200</pubDate><guid>tag:derdon.github.io,2014-08-03:blog/astroquery-new-service-atomic-line-list.html</guid></item><item><title>Bonding Period is Over</title><link>http://derdon.github.io/blog/bonding-period-is-over.html</link><description>&lt;p&gt;The last week has officially been the so-called &amp;quot;community bonding
 period&amp;quot;. I used it to get more familiar with the codebase, hang around on
 #astropy and follow the development via the mailinglist and the updates of
 the astroquery repository at GitHub. My next plans are:&lt;/p&gt;
