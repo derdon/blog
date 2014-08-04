@@ -18,6 +18,9 @@ parameter &lt;cite&gt;wavelength_range&lt;/cite&gt; is a 2-tuple where each item
 multiplied with an AstroPy unit. Behind the scenes, both values will be
 converted to Angstrom (arbitrarily chosen from the web form's dropdown
 menu)&lt;/p&gt;
+&lt;p&gt;In the following Python session you can see the atomic package in action.
+Note that Hz is actually not a supported unit by Atomic Line List, the
+atomic package takes care to support all spectral units.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;astropy&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;units&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;u&lt;/span&gt;
 &lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;astroquery.atomic&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;AtomicLineList&lt;/span&gt;
 &lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;alist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AtomicLineList&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
