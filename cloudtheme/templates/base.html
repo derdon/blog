@@ -3,12 +3,9 @@
   <head>
     <title>{% block title %}{{ SITENAME }}{%endblock%}</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/layout.css" type="text/css">
-    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/colors.css" type="text/css">
-    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/nav.css" type="text/css">
-    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/content.css" type="text/css">
-    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/pygments.css" type="text/css">
-    <!-- <link rel="stylesheet" href="{{ SITEURL }}/theme/css/{{ CSS_FILE }}" type="text/css"> -->
+    {% for filename in ['layout', 'colors', 'nav', 'content', 'pygments'] %}
+    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/{{ filename }}.css" type="text/css">
+    {% endfor %}
 
     <!-- Feeds -->
     {% if FEED_ALL_ATOM %}
