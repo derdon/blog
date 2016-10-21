@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Simon Liedtke'
 SITENAME = u"derdon's blog"
-SITEURL = ''
 
 TIMEZONE = 'Europe/Paris'
 
