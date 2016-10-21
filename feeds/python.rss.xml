@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>derdon's blog</title><link>http://derdon.github.io/blog/</link><description></description><lastBuildDate>Fri, 31 May 2013 00:00:00 +0200</lastBuildDate><item><title>Implementing an undo-redo-manager in Python</title><link>http://derdon.github.io/blog/implementing-an-undo-redo-manager-in-python.html</link><description>&lt;p&gt;An undo-redo-manager is useful in many cases, especially in interactive
+<rss version="2.0"><channel><title>donz0r's blog</title><link>http://derdon.github.io/blog/</link><description></description><lastBuildDate>Fri, 31 May 2013 00:00:00 +0200</lastBuildDate><item><title>Implementing an undo-redo-manager in Python</title><link>http://derdon.github.io/blog/implementing-an-undo-redo-manager-in-python.html</link><description>&lt;p&gt;An undo-redo-manager is useful in many cases, especially in interactive
 applications (interactive shells, grahical applications like &lt;a class="reference external" href="http://www.gimp.org/"&gt;GIMP&lt;/a&gt; or
 &lt;a class="reference external" href="http://www.libreoffice.org/"&gt;LibreOffice&lt;/a&gt;). There are two main different implementation types to
 consider: &lt;a class="reference external" href="http://stackoverflow.com/a/3542670/657575"&gt;save state and generate state&lt;/a&gt;.  Save state means that each
