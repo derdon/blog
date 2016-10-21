@@ -37,7 +37,7 @@
       </a>
     </h2>
   </header>
-  <time datetime="2013-08-04T00:00:00">
+  <time datetime="2013-08-04T00:00:00+02:00">
     Sun 04 August 2013
   </time>
   <p class="entry-content">
@@ -49,13 +49,13 @@ data that has been measured on 2013-08-04 between 12:00:00 and 12:10:00.
 You can see that this queried data has been completely added to the
 database, because <tt class="docutils literal">qr.num_records()</tt> returns the same number as
 <tt class="docutils literal">len(database)</tt>.</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">Database</span><span class="p">,</span> <span class="n">entries_from_query_result</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">Database</span><span class="p">,</span> <span class="n">entries_from_query_result</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net</span> <span class="kn">import</span> <span class="n">vso</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">vso</span><span class="o">.</span><span class="n">VSOClient</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s">&#39;20130804T120000&#39;</span><span class="p">,</span> <span class="s">&#39;20130804T121000&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s1">&#39;20130804T120000&#39;</span><span class="p">,</span> <span class="s1">&#39;20130804T121000&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span><span class="o">.</span><span class="n">num_records</span><span class="p">()</span>
 <span class="go">61</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s1">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">create_tables</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries_from_query_result</span><span class="p">(</span><span class="n">qr</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">database</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
@@ -72,7 +72,7 @@ without using the query interface: the slice syntax. Entries are returned
 ordered by their unique ID and in my opinion it works as expected (but I
 need feedback from more SunPy devs and users to be sure on that). Take a
 look at the following code snippet to see how it works:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">database</span><span class="p">[:]</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">database</span><span class="p">[:</span><span class="mi">6</span><span class="p">])</span>
 <span class="go">[&lt;DatabaseEntry(id 1, data provider NSO, fileid pptid=11007;url=ftp://gong2.nso.edu/oQR/bqa/201308/tdbqa130804/tdbqa130804t1204.fits.gz)&gt;,</span>
@@ -102,7 +102,7 @@ of the entry to get the corresponding value in the database. The code in
 the following example prints the ID, the instrument, the wavelength unit,
 the minimum wavelength and the maximum wavelength of every tenth database
 entry, beginning with the entry #10:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span><span class="n">database</span><span class="p">[</span><span class="mi">9</span><span class="p">::</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;instrument&#39;</span><span class="p">,</span> <span class="s">&#39;waveunit&#39;</span><span class="p">,</span> <span class="s">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s">&#39;wavemax&#39;</span><span class="p">])</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span><span class="n">database</span><span class="p">[</span><span class="mi">9</span><span class="p">::</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;instrument&#39;</span><span class="p">,</span> <span class="s1">&#39;waveunit&#39;</span><span class="p">,</span> <span class="s1">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s1">&#39;wavemax&#39;</span><span class="p">])</span>
 <span class="go">id instrument waveunit wavemin wavemax</span>
 <span class="go">-- ---------- -------- ------- -------</span>
 <span class="go">10 El teide   Angstrom 6562.0  6563.0</span>
@@ -123,20 +123,20 @@ to know that if a tag is removed from an entry and there is no database
 entry in the database with such a tag assigned, this tag itself is removed
 from the database as well! You can check this behaviour in the following
 example:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tags</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tags</span>
 <span class="go">[]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">first_entry</span><span class="p">,</span> <span class="n">second_entry</span> <span class="o">=</span> <span class="n">database</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">first_entry</span><span class="p">,</span> <span class="s">&#39;one&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">second_entry</span><span class="p">,</span> <span class="s">&#39;one&#39;</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">first_entry</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">second_entry</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tags</span>
 <span class="go">[&lt;Tag(id 1, name &#39;one&#39;)&gt;, &lt;Tag(id 2, name &#39;two&#39;)&gt;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">remove_tag</span><span class="p">(</span><span class="n">second_entry</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">remove_tag</span><span class="p">(</span><span class="n">second_entry</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tags</span>
 <span class="go">[&lt;Tag(id 1, name &#39;one&#39;)&gt;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">remove_tag</span><span class="p">(</span><span class="n">first_entry</span><span class="p">,</span> <span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">remove_tag</span><span class="p">(</span><span class="n">first_entry</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tags</span>
 <span class="go">[&lt;Tag(id 1, name &#39;one&#39;)&gt;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">remove_tag</span><span class="p">(</span><span class="n">second_entry</span><span class="p">,</span> <span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">remove_tag</span><span class="p">(</span><span class="n">second_entry</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">tags</span>
 <span class="go">[]</span>
 </pre></div>
@@ -156,9 +156,9 @@ one single value assigned. In particular, they are:</p>
 </blockquote>
 <p>The following example queries the database for all entries with the
 instrument <cite>ChroTel</cite>, the provider <cite>KIS</cite> and the physobs <cite>Intensity</cite>:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;ChroTel&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Provider</span><span class="p">(</span><span class="s">&#39;KIS&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Physobs</span><span class="p">(</span><span class="s">&#39;Intensity&#39;</span><span class="p">)),</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;waveunit&#39;</span><span class="p">,</span> <span class="s">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s">&#39;wavemax&#39;</span><span class="p">])</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s1">&#39;ChroTel&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Provider</span><span class="p">(</span><span class="s1">&#39;KIS&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Physobs</span><span class="p">(</span><span class="s1">&#39;Intensity&#39;</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;waveunit&#39;</span><span class="p">,</span> <span class="s1">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s1">&#39;wavemax&#39;</span><span class="p">])</span>
 <span class="go">id waveunit wavemin wavemax</span>
 <span class="go">-- -------- ------- -------</span>
 <span class="go">13 Angstrom 3934.0  3934.0</span>

@@ -37,7 +37,7 @@
       </a>
     </h2>
   </header>
-  <time datetime="2011-05-16T00:00:00">
+  <time datetime="2011-05-16T00:00:00+02:00">
     Mon 16 May 2011
   </time>
   <p class="entry-content">
@@ -50,8 +50,8 @@ this script. Example:</p>
 </pre>
 <p>The generated python code is now saved in styles.py. Let's take a look at
 it!</p>
-<div class="highlight"><pre><span class="o">~/.</span><span class="n">vim</span><span class="o">/</span><span class="n">colors</span><span class="err">$</span> <span class="n">cat</span> <span class="n">styles</span><span class="o">.</span><span class="n">py</span>
-<span class="c"># -*- coding: utf-8 -*-</span>
+<div class="highlight"><pre><span></span><span class="o">~/.</span><span class="n">vim</span><span class="o">/</span><span class="n">colors</span><span class="err">$</span> <span class="n">cat</span> <span class="n">styles</span><span class="o">.</span><span class="n">py</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Summerfruit Colorscheme</span>
 <span class="sd">    ~~~~~~~~~~~~~~~~~~~~~~~</span>
@@ -63,35 +63,35 @@ it!</p>
 
 <span class="k">class</span> <span class="nc">SummerfruitStyle</span><span class="p">(</span><span class="n">Style</span><span class="p">):</span>
 
-    <span class="n">background_color</span> <span class="o">=</span> <span class="s">&#39;#ffffff&#39;</span>
+    <span class="n">background_color</span> <span class="o">=</span> <span class="s1">&#39;#ffffff&#39;</span>
     <span class="n">styles</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">Token</span><span class="p">:</span>              <span class="s">&#39;#000000 bg:#ffffff&#39;</span><span class="p">,</span>
-        <span class="n">Generic</span><span class="o">.</span><span class="n">Output</span><span class="p">:</span>     <span class="s">&#39;#438ec3 bg:#b7dce8&#39;</span><span class="p">,</span>
-        <span class="n">Keyword</span><span class="p">:</span>            <span class="s">&#39;#fb660a bold&#39;</span><span class="p">,</span>
-        <span class="n">Number</span><span class="p">:</span>             <span class="s">&#39;#0086f7 bold&#39;</span><span class="p">,</span>
-        <span class="n">Name</span><span class="o">.</span><span class="n">Tag</span><span class="p">:</span>           <span class="s">&#39;#fb660a bold&#39;</span><span class="p">,</span>
-        <span class="n">String</span><span class="p">:</span>             <span class="s">&#39;#0086d2&#39;</span><span class="p">,</span>
-        <span class="n">Generic</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>      <span class="s">&#39;#ffffff bg:#d40000&#39;</span><span class="p">,</span>
-        <span class="n">Comment</span><span class="p">:</span>            <span class="s">&#39;#22a21f bg:#dbf3cd italic&#39;</span><span class="p">,</span>
-        <span class="n">Name</span><span class="o">.</span><span class="n">Attribute</span><span class="p">:</span>     <span class="s">&#39;#ff0086 bold&#39;</span><span class="p">,</span>
-        <span class="n">Name</span><span class="o">.</span><span class="n">Entity</span><span class="p">:</span>        <span class="s">&#39;#fd8900&#39;</span><span class="p">,</span>
-        <span class="n">Keyword</span><span class="o">.</span><span class="n">Type</span><span class="p">:</span>       <span class="s">&#39;#70796b bold&#39;</span><span class="p">,</span>
-        <span class="n">Name</span><span class="o">.</span><span class="n">Label</span><span class="p">:</span>         <span class="s">&#39;#ff0086&#39;</span><span class="p">,</span>
-        <span class="n">Name</span><span class="o">.</span><span class="n">Function</span><span class="p">:</span>      <span class="s">&#39;#ff0086 bold&#39;</span><span class="p">,</span>
-        <span class="n">Name</span><span class="o">.</span><span class="n">Variable</span><span class="p">:</span>      <span class="s">&#39;#ff0086 bold&#39;</span><span class="p">,</span>
-        <span class="n">Generic</span><span class="o">.</span><span class="n">Subheading</span><span class="p">:</span> <span class="s">&#39;#000000 bold&#39;</span><span class="p">,</span>
-        <span class="n">Generic</span><span class="o">.</span><span class="n">Heading</span><span class="p">:</span>    <span class="s">&#39;#000000 bold&#39;</span><span class="p">,</span>
-        <span class="n">Name</span><span class="o">.</span><span class="n">Constant</span><span class="p">:</span>      <span class="s">&#39;#0086d2&#39;</span><span class="p">,</span>
-        <span class="n">Comment</span><span class="o">.</span><span class="n">Preproc</span><span class="p">:</span>    <span class="s">&#39;#ff0007 bold&#39;</span><span class="p">,</span>
+        <span class="n">Token</span><span class="p">:</span>              <span class="s1">&#39;#000000 bg:#ffffff&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Output</span><span class="p">:</span>     <span class="s1">&#39;#438ec3 bg:#b7dce8&#39;</span><span class="p">,</span>
+        <span class="n">Keyword</span><span class="p">:</span>            <span class="s1">&#39;#fb660a bold&#39;</span><span class="p">,</span>
+        <span class="n">Number</span><span class="p">:</span>             <span class="s1">&#39;#0086f7 bold&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Tag</span><span class="p">:</span>           <span class="s1">&#39;#fb660a bold&#39;</span><span class="p">,</span>
+        <span class="n">String</span><span class="p">:</span>             <span class="s1">&#39;#0086d2&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>      <span class="s1">&#39;#ffffff bg:#d40000&#39;</span><span class="p">,</span>
+        <span class="n">Comment</span><span class="p">:</span>            <span class="s1">&#39;#22a21f bg:#dbf3cd italic&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Attribute</span><span class="p">:</span>     <span class="s1">&#39;#ff0086 bold&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Entity</span><span class="p">:</span>        <span class="s1">&#39;#fd8900&#39;</span><span class="p">,</span>
+        <span class="n">Keyword</span><span class="o">.</span><span class="n">Type</span><span class="p">:</span>       <span class="s1">&#39;#70796b bold&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Label</span><span class="p">:</span>         <span class="s1">&#39;#ff0086&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Function</span><span class="p">:</span>      <span class="s1">&#39;#ff0086 bold&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Variable</span><span class="p">:</span>      <span class="s1">&#39;#ff0086 bold&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Subheading</span><span class="p">:</span> <span class="s1">&#39;#000000 bold&#39;</span><span class="p">,</span>
+        <span class="n">Generic</span><span class="o">.</span><span class="n">Heading</span><span class="p">:</span>    <span class="s1">&#39;#000000 bold&#39;</span><span class="p">,</span>
+        <span class="n">Name</span><span class="o">.</span><span class="n">Constant</span><span class="p">:</span>      <span class="s1">&#39;#0086d2&#39;</span><span class="p">,</span>
+        <span class="n">Comment</span><span class="o">.</span><span class="n">Preproc</span><span class="p">:</span>    <span class="s1">&#39;#ff0007 bold&#39;</span><span class="p">,</span>
     <span class="p">}</span>
 </pre></div>
 <p>Now we open a new python shell and execute the following commands to
 create a CSS file with the information gathered from the generated python
 file:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pygments.formatters</span> <span class="kn">import</span> <span class="n">HtmlFormatter</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pygments.formatters</span> <span class="kn">import</span> <span class="n">HtmlFormatter</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">styles</span> <span class="kn">import</span> <span class="n">SummerfruitStyle</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">css_text</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="n">SummerfruitStyle</span><span class="p">)</span><span class="o">.</span><span class="n">get_style_defs</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;summerfruit.css&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cssfile</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;summerfruit.css&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cssfile</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">cssfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">css_text</span><span class="p">)</span>
 </pre></div>
 <p>We create a new HtmlFormatter because the wanted output is (X)HTML and
@@ -100,7 +100,7 @@ get the CSS from a HtmlFormatter instance, the method <tt class="docutils litera
 is used. Finally, this string is written to a new CSS file. Now you can use
 the CSS file in your pygments highlighted code by simply including it in a
 way that the generated HTML file accesses it, e.g.:</p>
-<div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;summerfruit.css&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;summerfruit.css&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span><span class="p">&gt;</span>
 </pre></div>
 
   </p>

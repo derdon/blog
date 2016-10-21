@@ -37,7 +37,7 @@
       </a>
     </h2>
   </header>
-  <time datetime="2013-07-08T00:00:00">
+  <time datetime="2013-07-08T00:00:00+02:00">
     Mon 08 July 2013
   </time>
   <p class="entry-content">
@@ -50,8 +50,8 @@ searches for the keys <em>INSTRUME</em>, <em>WAVELNTH</em>, <em>DATE-OBS</em> / 
 <em>DATE-END</em> / <em>DATE_END</em>. Their values are used to set the attribute
 <tt class="docutils literal">instrument</tt>, <tt class="docutils literal">wavemin</tt> and <tt class="docutils literal">wavemax</tt>, <tt class="docutils literal">observation_time_start</tt>
 or <tt class="docutils literal">observation_time_end</tt>, respectively.</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">DatabaseEntry</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="o">.</span><span class="n">from_fits_filepath</span><span class="p">(</span><span class="s">&#39;sunpy/data/efz20010101.143610.fits&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">DatabaseEntry</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="o">.</span><span class="n">from_fits_filepath</span><span class="p">(</span><span class="s1">&#39;sunpy/data/efz20010101.143610.fits&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span><span class="o">.</span><span class="n">instrument</span>
 <span class="go">&#39;EIT&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span><span class="o">.</span><span class="n">wavemin</span><span class="p">,</span> <span class="n">entry</span><span class="o">.</span><span class="n">wavemax</span>
@@ -59,7 +59,7 @@ or <tt class="docutils literal">observation_time_end</tt>, respectively.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span><span class="o">.</span><span class="n">observation_time_start</span><span class="p">,</span> <span class="n">entry</span><span class="o">.</span><span class="n">observation_time_end</span>
 <span class="go">(datetime.datetime(2001, 1, 1, 14, 36, 10, 983000), None)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">header_entry</span> <span class="ow">in</span> <span class="n">entry</span><span class="o">.</span><span class="n">fits_header_entries</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">if</span> <span class="n">header_entry</span><span class="o">.</span><span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;INSTRUME&#39;</span><span class="p">,</span> <span class="s">&#39;WAVELNTH&#39;</span><span class="p">,</span> <span class="s">&#39;DATE-OBS&#39;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">header_entry</span><span class="o">.</span><span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;INSTRUME&#39;</span><span class="p">,</span> <span class="s1">&#39;WAVELNTH&#39;</span><span class="p">,</span> <span class="s1">&#39;DATE-OBS&#39;</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="k">print</span> <span class="n">header_entry</span>
 <span class="gp">...</span>
 <span class="go">&lt;FitsHeaderEntry(id None, key &#39;DATE-OBS&#39;, value &#39;2001-01-01T14:36:10.983&#39;)&gt;</span>
@@ -76,9 +76,9 @@ how a FITS path is detected by its filename. This value is passed to
 and its default is <em>*.fits</em>. Again, the values of the attributes
 <tt class="docutils literal">instrument</tt>, <tt class="docutils literal">wavemin</tt>, <tt class="docutils literal">wavemax</tt>, <tt class="docutils literal">observation_time_start</tt>, and
 <tt class="docutils literal">observation_time_end</tt> are set, if possible.</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">entries_from_path</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">entries_from_path</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.data.test</span> <span class="kn">import</span> <span class="n">rootdir</span> <span class="k">as</span> <span class="n">sampledir</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">entries_from_path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sampledir</span><span class="p">,</span> <span class="s">&#39;EIT&#39;</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">entries_from_path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sampledir</span><span class="p">,</span> <span class="s1">&#39;EIT&#39;</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span>
 <span class="go">13</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">first_entry</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">entries</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>

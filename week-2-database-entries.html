@@ -37,7 +37,7 @@
       </a>
     </h2>
   </header>
-  <time datetime="2013-06-22T00:00:00">
+  <time datetime="2013-06-22T00:00:00+02:00">
     Sat 22 June 2013
   </time>
   <p class="entry-content">
@@ -62,7 +62,7 @@ instance of StringIO.StringIO). The saved information is saved in the
 attribute <tt class="docutils literal">fits_header_entries</tt> which is a list of <tt class="docutils literal">FitsHeaderEntry</tt>
 instances. The class <tt class="docutils literal">FitsHeaderEntry</tt> holds the attributes <tt class="docutils literal">id</tt>,
 <tt class="docutils literal">key</tt>, and <tt class="docutils literal">value</tt>. Here is an example:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sunpy</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">DatabaseEntry</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>
@@ -97,10 +97,10 @@ has to be established and the entries have to be added explicitly. See the
 last post about the <tt class="docutils literal">Database</tt> class for more information. Also see <a class="reference external" href="http://sunpy.readthedocs.org/en/latest/guide/vso.html">the
 documentation of the VSO package</a> for more
 information about its usage.</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net.vso</span> <span class="kn">import</span> <span class="n">VSOClient</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net.vso</span> <span class="kn">import</span> <span class="n">VSOClient</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">entries_from_query_result</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">VSOClient</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query_legacy</span><span class="p">(</span><span class="s">&#39;2001/1/1&#39;</span><span class="p">,</span> <span class="s">&#39;2001/1/2&#39;</span><span class="p">,</span> <span class="n">instrument</span><span class="o">=</span><span class="s">&#39;EIT&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query_legacy</span><span class="p">(</span><span class="s1">&#39;2001/1/1&#39;</span><span class="p">,</span> <span class="s1">&#39;2001/1/2&#39;</span><span class="p">,</span> <span class="n">instrument</span><span class="o">=</span><span class="s1">&#39;EIT&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="n">entries_from_query_result</span><span class="p">(</span><span class="n">qr</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 <span class="go">&lt;DatabaseEntry(id None, data provider SDAC, fileid /archive/soho/private/data/processed/eit/lz/2001/01/efz20010101.010014)&gt;</span>

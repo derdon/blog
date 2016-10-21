@@ -37,7 +37,7 @@
       </a>
     </h2>
   </header>
-  <time datetime="2013-08-23T00:00:00">
+  <time datetime="2013-08-23T00:00:00+02:00">
     Fri 23 August 2013
   </time>
   <p class="entry-content">
@@ -52,11 +52,11 @@ Angstrom to Nanometers. The reason for converting all wavelengths to
 Nanometers before saving them is that it makes querying using the <tt class="docutils literal">Wave</tt>
 attribute quite convenient (see the next section to better understand this
 claim).</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net</span> <span class="kn">import</span> <span class="n">vso</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net</span> <span class="kn">import</span> <span class="n">vso</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">vso</span><span class="o">.</span><span class="n">VSOClient</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s">&#39;20110608T235955&#39;</span><span class="p">,</span> <span class="s">&#39;2011-06-09&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;aia&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s1">&#39;20110608T235955&#39;</span><span class="p">,</span> <span class="s1">&#39;2011-06-09&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s1">&#39;aia&#39;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">qr</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">print</span> <span class="s">&#39;{wave.wavemin}</span><span class="se">\t</span><span class="s">{wave.wavemax}</span><span class="se">\t</span><span class="s">{wave.waveunit}</span><span class="se">\t</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wave</span><span class="o">=</span><span class="n">block</span><span class="o">.</span><span class="n">wave</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="s1">&#39;{wave.wavemin}</span><span class="se">\t</span><span class="s1">{wave.wavemax}</span><span class="se">\t</span><span class="s1">{wave.waveunit}</span><span class="se">\t</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wave</span><span class="o">=</span><span class="n">block</span><span class="o">.</span><span class="n">wave</span><span class="p">)</span>
 <span class="gp">...</span>
 <span class="go">193     193     Angstrom</span>
 <span class="go">94      94      Angstrom</span>
@@ -64,13 +64,13 @@ claim).</p>
 <span class="go">171     171     Angstrom</span>
 <span class="go">211     211     Angstrom</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">Database</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s1">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">create_tables</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">add_from_vso_query_result</span><span class="p">(</span><span class="n">qr</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database.tables</span> <span class="kn">import</span> <span class="n">display_entries</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">database</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_start&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_end&#39;</span><span class="p">,</span> <span class="s">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s">&#39;wavemax&#39;</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;observation_time_start&#39;</span><span class="p">,</span> <span class="s1">&#39;observation_time_end&#39;</span><span class="p">,</span> <span class="s1">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s1">&#39;wavemax&#39;</span><span class="p">])</span>
 <span class="go">id observation_time_start observation_time_end wavemin wavemax</span>
 <span class="go">-- ---------------------- -------------------- ------- -------</span>
 <span class="go">1  2011-06-08 23:59:55    2011-06-08 23:59:56  19.3    19.3</span>
@@ -89,9 +89,9 @@ Now, such a query will iterate over <em>all</em> entries and convert the values
 50GHz and 80GHz to Nanometers and check for each database entry if its
 wavelengths are in the converted range. Here is an example using
 Angstroms:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Wave</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)),</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_start&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_end&#39;</span><span class="p">,</span> <span class="s">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s">&#39;wavemax&#39;</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;observation_time_start&#39;</span><span class="p">,</span> <span class="s1">&#39;observation_time_end&#39;</span><span class="p">,</span> <span class="s1">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s1">&#39;wavemax&#39;</span><span class="p">])</span>
 <span class="go">id observation_time_start observation_time_end wavemin wavemax</span>
 <span class="go">-- ---------------------- -------------------- ------- -------</span>
 <span class="go">1  2011-06-08 23:59:55    2011-06-08 23:59:56  19.3    19.3</span>
@@ -107,9 +107,9 @@ equal to the <cite>start</cite> parameter of the <tt class="docutils literal">Ti
 observation time of each yielded entry is lower than or equal to the <cite>end</cite>
 parameter of the <tt class="docutils literal">Time</tt> attribute. See the following example to see how
 it works:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s">&#39;2011-06-08 23:59:57&#39;</span><span class="p">,</span> <span class="s">&#39;2011-06-10&#39;</span><span class="p">)),</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_start&#39;</span><span class="p">,</span> <span class="s">&#39;observation_time_end&#39;</span><span class="p">,</span> <span class="s">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s">&#39;wavemax&#39;</span><span class="p">])</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">display_entries</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s1">&#39;2011-06-08 23:59:57&#39;</span><span class="p">,</span> <span class="s1">&#39;2011-06-10&#39;</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;observation_time_start&#39;</span><span class="p">,</span> <span class="s1">&#39;observation_time_end&#39;</span><span class="p">,</span> <span class="s1">&#39;wavemin&#39;</span><span class="p">,</span> <span class="s1">&#39;wavemax&#39;</span><span class="p">])</span>
 <span class="go">id observation_time_start observation_time_end wavemin wavemax</span>
 <span class="go">-- ---------------------- -------------------- ------- -------</span>
 <span class="go">3  2011-06-08 23:59:57    2011-06-08 23:59:58  13.1    13.1</span>

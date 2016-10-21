@@ -37,7 +37,7 @@
       </a>
     </h2>
   </header>
-  <time datetime="2014-08-04T00:00:00">
+  <time datetime="2014-08-04T00:00:00+02:00">
     Mon 04 August 2014
   </time>
   <p class="entry-content">
@@ -63,11 +63,11 @@ menu)</p>
 <p>In the following Python session you can see the atomic package in action.
 Note that Hz is actually not a supported unit by Atomic Line List, the
 atomic package takes care to support all spectral units.</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">units</span> <span class="k">as</span> <span class="n">u</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">units</span> <span class="k">as</span> <span class="n">u</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">astroquery.atomic</span> <span class="kn">import</span> <span class="n">AtomicLineList</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">alist</span> <span class="o">=</span> <span class="n">AtomicLineList</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wavelength_range</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">nm</span><span class="p">,</span> <span class="mf">1.5e+16</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">Hz</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">alist</span><span class="o">.</span><span class="n">query_object</span><span class="p">(</span><span class="n">wavelength_range</span><span class="p">,</span> <span class="n">wavelength_type</span><span class="o">=</span><span class="s">&#39;Air&#39;</span><span class="p">,</span> <span class="n">wavelength_accuracy</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">element_spectrum</span><span class="o">=</span><span class="s">&#39;C II-IV&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alist</span><span class="o">.</span><span class="n">query_object</span><span class="p">(</span><span class="n">wavelength_range</span><span class="p">,</span> <span class="n">wavelength_type</span><span class="o">=</span><span class="s1">&#39;Air&#39;</span><span class="p">,</span> <span class="n">wavelength_accuracy</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">element_spectrum</span><span class="o">=</span><span class="s1">&#39;C II-IV&#39;</span><span class="p">)</span>
 <span class="go">&lt;Table rows=3 names=(&#39;LAMBDA VAC ANG&#39;,&#39;SPECTRUM&#39;,&#39;TT&#39;,&#39;TERM&#39;,&#39;J J&#39;,&#39;LEVEL ENERGY  CM 1&#39;)&gt;</span>
 <span class="go">array([(196.8874, &#39;C IV&#39;, &#39;E1&#39;, &#39;2S-2Po&#39;, &#39;1/2-*&#39;, &#39;0.00 -   507904.40&#39;),</span>
 <span class="go">       (197.7992, &#39;C IV&#39;, &#39;E1&#39;, &#39;2S-2Po&#39;, &#39;1/2-*&#39;, &#39;0.00 -   505563.30&#39;),</span>

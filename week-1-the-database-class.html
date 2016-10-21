@@ -37,7 +37,7 @@
       </a>
     </h2>
   </header>
-  <time datetime="2013-06-19T00:00:00">
+  <time datetime="2013-06-19T00:00:00+02:00">
     Wed 19 June 2013
   </time>
   <p class="entry-content">
@@ -68,8 +68,8 @@ operator. the number of entries can be accessed by using the <tt class="docutils
 function on any database object. It is also supported to iterate over a
 database object to get all entries. As a side-effect, using the <tt class="docutils literal">list()</tt>
 function on a database object gives you a list of all entries.</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">Database</span><span class="p">,</span> <span class="n">DatabaseEntry</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">Database</span><span class="p">,</span> <span class="n">DatabaseEntry</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s1">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">create_tables</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">entry1</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">entry2</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>
@@ -133,7 +133,7 @@ given number of commands cannot be reverted (if only 2 actions have been
 undone, it is not possible to redo 5 actions), an exception is raised.</p>
 <p>The <tt class="docutils literal">remove</tt> method is as simple as the <tt class="docutils literal">add</tt> method: you pass an
 entry and it gets removed.</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">entry1</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">entry1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">entry2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
 <span class="go">[]</span>
@@ -163,7 +163,7 @@ change a specific value of an entry. The first argument is the entry to be
 changed and all following arguments must be keyword arguments where the
 key represents the column name in the database and the value represents
 the new value.</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">star</span><span class="p">(</span><span class="n">entry2</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">star</span><span class="p">(</span><span class="n">entry2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">get_starred</span><span class="p">()</span>
 <span class="go">&lt;generator object &lt;genexpr&gt; at 0xb54d734&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">database</span><span class="o">.</span><span class="n">get_starred</span><span class="p">())</span>
@@ -195,8 +195,8 @@ can see that the entries #1 and #3 have been accessed once, whereas #2 has
 not been accessed at all. So you could imagine that its last accessed time
 is minus infinity and therefore it gets removed when entry #4 is added to
 the database.</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s">&#39;sqlite:///:memory:&#39;</span><span class="p">,</span> <span class="n">cache_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s1">&#39;sqlite:///:memory:&#39;</span><span class="p">,</span> <span class="n">cache_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">create_tables</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">entry1</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">entry2</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>

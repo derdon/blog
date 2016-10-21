@@ -37,7 +37,7 @@
       </a>
     </h2>
   </header>
-  <time datetime="2013-07-18T00:00:00">
+  <time datetime="2013-07-18T00:00:00+02:00">
     Thu 18 July 2013
   </time>
   <p class="entry-content">
@@ -47,9 +47,9 @@
 following query call filters all the data that was observed on 1st
 January, 2010 from 0:00 to 1:00 and was observed via the instrument EIT or
 SOT:</p>
-<div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
    <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">((</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
-   <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;eit&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;sot&#39;</span><span class="p">)</span>
+   <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s1">&#39;eit&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s1">&#39;sot&#39;</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -60,8 +60,8 @@ some sample entries. Ten entries are added, of which every second one is
 starred, every fourth one gets the tag <em>foo</em> and every fifth one gets the
 tag <em>bar</em>. To make sure that these entries are saved in the database, the
 method <tt class="docutils literal">commit</tt> is called on the database object.</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">Database</span><span class="p">,</span> <span class="n">DatabaseEntry</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">Database</span><span class="p">,</span> <span class="n">DatabaseEntry</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s1">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">create_tables</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">entry</span> <span class="o">=</span> <span class="n">DatabaseEntry</span><span class="p">()</span>
@@ -69,9 +69,9 @@ method <tt class="docutils literal">commit</tt> is called on the database object
 <span class="gp">... </span>    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 <span class="gp">... </span>        <span class="n">database</span><span class="o">.</span><span class="n">star</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="n">database</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">database</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="n">database</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">database</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 </pre></div>
@@ -89,13 +89,13 @@ meaning of this attribute. The third and last query in this example
 fetches all starred entries with the tag <em>foo</em> or <em>bar</em> (or both!) and
 sorts the result by their unique ID. The optional keyword argument <cite>id</cite> is
 a string that expresses by which column to sort.</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">attrs</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="s">&#39;foo&#39;</span><span class="p">),</span> <span class="n">attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">())</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">attrs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">),</span> <span class="n">attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">())</span>
 <span class="go">[&lt;DatabaseEntry(id 4, data provider None, fileid None)&gt;, &lt;DatabaseEntry(id 8, data provider None, fileid None)&gt;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="s">&#39;bar&#39;</span><span class="p">),</span> <span class="o">~</span><span class="n">attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">),</span> <span class="o">~</span><span class="n">attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">())</span>
 <span class="go">[&lt;DatabaseEntry(id 5, data provider None, fileid None)&gt;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="s">&#39;foo&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="n">attrs</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="s">&#39;bar&#39;</span><span class="p">),</span> <span class="n">attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">(),</span> <span class="n">sortby</span><span class="o">=</span><span class="s">&#39;id&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="n">attrs</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">),</span> <span class="n">attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">(),</span> <span class="n">sortby</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">))</span>
 <span class="go">[&lt;DatabaseEntry(id 4, data provider None, fileid None)&gt;,</span>
 <span class="go"> &lt;DatabaseEntry(id 8, data provider None, fileid None)&gt;,</span>
 <span class="go"> &lt;DatabaseEntry(id 10, data provider None, fileid None)&gt;]</span>
@@ -105,8 +105,8 @@ a string that expresses by which column to sort.</p>
 <h2>What are the next plans?</h2>
 <p>The next plan is to support query attributes from the VSO package so that
 code like the following will be possible:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net</span> <span class="kn">import</span> <span class="n">vso</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;EIT&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s">&#39;2000-01-01&#39;</span><span class="p">,</span> <span class="s">&#39;2000-01-31&#39;</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net</span> <span class="kn">import</span> <span class="n">vso</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s1">&#39;EIT&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s1">&#39;2000-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2000-01-31&#39;</span><span class="p">))</span>
 </pre></div>
 <p>This would fetch all data that was observed with the EIT in the January
 2000.</p>

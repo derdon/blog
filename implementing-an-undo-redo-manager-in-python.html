@@ -37,7 +37,7 @@
       </a>
     </h2>
   </header>
-  <time datetime="2013-05-31T00:00:00">
+  <time datetime="2013-05-31T00:00:00+02:00">
     Fri 31 May 2013
   </time>
   <p class="entry-content">
@@ -81,7 +81,7 @@ use an element to operate on this set. So I wrote a base class
 <tt class="docutils literal">__init__</tt> method receives a set and an element. This makes it easy to
 add another command, e.g. <tt class="docutils literal">SilentElementRemover</tt> which uses the
 <tt class="docutils literal">discard</tt> method of the set instead of <tt class="docutils literal">remove</tt>.</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
 
 
 <span class="k">class</span> <span class="nc">SetOperation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -131,7 +131,7 @@ optional integer as well, again defaulting to 1. On every iteration, the
 top element from the redo stack is popped, executed and pushed onto the
 undo stack. Note that this method does not clear the redo stack, like the
 method <tt class="docutils literal">do</tt> does.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">CommandManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CommandManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">undo_commands</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">redo_commands</span> <span class="o">=</span> <span class="p">[]</span>
@@ -173,7 +173,7 @@ method <tt class="docutils literal">do</tt> does.</p>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">command</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">push_undo_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-        <span class="c"># clear the redo stack when a new command was executed</span>
+        <span class="c1"># clear the redo stack when a new command was executed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">redo_commands</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
@@ -203,27 +203,27 @@ method <tt class="docutils literal">do</tt> does.</p>
 </pre></div>
 <p>Let's see the code in action! Here is a copy of an interactive python
 session:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">13</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">13</span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span>
 <span class="go">set([3, 13, 5])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">CommandManager</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># remove element 5 from the set</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># remove element 5 from the set</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">ElementRemover</span><span class="p">(</span><span class="n">my_set</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span>
 <span class="go">set([3, 13])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># add element -7 to the set</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># add element -7 to the set</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">do</span><span class="p">(</span><span class="n">ElementAdder</span><span class="p">(</span><span class="n">my_set</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span>
 <span class="go">set([-7, 3, 13])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># undo adding element -7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># undo adding element -7</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span>
 <span class="go">set([3, 13])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># undo removing element 5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># undo removing element 5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span>
 <span class="go">set([3, 13, 5])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># redo both undone operations</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># redo both undone operations</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">redo</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_set</span>
 <span class="go">set([-7, 3, 13])</span>

@@ -37,7 +37,7 @@
       </a>
     </h2>
   </header>
-  <time datetime="2013-07-04T00:00:00">
+  <time datetime="2013-07-04T00:00:00+02:00">
     Thu 04 July 2013
   </time>
   <p class="entry-content">
@@ -46,9 +46,9 @@
 <div class="section" id="how-does-querying-work-with-the-existing-vso-interface">
 <h3>How does querying work with the existing VSO interface?</h3>
 <p>Querying a VSO server with the VSO interface of SunPy can look like this:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net</span> <span class="kn">import</span> <span class="n">vso</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net</span> <span class="kn">import</span> <span class="n">vso</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">vso</span><span class="o">.</span><span class="n">VSOClient</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s">&#39;2001/1/1&#39;</span><span class="p">,</span> <span class="s">&#39;2001/1/2&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;eit&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qr</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="s1">&#39;2001/1/1&#39;</span><span class="p">,</span> <span class="s1">&#39;2001/1/2&#39;</span><span class="p">),</span> <span class="n">vso</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s1">&#39;eit&#39;</span><span class="p">))</span>
 </pre></div>
 <p>The <tt class="docutils literal">query</tt> method of <tt class="docutils literal">VSOClient</tt> receives any number of attributes
 and conjugates them. So if you read the exemplary query above, it reads
@@ -62,11 +62,11 @@ queried data.</p>
 <p>To keep the usage consistent with the query interface of the VSO package
 described above, I plan to make the database query interface usable like
 this:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net.vso</span> <span class="kn">import</span> <span class="n">attrs</span> <span class="k">as</span> <span class="n">vso_attrs</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.net.vso</span> <span class="kn">import</span> <span class="n">attrs</span> <span class="k">as</span> <span class="n">vso_attrs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">Database</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sunpy.database</span> <span class="kn">import</span> <span class="n">attrs</span> <span class="k">as</span> <span class="n">db_attrs</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso_attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s">&#39;eit&#39;</span><span class="p">),</span> <span class="n">db_attrs</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="s">&#39;sun&#39;</span><span class="p">),</span> <span class="n">db_attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">(</span><span class="bp">True</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">database</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s1">&#39;sqlite:///:memory:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vso_attrs</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="s1">&#39;eit&#39;</span><span class="p">),</span> <span class="n">db_attrs</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="s1">&#39;sun&#39;</span><span class="p">),</span> <span class="n">db_attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">(</span><span class="bp">True</span><span class="p">))</span>
 </pre></div>
 <p>The class <tt class="docutils literal">Database</tt> gets a new method called <tt class="docutils literal">query</tt> which accepts
 any number of attributes and returns a generator of <tt class="docutils literal">DatabaseEntry</tt>
@@ -80,7 +80,7 @@ instrument <em>and</em> are tagged 'sun' <em>and</em> are starred”.</p>
 <p><strong>Edit</strong>: After a night of good sleep, I think I have come to a better API
 for the <tt class="docutils literal">Starred</tt> attribute. Or, more general, for any boolean
 attribute:</p>
-<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">starred_entries</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">db_attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">())</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">starred_entries</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">db_attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">unstarred_entries</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="o">~</span><span class="n">db_attrs</span><span class="o">.</span><span class="n">Starred</span><span class="p">())</span>
 </pre></div>
 <p>The iterator <tt class="docutils literal">starred_entries</tt> will contain all entries that have been
