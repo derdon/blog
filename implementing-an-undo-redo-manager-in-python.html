@@ -89,14 +89,14 @@ add another command, e.g. <tt class="docutils literal">SilentElementRemover</tt>
 
 
 <span class="k">class</span> <span class="nc">SetOperation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
+    <span class="vm">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">set_</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">set_</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_</span> <span class="o">=</span> <span class="n">set_</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">element</span> <span class="o">=</span> <span class="n">element</span>
 
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span>
 
     <span class="nd">@abstractmethod</span>
@@ -105,7 +105,7 @@ add another command, e.g. <tt class="docutils literal">SilentElementRemover</tt>
 
 
 <span class="k">class</span> <span class="nc">ElementAdder</span><span class="p">(</span><span class="n">SetOperation</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -113,7 +113,7 @@ add another command, e.g. <tt class="docutils literal">SilentElementRemover</tt>
 
 
 <span class="k">class</span> <span class="nc">ElementRemover</span><span class="p">(</span><span class="n">SetOperation</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -136,7 +136,7 @@ top element from the redo stack is popped, executed and pushed onto the
 undo stack. Note that this method does not clear the redo stack, like the
 method <tt class="docutils literal">do</tt> does.</p>
 <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CommandManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">undo_commands</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">redo_commands</span> <span class="o">=</span> <span class="p">[]</span>
 
